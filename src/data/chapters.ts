@@ -6,7 +6,7 @@ export const chapters: Chapter[] = [
     number: 1,
     title: 'O Sonho Imperial do Barão',
     subtitle: 'Irineu Evangelista de Sousa e o Despertar da Infraestrutura Nacional',
-    image: 'assets/images/barao_de_maua_1781298320469.jpg',
+    image: '/assets/images/barao_de_maua_1781298320469.jpg',
     imageCaption: 'Irineu Evangelista de Sousa, o Barão de Mauá (1813–1889), pioneiro absoluto da industrialização e dos transportes ferroviários no Império do Brasil.',
     readingTime: 6,
     content: [
@@ -21,7 +21,7 @@ export const chapters: Chapter[] = [
     number: 2,
     title: 'O Enigma da Serra e o Capital Inglês',
     subtitle: 'A Aliança Financeira de Mauá e a Chegada dos Engenheiros Britânicos',
-    image: 'assets/images/luz_paranapiacaba_1781298346748.jpg',
+    image: '/assets/images/luz_paranapiacaba_1781298346748.jpg',
     imageCaption: 'A influência vitoriana se consolidou na serra paulista através da arquitetura de requinte industrial, marcada por relógios icônicos e estações de tijolos vermelhos importados.',
     readingTime: 7,
     content: [
@@ -36,7 +36,7 @@ export const chapters: Chapter[] = [
     number: 3,
     title: 'O Desafio da Muralha',
     subtitle: 'O Milagre do Sistema Funicular e o Sangue nas Montanhas',
-    image: 'assets/images/funicular_cable_1781298331429.jpg',
+    image: '/assets/images/funicular_cable_1781298331429.jpg',
     imageCaption: 'O revolucionário sistema funicular: imensas caldeiras e cabos de aço permitiam que composições pesadas vencessem o monstruoso desnível de 800 metros da serra.',
     readingTime: 9,
     content: [
@@ -51,7 +51,7 @@ export const chapters: Chapter[] = [
     number: 4,
     title: 'Névoa sobre Paranapiacaba',
     subtitle: 'A Comunidade Britânica no Topo do Mundo e as Origens do Futebol',
-    image: '/src/assets/images/luz_paranapiacaba_1781298346748.jpg',
+    image: '/assets/images/luz_paranapiacaba_1781298346748.jpg',
     imageCaption: 'A histórica vila de Paranapiacaba desenvolveu-se no topo do sistema funicular, vivenciando o singular choque cultural entre operários brasileiros e o modo de vida vitoriano inglês.',
     readingTime: 7,
     content: [
@@ -66,7 +66,7 @@ export const chapters: Chapter[] = [
     number: 5,
     title: 'O Legado do Café para São Paulo',
     subtitle: 'A Consolidação de uma Metrópole e o Nascimento da Estação da Luz',
-    image: 'assets/images/ebook_cover_1781298306266.jpg',
+    image: '/assets/images/ebook_cover_1781298306266.jpg',
     imageCaption: 'A São Paulo Railway impulsionou a transformação de São Paulo de vilarejo colonial para uma metrópole cosmopolita e capital industrial da América do Sul.',
     readingTime: 8,
     content: [
@@ -81,7 +81,7 @@ export const chapters: Chapter[] = [
     number: 6,
     title: 'A Artéria de Ouro para o Porto de Santos',
     subtitle: 'O Escoamento do Café e a Conexão Definitiva Paulista com o Mercado Mundial',
-    image: 'assets/images/porto_de_santos_1781307571913.jpg',
+    image: '/assets/images/porto_de_santos_1781307571913.jpg',
     imageCaption: 'Ilustração histórica representando as docas do Porto de Santos no final do século XIX, recebendo os carregamentos de café transportados pela ferrovia da serra.',
     readingTime: 6,
     content: [

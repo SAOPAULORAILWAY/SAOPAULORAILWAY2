@@ -802,7 +802,7 @@ export default function EbookReader({
                           {/* Cover page image slot */}
                           <div className="w-full max-w-sm mx-auto border-2 border-stone-300 p-1.5 bg-white shadow-md print:shadow-none print:max-w-[200px] print:my-2">
                             <img 
-                              src="assets/images/ebook_cover_1781298306266.jpg" 
+                              src="/assets/images/ebook_cover_1781298306266.jpg" 
                               alt="Capa de Trem Histórico" 
                               className="w-full h-auto aspect-[4/3] object-cover grayscale"
                               referrerPolicy="no-referrer"

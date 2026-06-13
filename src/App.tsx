@@ -185,7 +185,7 @@ export default function App() {
                       {/* Mini illustrative photograph badge */}
                       <div className="z-10 w-full max-w-[180px] mx-auto border border-stone-300 p-1 bg-white shadow-md">
                         <img 
-                          src="assets/images/ebook_cover_1781298306266.jpg" 
+                          src="/assets/images/ebook_cover_1781298306266.jpg" 
                           alt="Ebook Cover Miniature" 
                           className="w-full h-auto aspect-[4/3] object-cover grayscale"
                           referrerPolicy="no-referrer"
