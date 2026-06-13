@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;700&display=swap');
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Print/Export PDF refinement styling sheets */
+@media print {
+  /* Suppress default browser-injected header (URL/link) and footer (date/time) */
+  @page {
+    size: A4 portrait;
+    margin: 0 !important;
+  }
+  
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
+    font-size: 10pt !important;
+    line-height: 1.45 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Fixed page layouts (Cover, Title, Index, Certificate) */
+  .pdf-fixed-page {
+    width: 210mm !important;
+    height: 295mm !important; /* Extremely crucial: slightly less than 297mm to prevent browser margin decimals from forcing blank spillover pages */
+    max-height: 295mm !important;
+    padding: 16mm 16mm 16mm 16mm !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
+    border: none !important;
+  }
+
+  /* Flowing page layout for chapters (to make sure text paragraphs are perfectly wrapped with no empty pages) */
+  .pdf-flow-page {
+    width: 210mm !important;
+    min-height: 295mm !important;
+    max-height: 295mm !important; /* Force each chapter page to strictly stay on a single sheet of A4 */
+    padding: 16mm 16mm 16mm 16mm !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    border: none !important;
+  }
+
+  /* General elements typography on print sheets */
+  .pdf-fixed-page p, .pdf-flow-page p {
+    font-size: 10.5pt !important;
+    line-height: 1.45 !important;
+    margin-bottom: 2mm !important;
+  }
+
+  .pdf-fixed-page h1, .pdf-flow-page h1 {
+    font-size: 24pt !important;
+  }
+
+  .pdf-fixed-page h2, .pdf-flow-page h2 {
+    font-size: 18pt !important;
+  }
+
+  .pdf-fixed-page h3, .pdf-flow-page h3 {
+    font-size: 14pt !important;
+  }
+
+  /* Keep illustrations and captions intact during pagination */
+  .pdf-avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Force background colors and background-images to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
