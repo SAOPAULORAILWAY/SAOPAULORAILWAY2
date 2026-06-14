@@ -42,6 +42,59 @@ export default function PaywallModal({
   const [newKeyInput, setNewKeyInput] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   
+  // Custom states for Pix & Author Authentication
+  const [isAuthorAuthenticated, setIsAuthorAuthenticated] = useState(false);
+  const [authorPassword, setAuthorPassword] = useState('');
+  const [authorPassError, setAuthorPassError] = useState('');
+  const [pixCopied, setPixCopied] = useState(false);
+
+  const buildPixCode = () => {
+    const key = "30026230836"; // CPF
+    const name = "Evandro Felix Marcondes";
+    const city = "Sao Paulo";
+    const amount = "29.99";
+    const txid = "SPRAVALIA"; // Transaction ID label
+    
+    const keyClean = key.replace(/\D/g, '');
+    const gui = "br.gov.bcb.pix";
+    
+    // Tag 26 (Merchant Account Info)
+    const sub26_00 = "0014" + gui;
+    const sub26_01 = "01" + keyClean.length.toString().padStart(2, '0') + keyClean;
+    const sub26 = sub26_00 + sub26_01;
+    const f26 = "26" + sub26.length.toString().padStart(2, '0') + sub26;
+    
+    const base = "000201" + 
+                 "010212" + // Recurrent template
+                 f26 +
+                 "52040000" + // MCC
+                 "5303986" + // Currency (BRL)
+                 "5405" + amount + // Value
+                 "5802BR" + // Country
+                 "59" + name.length.toString().padStart(2, '0') + name.toUpperCase() +
+                 "60" + city.length.toString().padStart(2, '0') + city.toUpperCase() +
+                 "62130509" + txid + // Additional details (TxID)
+                 "6304";
+                 
+    // CRC16 CCITT standard calculation
+    let crc = 0xFFFF;
+    for (let i = 0; i < base.length; i++) {
+      let x = ((crc >> 8) ^ base.charCodeAt(i)) & 0xFF;
+      x ^= x >> 4;
+      crc = ((crc << 8) ^ (x << 12) ^ (x << 5) ^ x) & 0xFFFF;
+    }
+    const crcHex = crc.toString(16).toUpperCase().padStart(4, '0');
+    return base + crcHex;
+  };
+
+  const pixCode = buildPixCode();
+
+  const handleCopyPixCode = () => {
+    navigator.clipboard.writeText(pixCode);
+    setPixCopied(true);
+    setTimeout(() => setPixCopied(false), 2000);
+  };
+  
   // Custom keys managed by Evandro in his local session
   const [customKeys, setCustomKeys] = useState<string[]>(() => {
     const saved = localStorage.getItem('efm_custom_keys');
@@ -164,8 +217,67 @@ export default function PaywallModal({
         {/* Scrollable Modal Content */}
         <div className="overflow-y-auto pr-1 space-y-6 flex-1">
           {showAuthorPanel ? (
-            /* ================= AUTHOR KEY MANAGER PANEL ================= */
-            <div className="space-y-5">
+            !isAuthorAuthenticated ? (
+              <div className="space-y-5 py-4 max-w-sm mx-auto">
+                <div className="space-y-1 select-none text-center">
+                  <h3 className="text-xl font-serif font-bold text-stone-950 flex items-center justify-center gap-2">
+                    <Lock className="h-5 w-5 text-[#8A7055]" /> Painel Administrativo
+                  </h3>
+                  <p className="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
+                    Acesso restrito para o autor, Evandro. Insira a sua senha de gerenciamento de chaves para prosseguir.
+                  </p>
+                </div>
+
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const cleanVal = authorPassword.trim().toUpperCase();
+                    if (cleanVal === 'EVANDRO' || cleanVal === 'EVANDRO2026' || cleanVal === 'MARCONDES' || cleanVal === '30026230836') {
+                      setIsAuthorAuthenticated(true);
+                      setAuthorPassError('');
+                    } else {
+                      setAuthorPassError('Senha inválida. Tente novamente.');
+                    }
+                  }} 
+                  className="space-y-3.5 bg-white border border-stone-200 p-5 rounded-2xl shadow-xs"
+                >
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-bold text-left">Senha do Autor</label>
+                    <input 
+                      type="password" 
+                      placeholder="••••••••" 
+                      value={authorPassword}
+                      onChange={(e) => {
+                        setAuthorPassword(e.target.value);
+                        setAuthorPassError('');
+                      }}
+                      className="w-full bg-stone-50 border border-stone-250 rounded-lg px-3 py-2 text-sm text-center font-mono tracking-widest placeholder:text-stone-300 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-[#8A7055]"
+                    />
+                    {authorPassError && (
+                      <p className="text-[10px] text-red-650 font-mono text-center">
+                        {authorPassError}
+                      </p>
+                    )}
+                  </div>
+                  <button 
+                    type="submit"
+                    className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-serif font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    <ShieldCheck className="h-4 w-4" /> Autenticar Painel
+                  </button>
+                </form>
+
+                <button
+                  type="button"
+                  onClick={() => setShowAuthorPanel(false)}
+                  className="text-[#8A7055] hover:text-[#725C46] text-xs font-mono font-bold block mx-auto underline uppercase tracking-tight py-1 cursor-pointer"
+                >
+                  Voltar ao Checkout
+                </button>
+              </div>
+            ) : (
+              /* ================= AUTHOR KEY MANAGER PANEL ================= */
+              <div className="space-y-5">
               <div className="space-y-1 select-none">
                 <h3 className="text-xl font-serif font-bold text-stone-950 flex items-center gap-2">
                   <Settings className="h-5 w-5 text-[#8A7055]" /> Gerenciador de Chaves de Acesso
@@ -275,7 +387,8 @@ export default function PaywallModal({
                 </div>
               </div>
             </div>
-          ) : (
+          )
+        ) : (
             /* ================= READERS GATE / STANDARD VIEW ================= */
             <>
               {paymentStep === 'options' && (
@@ -368,40 +481,51 @@ export default function PaywallModal({
               {paymentStep === 'pix' && (
                 <div className="space-y-6 text-center py-2 select-none">
                   <div className="space-y-1">
-                    <h4 className="font-serif font-bold text-lg text-stone-900 leading-tight">Código PIX Copia-e-Cola</h4>
-                    <p className="text-xs text-stone-500 font-sans">Simulação interativa do checkout comercial do seu e-book</p>
+                    <h4 className="font-serif font-bold text-lg text-stone-900 leading-tight">Pagar via Pix (R$ 29,99)</h4>
+                    <p className="text-xs text-stone-500 font-sans">Escaneie o QR Code ou utilize o código Copia-e-Cola</p>
                   </div>
 
-                  {/* Dummy QR code stylized */}
-                  <div className="w-44 h-44 bg-white border border-stone-300 p-2.5 mx-auto rounded-xl flex items-center justify-center shadow-xs">
-                    <div className="relative w-full h-full bg-stone-100 flex flex-col items-center justify-center rounded">
-                      <QrCode className="h-24 w-24 text-stone-800" />
-                      <div className="absolute inset-0 bg-[#8A7055]/5 flex items-center justify-center font-bold font-mono text-[10px] text-[#8A7055]/80">
-                        QR CODE SIMULADO
-                      </div>
+                  {/* Real Dynamic QR Code based on Evandro's Pix standard */}
+                  <div className="w-48 h-48 bg-white border border-stone-250 p-2 mx-auto rounded-2xl flex items-center justify-center shadow-md">
+                    <img 
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}&ecc=M`}
+                      alt="Pix QR Code"
+                      className="w-full h-full object-contain"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+
+                  <div className="space-y-2 max-w-sm mx-auto">
+                    <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 block font-bold text-left">Código Pix Copia-e-Cola</span>
+                    <div className="bg-stone-50 border border-stone-200 p-2 px-3 rounded-xl flex items-center justify-between gap-2.5">
+                      <span className="font-mono text-[9px] text-stone-500 overflow-hidden text-ellipsis whitespace-nowrap flex-1 text-left select-all">
+                        {pixCode}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={handleCopyPixCode}
+                        className="bg-stone-900 hover:bg-stone-800 text-white font-mono font-bold text-[9px] py-1.5 px-3 rounded-lg uppercase border border-stone-300 transition-colors cursor-pointer shrink-0"
+                      >
+                        {pixCopied ? 'Copiado!' : 'Copiar'}
+                      </button>
                     </div>
                   </div>
 
-                  {/* PIX copy-paste box */}
-                  <div className="bg-stone-100 border border-stone-250 p-2 px-3 rounded-lg flex items-center justify-between gap-2 max-w-sm mx-auto">
-                    <span className="font-mono text-[9px] text-stone-500 overflow-hidden text-ellipsis whitespace-nowrap flex-1 text-left">
-                      00020101021226830014br.gov.bcb.pix0141spr-saopaulorailway-evandro-felix-2999
-                    </span>
-                    <span className="bg-stone-250 text-[#8A7055] font-mono font-black text-[9px] py-1 px-2 rounded uppercase border border-stone-300">
-                      Copiado
-                    </span>
+                  <div className="bg-[#FAF7F2] border border-[#2C2620]/10 p-4 rounded-xl text-left max-w-sm mx-auto space-y-2">
+                    <span className="text-[10px] text-[#8A7055] font-mono font-bold uppercase tracking-wider block">Instruções de Ativação</span>
+                    <ul className="text-[11px] text-stone-600 leading-relaxed list-decimal pl-4 space-y-1">
+                      <li>Use o Pix Copia-e-Cola ou escaneie o QR Code no seu aplicativo do banco.</li>
+                      <li>Confirme o destinatário como <b>Evandro Felix Marcondes</b> (Banco Nubank).</li>
+                      <li>Após concluir o pagamento, envie o comprovante de R$ 29,99 para o e-mail <b>saopaulorailwayspr@gmail.com</b> para receber sua chave de acesso.</li>
+                    </ul>
                   </div>
-
-                  <p className="text-xs text-stone-500 max-w-xs mx-auto leading-normal">
-                    Pague usando o simulador abaixo para receber e validar a primeira chave padrão <b>FERROVIA1867</b> automaticamente.
-                  </p>
 
                   <div className="space-y-2 pt-2">
                     <button
                       type="button"
                       disabled={isProcessing}
                       onClick={handleConfirmPixPayment}
-                      className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-stone-300 text-white rounded-xl text-sm font-serif font-bold transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-stone-300 text-white rounded-xl text-sm font-serif font-bold transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm hover:shadow-md"
                     >
                       {isProcessing ? (
                         <span className="flex items-center gap-2 font-mono text-xs">
@@ -413,13 +537,14 @@ export default function PaywallModal({
                         </span>
                       ) : (
                         <>
-                          <ShieldCheck className="h-4.5 w-4.5" /> Confirmar Pagamento Simulado
+                          <ShieldCheck className="h-4.5 w-4.5" /> Confirmar Simulação de Pagamento
                         </>
                       )}
                     </button>
                     <button
+                      type="button"
                       onClick={() => setPaymentStep('options')}
-                      className="text-stone-500 text-xs font-mono underline hover:text-stone-800 uppercase block mx-auto py-1"
+                      className="text-stone-500 text-xs font-mono underline hover:text-stone-850 uppercase block mx-auto py-1 cursor-pointer"
                     >
                       Voltar às Opções
                     </button>
@@ -433,14 +558,14 @@ export default function PaywallModal({
                     <CheckCircle className="h-8 w-8" />
                   </div>
                   <div className="space-y-1">
-                    <h4 className="font-serif font-bold text-xl sm:text-2xl text-stone-900 leading-tight">E-book Desbloqueado!</h4>
-                    <p className="text-xs text-stone-500 font-sans">A Chave de Acesso permanente é <b>FERROVIA1867</b></p>
+                    <h4 className="font-serif font-bold text-xl sm:text-2xl text-stone-900 leading-tight">Acesso Permanente Liberado!</h4>
+                    <p className="text-xs text-stone-500 font-sans">Seu navegador foi autorizado e o e-book está 100% desbloqueado.</p>
                   </div>
 
                   <div className="bg-emerald-50/50 border border-emerald-200/60 p-4 rounded-xl max-w-sm mx-auto space-y-1">
-                    <span className="text-[10px] text-emerald-700 font-mono font-bold uppercase tracking-widest block">Licença Vitalícia Validada</span>
-                    <p className="text-xs text-stone-700 leading-relaxed max-w-xs mx-auto">
-                      Agradecemos a simulação de compra! Agora você tem passe livre para explorar, estudar e compilar o PDF de gráfica do e-book.
+                    <span className="text-[10px] text-emerald-700 font-mono font-bold uppercase tracking-widest block">Licença Vitalícia Ativada</span>
+                    <p className="text-xs text-stone-700 leading-relaxed max-w-xs mx-auto text-center">
+                      Agradecemos por prestigiar a obra e adquirir o exemplar! Agora você possui passe livre imediato para ler todos os capítulos e compilar a edição de gráfica.
                     </p>
                   </div>
 
