@@ -160,12 +160,7 @@ export default function App() {
                       <div className="absolute inset-2 border-2 border-stone-300 bg-transparent rounded-xl pointer-events-none z-10"></div>
                       <div className="absolute inset-2.5 border border-double border-stone-300 bg-transparent rounded-xl pointer-events-none z-10"></div>
                       
-                      <div className="z-10 text-center pt-2 sm:pt-6 space-y-1 select-none">
-                        <span className="text-[8px] sm:text-[10px] uppercase font-mono tracking-widest text-[#8A7055] font-black">
-                          Série Arquivo Nacional
-                        </span>
-                        <div className="h-[1px] w-10 sm:w-12 bg-[#8A7055]/30 mx-auto mt-0.5 sm:mt-1"></div>
-                      </div>
+
 
                       {/* Cover main core headings */}
                       <div className="z-10 text-center space-y-1 sm:space-y-3 px-3">

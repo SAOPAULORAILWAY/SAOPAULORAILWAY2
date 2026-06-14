@@ -779,12 +779,11 @@ export default function EbookReader({
                     {printScope === 'full' ? (
                       /* ====== MAXIMUM FIDELITY COMPILED EXPANSIVE EBOOK PDF TEMPLATE ====== */
                       <div className="print-container bg-white text-stone-900 border border-stone-300 rounded-2xl shadow-xl overflow-hidden p-6 sm:p-14 space-y-16 max-w-3xl mx-auto font-serif print:border-0 print:shadow-none print:p-0 print:space-y-0 selection:bg-stone-200">
-                        
                         {/* COVER SHEET (PAGE 1) */}
-                        <div className="pdf-fixed-page min-h-[85vh] flex flex-col justify-between p-8 sm:p-12 border-8 border-double border-stone-300 relative bg-stone-50 select-none print:bg-white print:border-4" style={{ pageBreakAfter: 'always', breakAfter: 'page' }}>
+                        <div className="pdf-fixed-page min-h-[85vh] flex flex-col justify-between p-8 sm:p-12 border-8 border-double border-stone-300 relative bg-stone-50 select-none print:bg-white print:border-0 print:border-none" style={{ pageBreakAfter: 'always', breakAfter: 'page' }}>
                           <div className="text-center space-y-1.5 uppercase font-mono tracking-widest text-[#8A7055]">
                             <span className="text-[10px] font-black">Série História Ativa • Documentário Histórico</span>
-                            <div className="h-[1px] w-20 bg-[#8A7055]/40 mx-auto mt-2"></div>
+                            <div className="h-[1px] w-20 bg-[#8A7055]/40 mx-auto mt-2 print:hidden"></div>
                           </div>
 
                           <div className="space-y-4 text-center my-8 print:my-4">
@@ -793,18 +792,18 @@ export default function EbookReader({
                               A Saga da <br/>
                               <span className="text-[#8A7055]">São Paulo Railway</span>
                             </h1>
-                            <div className="h-1.5 w-16 bg-[#8A7055] mx-auto my-4 rounded-full print:my-2"></div>
+                            <div className="h-1.5 w-16 bg-[#8A7055] mx-auto my-4 rounded-full print:hidden"></div>
                             <p className="text-xs sm:text-sm tracking-wide text-stone-600 max-w-md mx-auto uppercase font-mono leading-relaxed print:text-[9px]">
                               A CONEXÃO INGLESA NA SERRA DO MAR, DO PIONEIRISMO DE MAUÁ AO APOGEU DE PARANAPIACABA
                             </p>
                           </div>
 
                           {/* Cover page image slot */}
-                          <div className="w-full max-w-xs mx-auto border-2 border-stone-300 p-1.5 bg-white shadow-md print:shadow-none print:max-w-[180px] print:my-2">
+                          <div className="w-full max-w-xs mx-auto border-2 border-stone-300 p-1.5 bg-white shadow-md print:shadow-none print:border-0 print:p-0 print:max-w-[180px] print:my-2">
                             <img 
                               src="/assets/images/ebook_cover_realistic_clean_1781404957659.jpg" 
                               alt="Capa de Trem Histórico" 
-                              className="w-full h-auto aspect-[4/3] object-cover grayscale"
+                              className="w-full h-auto aspect-[4/3] object-cover grayscale font-serif"
                               referrerPolicy="no-referrer"
                             />
                             <p className="text-[8px] print:text-[6.5px] font-mono text-center text-stone-400 mt-1 uppercase">Locomotiva a vapor vencendo os planos inclinados da Serra do Mar (Século XIX)</p>
@@ -817,49 +816,55 @@ export default function EbookReader({
                         </div>
 
                         {/* TITLE LEAF & CREDIT DECLARATIONS (PAGE 2) */}
-                        <div className="pdf-fixed-page min-h-[82vh] flex flex-col justify-between p-8 sm:p-14 border-b border-stone-200/60 print:border-b-0" style={{ pageBreakAfter: 'always', breakAfter: 'page' }}>
-                          <div className="space-y-8 select-text print:space-y-4">
+                        <div className="pdf-fixed-page flex flex-col justify-start p-8 sm:p-14 border-b border-stone-200/60 print:border-b-0 print:border-none" style={{ pageBreakAfter: 'always', breakAfter: 'page' }}>
+                          <div className="space-y-6 select-text print:space-y-3">
                             <div className="space-y-2 text-center">
                               <h2 className="text-2xl sm:text-3xl font-serif font-black tracking-tight uppercase text-stone-950 print:text-lg">A SAGA DA SÃO PAULO RAILWAY</h2>
                               <p className="text-xs font-mono uppercase tracking-widest text-[#8A7055] font-bold print:text-[9px]">Registros Históricos dos Trilhos de Ferro sob o Império do Brasil</p>
                             </div>
-                            <div className="h-[1px] w-28 bg-[#8A7055]/50 mx-auto my-4 rounded-full print:my-2"></div>
+                            <div className="h-[1px] w-28 bg-[#8A7055]/50 mx-auto my-2 rounded-full print:hidden"></div>
                             
-                            <div className="space-y-6 text-xs sm:text-sm text-stone-700 leading-relaxed max-w-xl mx-auto font-serif print:space-y-3.5">
+                            <div className="space-y-5 text-xs sm:text-[13px] text-stone-700 leading-relaxed max-w-xl mx-auto font-serif print:space-y-2.5">
                               <div className="space-y-1">
-                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[13px] font-serif block font-black mb-1 print:text-[10px]">Autoria e Levantamento Documental:</b>
+                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Autoria e Levantamento Documental:</b>
                                 <p className="text-justify text-stone-800 leading-relaxed print:text-[9.5px]">
-                                  Esta obra de jornalismo histórico e reconstrução documental foi inteiramente planejada, redigida e estruturada por <b>Evandro Felix Marcondes</b>, projetada sob estrito compromisso de fidelidade histórica. O trabalho baseia-se em uma pesquisa profunda que resgata os principais eventos sociais, políticos e econômicos da instalação da ferrovia no planalto paulista. Através do cruzamento de relatórios estatísticos provinciais, correspondências confidenciais e registros da época, este livro reconstitui a trajetória visionária de Irineu Evangelista de Sousa (o Barão de Mauá) e sua luta para vencer os enormes abismos geográficos do Brasil Imperial.
+                                  Esta obra de jornalismo histórico e reconstrução documental foi inteiramente planejada, redigida e estruturada por <b>Evandro Felix Marcondes</b>, projetada sob estrito compromisso de fidelidade histórica. O trabalho baseia-se em uma pesquisa profunda que resgata os principais eventos sociais, políticos e econômicos da instalação da ferrovia no planalto paulista. Através do cruzamento de relatórios estatísticos provinciais, correspondências confidencias e registros da época, este livro reconstitui a trajetória visionária de Irineu Evangelista de Sousa (o Barão de Mauá) e sua luta para vencer os enormes abismos geográficos do Brasil Imperial.
                                 </p>
                               </div>
                               <div className="space-y-1">
-                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[13px] font-serif block font-black mb-1 print:text-[10px]">Acervo Histórico e Visual:</b>
+                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Acervo Histórico e Visual:</b>
                                 <p className="text-justify text-stone-800 leading-relaxed print:text-[9.5px]">
                                   O projeto gráfico e o acervo visual que acompanham cada um dos capítulos foram cuidadosamente selecionados para ilustrar a grandiosidade desta epopeia de engenharia do século XIX. As imagens históricas restauradas e apresentadas neste volume retratam com extrema fidelidade o desenho técnico original dos planos inclinados funiculares, a vida cotidiana dos operários imigrantes alemães e italianos e o desenvolvimento urbanístico da mística vila ferroviária de Paranapiacaba. Cada gravura e fotografia serve como documento histórico visual que complementa a narrativa textual.
                                 </p>
                               </div>
                               <div className="space-y-1">
-                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[13px] font-serif block font-black mb-1 print:text-[10px]">Conservação de Patrimônio:</b>
+                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Metodologia e Estudos Comparados:</b>
                                 <p className="text-justify text-stone-800 leading-relaxed print:text-[9.5px]">
-                                  Este material foi sistematizado com profundo respeito à memória nacional, oferecendo um registro consolidado para fins de distribuição eletrônica educacional e preservação histórica para pesquisadores, estudantes e entusiastas do tema. O objetivo principal é preservar a valiosa memória ferroviária do século XIX e incentivar o estudo acadêmico, promovendo a valorização do turismo histórico paulista e reforçando o compromisso com a conservação e difusão de nosso patrimônio material e tecnológico nacional.
+                                  As análises historiográficas contidas neste compêndio derivam da triangulação de dados entre anuários comerciais e estatísticos do Império do Brasil e correspondências diplomáticas coligidas em acervos e consulados britânicos. Buscou-se manter a máxima neutralidade de julgamento metodológico, permitindo que os próprios relatórios técnicos dos engenheiros James Brunlees e Daniel Fox esclareçam o dimensionamento das dificuldades geofísicas da Serra do Mar e seu subsequente impacto geopolítico e socioeconômico de escala internacional.
+                                </p>
+                              </div>
+                              <div className="space-y-1">
+                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Conservação de Patrimônio:</b>
+                                <p className="text-justify text-stone-800 leading-relaxed print:text-[9.5px]">
+                                  Este material foi sistematizado com profundo respeito à memória nacional, oferecendo um registro consolidado para fins de distribuição eletrônica educacional e preservação histórica para pesquisadores, estudantes e entusiastas do tema. O objetivo principal é preservar a valiosa memória ferroviária do século XIX e incentivar o estudo acadêmico, promovendo a valorização do turismo histórico paulista e reforçando o compromisso com a conservação e difusão de nosso patrimônio material e tecnológico de relevância nacional.
                                 </p>
                               </div>
                             </div>
                           </div>
-
-                          <div className="text-xs font-mono text-stone-450 border-t border-stone-100 pt-6 print:pt-2 flex justify-between uppercase select-none print:text-[8px]">
+ 
+                          <div className="text-xs font-mono text-stone-450 border-t border-stone-100 pt-4 flex justify-between uppercase select-none mt-auto print:border-t-0 print:text-[7.5px] print:pt-1">
                             <span>© Evandro Felix Marcondes</span>
                             <span className="font-bold text-[#8A7055]">ESTUDOS HISTÓRICOS ATIVOS</span>
                           </div>
                         </div>
-
+ 
                         {/* CORE SUMÁRIO / INDEX WITH LEADERS (PAGE 3) */}
-                        <div className="pdf-fixed-page min-h-[82vh] flex flex-col justify-between p-8 sm:p-14 border-b border-stone-200/60 print:border-b-0" style={{ pageBreakAfter: 'always', breakAfter: 'page' }}>
+                        <div className="pdf-fixed-page flex flex-col justify-start p-8 sm:p-14 border-b border-stone-200/60 print:border-b-0 print:border-none" style={{ pageBreakAfter: 'always', breakAfter: 'page' }}>
                           <div className="space-y-12 print:space-y-4">
                             <div className="text-center space-y-2 select-none">
                               <span className="text-[11px] font-mono tracking-widest uppercase text-[#8A7055] font-extrabold print:text-[9px]">Sumário de Matérias</span>
                               <h2 className="text-3xl font-serif font-black uppercase text-stone-900 leading-tight print:text-lg">Índice Geral do Volume</h2>
-                              <div className="h-[1px] w-20 bg-stone-300 mx-auto mt-2"></div>
+                              <div className="h-[1px] w-20 bg-stone-300 mx-auto mt-2 print:hidden"></div>
                             </div>
 
                             <nav className="space-y-7 max-w-lg mx-auto pt-4 select-text print:space-y-3">
@@ -871,20 +876,20 @@ export default function EbookReader({
                                       <span className="text-stone-950 font-bold tracking-tight">{ch.title}</span>
                                       <span className="text-[11px] print:text-[8.5px] text-stone-500 italic font-medium leading-none mt-0.5">{ch.subtitle}</span>
                                     </div>
-                                    <div className="flex-1 border-b border-dashed border-stone-300 h-1 min-w-[20px]"></div>
+                                    <div className="flex-1 border-b border-dashed border-stone-300 h-1 min-w-[20px] print:border-b-0"></div>
                                   </div>
                                   <span className="font-mono text-stone-500 text-xs shrink-0 bg-white px-1 print:text-[8.5px]">Pág. {idx + 4}</span>
                                 </div>
                               ))}
                               
-                              <div className="flex justify-between items-baseline gap-4 text-sm font-serif pt-4 border-t border-stone-150 print:text-[10px] print:pt-2">
+                              <div className="flex justify-between items-baseline gap-4 text-sm font-serif pt-4 border-t border-stone-150 print:border-t-0 print:text-[10px] print:pt-2">
                                 <div className="flex-1 flex items-baseline gap-2">
                                   <span className="font-mono text-xs text-[#8A7055] font-black shrink-0 print:text-[8px]">REF.</span>
                                   <div className="flex flex-col">
                                     <span className="text-stone-950 font-bold tracking-tight">Memorial de Rigor Histórico</span>
                                     <span className="text-[11px] print:text-[8.5px] text-stone-500 italic font-medium leading-none mt-0.5">Fontes Primárias e Fatos Referenciados</span>
                                   </div>
-                                  <div className="flex-1 border-b border-dashed border-stone-300 h-1 min-w-[20px]"></div>
+                                  <div className="flex-1 border-b border-dashed border-stone-300 h-1 min-w-[20px] print:border-b-0"></div>
                                 </div>
                                 <span className="font-mono text-stone-500 text-xs shrink-0 bg-white px-1 print:text-[8.5px]">Pág. {chapters.length + 4}</span>
                               </div>
@@ -898,7 +903,7 @@ export default function EbookReader({
 
                         {/* CHRONOLOGICAL CHAPTER PAGINATION */}
                         {chapters.map((chapter, cIdx) => (
-                          <div key={chapter.id} className="pdf-flow-page space-y-6 py-10 border-b border-stone-100 print:border-b-0 print:space-y-2.5 select-text" style={{ pageBreakAfter: 'always', breakAfter: 'page' }}>
+                          <div key={chapter.id} className="pdf-flow-page space-y-6 py-10 border-b border-stone-100 print:border-b-0 print:py-4 print:space-y-4 select-text" style={{ pageBreakAfter: 'always', breakAfter: 'page' }}>
                             <div className="text-center space-y-2 pb-6 border-b border-stone-200 print:pb-2">
                               <span className="text-xs uppercase font-mono tracking-widest text-[#8A7055] font-extrabold block print:text-[8px]">Capítulo {chapter.number} • Registros da Categoria</span>
                               <h3 className="text-2xl sm:text-3xl font-bold text-stone-950 tracking-tight leading-tight print:text-base">{chapter.title}</h3>
@@ -906,22 +911,22 @@ export default function EbookReader({
                             </div>
 
                             {/* Center-aligned illustrated layout plate */}
-                            <div className="flex justify-center py-4 print:py-1.5 select-none">
-                              <div className="max-w-md border border-stone-350 p-1.5 bg-white rounded shadow-xs print:shadow-none print:max-w-xs">
+                            <div className="flex justify-center py-4 print:py-2 select-none">
+                              <div className="max-w-md border border-stone-350 p-1.5 bg-white rounded shadow-xs print:shadow-none print:max-w-xs print:border-stone-300">
                                 <img 
                                   src={chapter.image} 
                                   alt={chapter.title} 
-                                  className="w-full h-auto aspect-[4/3] object-cover rounded-md grayscale select-none" 
+                                  className="w-full h-auto max-h-[180px] aspect-[4/3] object-cover rounded-md grayscale select-none print:max-h-[140px] print:w-auto print:mx-auto" 
                                   referrerPolicy="no-referrer"
                                 />
                                 <div className="h-[1px] w-2/3 bg-stone-200 mx-auto mt-2 print:mt-1"></div>
-                                <p className="text-[10px] print:text-[7.5px] font-mono text-stone-500 mt-2 print:mt-1 text-center max-w-xs mx-auto leading-normal">{chapter.imageCaption}</p>
-                                <p className="text-[7.5px] print:text-[6px] font-mono text-stone-400 uppercase text-center mt-1 select-none font-bold tracking-wider">Imagem Ilustrativa</p>
+                                <p className="text-[10px] print:text-[8px] font-mono text-stone-500 mt-2 print:mt-1 text-center max-w-xs mx-auto leading-normal">{chapter.imageCaption}</p>
+                                <p className="text-[7.5px] print:text-[6.5px] font-mono text-stone-400 uppercase text-center mt-1 select-none font-bold tracking-wider">Imagem Ilustrativa</p>
                               </div>
                             </div>
 
                             {/* Multi-paragraph historical content in classic style */}
-                            <div className="space-y-5 print:space-y-2.5 text-left text-stone-850 text-[15px] sm:text-[16px] print:text-[10px] leading-relaxed font-serif px-2 sm:px-6 print:px-4">
+                            <div className="space-y-5 print:space-y-3 text-left text-stone-850 text-[15px] sm:text-[16px] print:text-[10pt] leading-relaxed font-serif px-2 sm:px-6 print:px-4">
                               {chapter.content.map((p, pIdx) => (
                                 <p key={pIdx} className="text-left leading-relaxed">
                                   {p}
@@ -932,20 +937,20 @@ export default function EbookReader({
                         ))}
 
                         {/* HISTORICAL RESOLUTION AND REFERENCES PAGE (PAGE 10) */}
-                        <div className="pdf-fixed-page p-8 sm:p-14 border-4 border-double border-stone-450 text-justify bg-[#FAF7F2] space-y-6 select-text font-serif min-h-[82vh] flex flex-col justify-between print:border-2" style={{ pageBreakAfter: 'avoid', breakAfter: 'avoid' }}>
+                        <div className="pdf-fixed-page p-8 sm:p-14 border-4 border-double border-stone-450 text-justify bg-[#FAF7F2] space-y-6 select-text font-serif min-h-[82vh] flex flex-col justify-between print:border-0 print:border-none print:p-0" style={{ pageBreakAfter: 'avoid', breakAfter: 'avoid' }}>
                           <div>
-                            <div className="text-center space-y-1.5 pb-4 border-b border-stone-250 uppercase font-mono tracking-widest text-[#8A7055] print:pb-2">
+                            <div className="text-center space-y-1.5 pb-4 border-b border-stone-250 uppercase font-mono tracking-widest text-[#8A7055] print:pb-0 print:border-b-0">
                               <span className="text-[10px] font-black print:text-[8px]">Conselho Editorial de Patrimônio • Página de Certidão</span>
                               <h3 className="text-xl sm:text-2xl font-serif font-black uppercase text-stone-950 leading-tight mt-1 print:text-base">Fontes e Memorial de Rigor Histórico</h3>
                             </div>
                             
-                            <p className="text-[11.5px] sm:text-xs text-stone-800 leading-relaxed font-serif text-justify mt-5">
+                            <p className="text-[11.5px] sm:text-xs text-stone-800 leading-relaxed font-serif text-justify mt-5 print:mt-2 print:text-[9.5pt]">
                               Para assegurar a perfeita idoneidade factual e afastar categoricamente qualquer contestação historiográfica após a publicação desta obra digital de patrimônio, certificamos que as datas históricas, marcos arquitetônicos ingleses, contingências demográficas e trajetórias biográficas contidas neste volume estão rigorosamente mapeadas e sustentadas pelos arquivos oficiais das seguintes referências:
                             </p>
 
-                            <div className="space-y-4 pt-4 text-stone-900">
+                            <div className="space-y-4 pt-4 text-stone-900 print:space-y-1.5 print:pt-1">
                               <div className="space-y-0.5">
-                                <span className="font-mono text-[9px] font-extrabold text-[#8A7055] block">I. CHANCELAS DE CONCESSÕES IMPERIAIS (1855-1856)</span>
+                                <span className="font-mono text-[9px] font-extrabold text-[#8A7055] block print:text-[7.5px]">I. CHANCELAS DE CONCESSÕES IMPERIAIS (1855-1856)</span>
                                 <p className="text-[11px] text-stone-800 pl-3 border-l border-[#8A7055]/30 leading-relaxed">
                                   • <b>Arquivo Público do Estado de São Paulo:</b> Decretos e atas das sessões do Parlamento Imperial e relatórios provinciais detalhando a garantia fiduciária concedida ao Visconde de Mauá para o traçado de trilhos.
                                 </p>
@@ -981,38 +986,39 @@ export default function EbookReader({
                             </div>
                           </div>
 
-                          <div className="pt-6 border-t border-stone-200 flex justify-between items-center text-[8.5px] font-mono text-stone-400 select-none uppercase mt-6">
+                          <div className="pt-6 border-t border-stone-200 flex justify-between items-center text-[8.5px] font-mono text-stone-400 select-none uppercase mt-6 print:border-t-0 print:border-none print:pt-1 print:mt-1">
                             <span>São Paulo Railway Co. • Império do Brasil</span>
                             <span className="text-[#8A7055] font-black tracking-widest">Patrimônio Histórico Verificado</span>
                           </div>
                         </div>
 
-
-
                       </div>
                     ) : (
                       /* ====== SINGLE ACTIVE CHAPTER VIEW PRINT TEMPLATE ====== */
-                      <div className="pdf-flow-page space-y-6 p-6 sm:p-12 bg-white text-stone-900 border border-stone-300 rounded-2xl shadow-xl max-w-2xl mx-auto font-serif print:border-0 print:shadow-none print:space-y-2.5 select-text">
-                        <div className="text-center space-y-2 border-b border-stone-200 pb-6 print:pb-2 uppercase font-mono tracking-widest">
-                          <span className="text-xs text-[#8A7055] font-extrabold print:text-[8px]">São Paulo Railway Company • Capítulo {activeChapter.number}</span>
+                      <div className="pdf-flow-page space-y-6 p-6 sm:p-12 bg-white text-stone-900 border border-stone-300 rounded-2xl shadow-xl max-w-2xl mx-auto font-serif print:border-0 print:shadow-none print:space-y-4 select-text">
+                        <div className="text-center space-y-2 border-b border-stone-200 pb-6 print:pb-2">
+                          <span className="text-xs uppercase font-mono tracking-widest text-[#8A7055] font-extrabold block print:text-[8px]">São Paulo Railway Company • Capítulo {activeChapter.number}</span>
                           <h1 className="text-3xl font-serif font-black text-stone-900 tracking-tight leading-none print:text-base">{activeChapter.title}</h1>
                           <p className="text-xs text-stone-500 font-serif italic mt-1.5 leading-relaxed print:text-[9px]">{activeChapter.subtitle}</p>
                         </div>
 
-                        <div className="w-full flex justify-center py-4 print:py-1.5 select-none">
-                          <div className="max-w-md border border-stone-300 p-1.5 bg-white rounded print:max-w-xs print:p-1.5 print:shadow-none">
+                        {/* Center-aligned illustrated layout plate */}
+                        <div className="w-full flex justify-center py-4 print:py-2 select-none">
+                          <div className="max-w-md border border-stone-300 p-1.5 bg-white rounded print:max-w-xs print:p-1 print:shadow-none print:border-stone-300">
                             <img 
                               src={activeChapter.image} 
                               alt={activeChapter.title} 
-                              className="w-full h-auto aspect-[4/3] object-cover rounded-md grayscale" 
+                              className="w-full h-auto max-h-[160px] aspect-[4/3] object-cover rounded-md grayscale print:max-h-[140px] print:w-auto print:mx-auto" 
                               referrerPolicy="no-referrer"
                             />
-                            <p className="text-[10px] print:text-[7.5px] font-mono text-stone-400 mt-2 print:mt-1 text-center max-w-xs mx-auto leading-normal">{activeChapter.imageCaption}</p>
-                            <p className="text-[7.5px] print:text-[6px] font-mono text-stone-405 uppercase text-center mt-1 select-none font-bold tracking-wider">Imagem Ilustrativa</p>
+                            <div className="h-[1px] w-2/3 bg-stone-200 mx-auto mt-2 print:mt-1"></div>
+                            <p className="text-[10px] print:text-[8px] font-mono text-stone-500 mt-2 print:mt-1 text-center max-w-xs mx-auto leading-normal">{activeChapter.imageCaption}</p>
+                            <p className="text-[7.5px] print:text-[6.5px] font-mono text-stone-400 uppercase text-center mt-1 select-none font-bold tracking-wider">Imagem Ilustrativa</p>
                           </div>
                         </div>
 
-                        <div className="space-y-5 print:space-y-2.5 text-base print:text-[10px] leading-relaxed text-left px-2 sm:px-6 print:px-4">
+                        {/* Multi-paragraph historical content in classic style */}
+                        <div className="space-y-5 print:space-y-3 text-left text-stone-850 text-[15px] sm:text-[16px] print:text-[10pt] leading-relaxed font-serif px-2 sm:px-6 print:px-4">
                           {activeChapter.content.map((p, pIdx) => (
                             <p key={pIdx} className="text-left leading-relaxed">
                               {p}
@@ -1020,7 +1026,7 @@ export default function EbookReader({
                           ))}
                         </div>
 
-                        <div className="border-t border-stone-200 pt-6 print:pt-2 flex justify-between items-center text-xs font-mono text-stone-450 select-none print:text-[8px]">
+                        <div className="border-t border-stone-200 pt-6 print:pt-2 flex justify-between items-center text-xs font-mono text-stone-450 select-none print:border-t-0 print:border-none print:text-[8px]">
                           <span>Estudos Ferroviários • Memória Nacional</span>
                           <span>Capítulo {activeChapter.number} de {chapters.length}</span>
                         </div>

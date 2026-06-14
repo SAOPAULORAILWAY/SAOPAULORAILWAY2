@@ -39,12 +39,14 @@
   }
 
   /* Fixed page layouts (Cover, Title, Index, Certificate) */
-  /* Using A4 dimensions with a 2mm safe sub-pixel buffer for guaranteed single-sheet containment */
+  /* Using exact fluid containment to prevent secondary page overflow */
   .pdf-fixed-page {
-    width: 210mm !important;
-    height: 295mm !important;
-    max-height: 295mm !important;
-    padding: 20mm 20mm 20mm 20mm !important; /* Elegant 2cm margin */
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    min-height: 250mm !important;
+    max-height: 297mm !important;
+    padding: 15mm 20mm !important; /* Elegant margin */
     margin: 0 auto !important;
     box-sizing: border-box !important;
     page-break-after: always !important;
@@ -53,19 +55,21 @@
     break-inside: avoid !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
+    gap: 8mm !important;
     background-color: #FFFFFF !important;
     color: #111111 !important;
     border: none !important;
     overflow: hidden !important;
   }
 
-  /* Flowing page layout for chapters - avoids restricting height so text never clips, while starting each chapter fresh */
+  /* Flowing page layout for chapters - elegant and spacious */
   .pdf-flow-page {
-    width: 210mm !important;
-    min-height: 295mm !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
-    padding: 20mm 20mm 20mm 20mm !important; /* Elegant 2cm margin */
+    min-height: 270mm !important;
+    padding: 18mm 20mm !important; /* Spacious, luxurious margins */
     margin: 0 auto !important;
     box-sizing: border-box !important;
     background-color: #FFFFFF !important;
@@ -81,10 +85,16 @@
   }
 
   /* General elements typography on print sheets */
-  .pdf-fixed-page p, .pdf-flow-page p {
+  .pdf-fixed-page p {
     font-size: 10.5pt !important;
-    line-height: 1.45 !important;
-    margin-bottom: 2mm !important;
+    line-height: 1.5 !important;
+    margin-bottom: 3mm !important;
+  }
+
+  .pdf-flow-page p {
+    font-size: 10.5pt !important; /* Elegant standard publishing font size */
+    line-height: 1.5 !important;
+    margin-bottom: 3mm !important;
   }
 
   .pdf-fixed-page h1, .pdf-flow-page h1 {
@@ -92,11 +102,11 @@
   }
 
   .pdf-fixed-page h2, .pdf-flow-page h2 {
-    font-size: 18pt !important;
+    font-size: 17pt !important;
   }
 
   .pdf-fixed-page h3, .pdf-flow-page h3 {
-    font-size: 14pt !important;
+    font-size: 13.5pt !important;
   }
 
   /* Keep illustrations and captions intact during pagination */
