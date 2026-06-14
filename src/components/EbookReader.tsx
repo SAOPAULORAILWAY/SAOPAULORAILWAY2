@@ -800,9 +800,9 @@ export default function EbookReader({
                           </div>
 
                           {/* Cover page image slot */}
-                          <div className="w-full max-w-sm mx-auto border-2 border-stone-300 p-1.5 bg-white shadow-md print:shadow-none print:max-w-[200px] print:my-2">
+                          <div className="w-full max-w-xs mx-auto border-2 border-stone-300 p-1.5 bg-white shadow-md print:shadow-none print:max-w-[180px] print:my-2">
                             <img 
-                              src="/assets/images/ebook_cover_1781298306266.jpg" 
+                              src="/assets/images/ebook_cover_realistic_clean_1781404957659.jpg" 
                               alt="Capa de Trem Histórico" 
                               className="w-full h-auto aspect-[4/3] object-cover grayscale"
                               referrerPolicy="no-referrer"
@@ -907,11 +907,11 @@ export default function EbookReader({
 
                             {/* Center-aligned illustrated layout plate */}
                             <div className="flex justify-center py-4 print:py-1.5 select-none">
-                              <div className="max-w-md border border-stone-350 p-2.5 bg-stone-50 rounded shadow-xs print:shadow-none print:max-w-xs print:p-1.5">
+                              <div className="max-w-md border border-stone-350 p-1.5 bg-white rounded shadow-xs print:shadow-none print:max-w-xs">
                                 <img 
                                   src={chapter.image} 
                                   alt={chapter.title} 
-                                  className="w-full h-auto aspect-[4/3] sm:aspect-[3/4] print:aspect-[16/9] object-cover grayscale select-none" 
+                                  className="w-full h-auto aspect-[4/3] object-cover rounded-md grayscale select-none" 
                                   referrerPolicy="no-referrer"
                                 />
                                 <div className="h-[1px] w-2/3 bg-stone-200 mx-auto mt-2 print:mt-1"></div>
@@ -1000,11 +1000,11 @@ export default function EbookReader({
                         </div>
 
                         <div className="w-full flex justify-center py-4 print:py-1.5 select-none">
-                          <div className="max-w-md border border-stone-300 p-2.5 bg-stone-50 rounded print:max-w-xs print:p-1.5 print:shadow-none">
+                          <div className="max-w-md border border-stone-300 p-1.5 bg-white rounded print:max-w-xs print:p-1.5 print:shadow-none">
                             <img 
                               src={activeChapter.image} 
                               alt={activeChapter.title} 
-                              className="w-full h-auto aspect-[3/4] print:aspect-[16/9] object-cover grayscale" 
+                              className="w-full h-auto aspect-[4/3] object-cover rounded-md grayscale" 
                               referrerPolicy="no-referrer"
                             />
                             <p className="text-[10px] print:text-[7.5px] font-mono text-stone-400 mt-2 print:mt-1 text-center max-w-xs mx-auto leading-normal">{activeChapter.imageCaption}</p>
@@ -1066,11 +1066,11 @@ export default function EbookReader({
 
                     {/* Integrated Illustrative Image plate */}
                     <div className="flex justify-center select-none">
-                      <div className={`p-2.5 border rounded-2xl w-full max-w-md ${themeStyles[theme].card}`}>
+                      <div className={`p-1.5 border rounded-2xl w-full max-w-md ${themeStyles[theme].card}`}>
                         <img 
                           src={activeChapter.image} 
                           alt={activeChapter.title} 
-                          className="w-full h-auto aspect-[4/3] sm:aspect-[3/4] object-cover rounded-xl shadow-xs grayscale" 
+                          className="w-full h-auto aspect-[4/3] object-cover rounded-xl shadow-xs grayscale" 
                           referrerPolicy="no-referrer"
                         />
                         <p className="text-[10.5px] font-mono opacity-80 mt-2.5 text-center leading-normal px-2">
