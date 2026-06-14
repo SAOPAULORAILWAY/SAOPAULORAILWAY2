@@ -617,11 +617,11 @@ export default function EbookReader({
                   <div className="space-y-6">
                     <div className="text-center space-y-2 mb-8 select-none">
                       <span className="text-[10px] sm:text-xs font-mono tracking-widest text-[#8A7055] uppercase font-extrabold bg-[#8A7055]/10 py-1 px-3 rounded-full">
-                        Etapa Filológica Conclusiva
+                        Fixação de Conteúdo
                       </span>
                       <h2 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">Avaliação de Rigor Histórico</h2>
-                      <p className="text-xs sm:text-sm text-stone-500 max-w-md mx-auto italic font-serif">
-                        Demonstre erudição testando sua compreensão geral sobre o comércio vitoriano e as lendárias vias de ferro da São Paulo Railway.
+                      <p className="text-xs sm:text-sm text-stone-600 max-w-md mx-auto leading-relaxed">
+                        Teste seus conhecimentos sobre a engenharia, os personagens marcantes e os principais acontecimentos que envolveram a construção da São Paulo Railway.
                       </p>
                     </div>
                     <HistoryQuiz />
@@ -1175,7 +1175,7 @@ export default function EbookReader({
                   <div className="font-bold uppercase tracking-wider text-[10px] text-amber-900 font-mono">Como Salvar seu Ebook perfeitamente:</div>
                   <ol className="list-decimal list-inside space-y-1.5">
                     <li>Clique no botão <b>"Abrir Livro Inteiro"</b> abaixo para carregar o e-book em tela cheia na aba principal de seu navegador.</li>
-                    <li>Lá, clique em <b>"Compilar PDF de Gráfica"</b> e depois em <b>"Abrir Painel de Impressão"</b>.</li>
+                    <li>Lá, clique em <b>"Exportar em PDF"</b> e depois em <b>"Abrir Painel de Impressão"</b>.</li>
                     <li>O painel nativo do dispositivo abrirá perfeitamente e você poderá escolher a opção <b>"Salvar como PDF"</b>!</li>
                   </ol>
                 </div>

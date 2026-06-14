@@ -199,7 +199,7 @@ export default function App() {
                   {isUnlocked ? (
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-600/10 border border-emerald-600/20 rounded-full text-xs font-mono text-emerald-800 w-fit font-bold uppercase select-none">
                       <Compass className="h-3.5 w-3.5 text-emerald-700 font-bold animate-pulse" />
-                      E-book Desbloqueado • Acesso Coletivo Vitalício
+                      E-book Desbloqueado • Acesso Vitalício Liberado
                     </div>
                   ) : (
                     <button
@@ -211,11 +211,11 @@ export default function App() {
                   )}
 
                   <h2 className="text-4xl sm:text-5xl font-serif tracking-tight text-stone-950 font-medium leading-tight">
-                    A primeira grande ferrovia brasileira em <span className="text-[#8A7055] font-black">alta definição</span>.
+                    A primeira ferrovia paulista em <span className="text-[#8A7055] font-black">fidelidade histórica</span>.
                   </h2>
 
-                  <p className="text-base sm:text-lg text-[#52463A] leading-relaxed">
-                    Experimente uma imersão de estúdio em formato digital sobre um dos maiores feitos de engenharia do século XIX. Conheça a jornada de Irineu Evangelista de Sousa, as negociações financeiras vitorianas em Londres, os intrépidos planos funiculares inclinados de Daniel Fox e o singular legado arquitetônico britânico em Paranapiacaba.
+                  <p className="text-base sm:text-lg text-[#52463A] leading-relaxed text-justify">
+                    Esta obra reconstitui em detalhes o pioneirismo de Irineu Evangelista de Sousa (Barão de Mauá) e os bastidores das negociações políticas e financeiras que ligaram o Império do Brasil à Londres vitoriana. Muito além de estatísticas frias, a narrativa acompanha o audacioso projeto do engenheiro Daniel Fox, que superou os quase 800 metros de desnível da Serra do Mar por meio de um engenhoso sistema de planos inclinados funiculares, uma façanha técnica que revolucionou o escoamento do café rumo ao porto de Santos e ergueu em Paranapiacaba um pedaço fascinante de herança britânica cravado na serra paulista.
                   </p>
 
                   {/* Curated features grid */}
@@ -223,32 +223,32 @@ export default function App() {
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Fidelidade Filológica Completa</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Datas, nomes, termos técnicos e estatísticas validadas por historiadores.</p>
+                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Rigor e Conteúdo Exclusivo</h4>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Destrave a pesquisa histórica definitiva. Garanta seu acesso vitalício à reconstituição completa da ferrovia paulista, com dados técnicos originais e revelações inéditas.</p>
                       </div>
                     </div>
                     
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Cura de Imagens por IA</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Fotografias baseadas no estilo químico e emulsões originais do século XIX.</p>
+                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Arte Visual de Colecionador</h4>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Ao destravar seu exemplar, acesse as recriações fotográficas exclusivas que ilustram este projeto pioneiro, resgatando a rica atmosfera estética dos daguerreótipos históricos.</p>
                       </div>
                     </div>
 
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Leitor Altamente Refluível</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Suporte a tamanhos dinâmicos de fonte e paletas adaptativas de cor de tela.</p>
+                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Plataforma de Leitura Otimizada</h4>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Garanta uma experiência histórica imersiva e livre de anúncios. Ajuste as fontes e leia com conforto absoluto em qualquer tela.</p>
                       </div>
                     </div>
 
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Pronto para Exportação Gráfica</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Compile e imprima o documento inteiro com margens, capas e índice fidedignos.</p>
+                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Edição para Impressão em PDF</h4>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Adquira o livro completo diagramado em PDF de alta resolução, pronto para impressão em A4.</p>
                       </div>
                     </div>
                   </div>
@@ -282,7 +282,7 @@ export default function App() {
                       onClick={() => openFullPDF()}
                       className="py-4 px-8 border-2 border-emerald-700 text-emerald-800 hover:bg-emerald-50/50 rounded-xl font-serif font-bold text-base transition-colors flex items-center justify-center gap-2 cursor-pointer duration-150"
                     >
-                      <Printer className="h-5 w-5" /> Compilar PDF de Gráfica
+                      <Printer className="h-5 w-5" /> Exportar em PDF
                     </button>
                   </div>
                 </div>

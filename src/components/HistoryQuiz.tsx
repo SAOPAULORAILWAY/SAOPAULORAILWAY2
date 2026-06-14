@@ -4,13 +4,37 @@ import { CheckCircle2, XCircle, ArrowRight, RotateCcw, Award, BookOpen, Share2 }
 import { quizQuestions } from '../data/chapters';
 
 export default function HistoryQuiz() {
+  // Helper to shuffle the options for a question while mapping the correct index
+  const shuffleQuestionOptions = (q: typeof quizQuestions[0]) => {
+    const optionsWithCorrectness = q.options.map((opt, idx) => ({
+      text: opt,
+      isCorrect: idx === q.correctIndex
+    }));
+    
+    // Fisher-Yates shuffle
+    const shuffled = [...optionsWithCorrectness];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    return {
+      id: q.id,
+      question: q.question,
+      options: shuffled.map(item => item.text),
+      correctIndex: shuffled.findIndex(item => item.isCorrect),
+      explanation: q.explanation
+    };
+  };
+
+  const [questions, setQuestions] = useState(() => quizQuestions.map(shuffleQuestionOptions));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [score, setScore] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
 
-  const currentQuestion = quizQuestions[currentIndex];
+  const currentQuestion = questions[currentIndex];
 
   const handleOptionSelect = (optionIdx: number) => {
     if (isSubmitted) return;
@@ -30,7 +54,7 @@ export default function HistoryQuiz() {
     setSelectedOption(null);
     setIsSubmitted(false);
 
-    if (currentIndex < quizQuestions.length - 1) {
+    if (currentIndex < questions.length - 1) {
       setCurrentIndex(prev => prev + 1);
     } else {
       setQuizFinished(true);
@@ -38,6 +62,7 @@ export default function HistoryQuiz() {
   };
 
   const resetQuiz = () => {
+    setQuestions(quizQuestions.map(shuffleQuestionOptions));
     setCurrentIndex(0);
     setSelectedOption(null);
     setIsSubmitted(false);
@@ -47,24 +72,44 @@ export default function HistoryQuiz() {
 
   // Rank thresholds based on correct answers
   const getRank = () => {
-    if (score === quizQuestions.length) {
-      return {
-        title: 'Historiador Imperial',
-        desc: 'Excepcional! Você domina todos os meandros da ligação vitoriana entre Jundiaí e Santos, desde as engrenagens de Mauá aos fogs de Paranapiacaba.',
-        color: 'text-amber-600 border-amber-500 bg-amber-500/10'
-      };
-    } else if (score >= 3) {
-      return {
-        title: 'Pioneiro Ferroviário',
-        desc: 'Muito bom! Você compreendeu profundamente os planos inclinados, a influência britânica e os obstáculos técnicos ultrapassados pela ferrovia.',
-        color: 'text-emerald-700 border-emerald-600 bg-emerald-600/10'
-      };
-    } else {
-      return {
-        title: 'Viajante de Vagão',
-        desc: 'Você concluiu o trajeto básico! Que tal reler as seções ilustradas do e-book para dominar a mecânica dos funiculares e o pioneirismo de Mauá?',
-        color: 'text-stone-600 border-stone-400 bg-stone-100'
-      };
+    switch (score) {
+      case 5:
+        return {
+          title: 'Domínio Integral (100% de Aproveitamento)',
+          desc: 'Brilhante! Você acertou todas as questões (100% de aproveitamento) e compreendeu com absoluta maestria a epopeia da São Paulo Railway: das audaciosas engrenagens de Mauá ao monumental sistema de planos inclinados que desafiou a gravidade.',
+          color: 'text-amber-800 border-amber-500 bg-amber-500/10'
+        };
+      case 4:
+        return {
+          title: 'Domínio Avançado (80% de Aproveitamento)',
+          desc: 'Excelente! Com 4 acertos (80% de aproveitamento), você demonstrou profundo conhecimento sobre os desafios políticos, a forte influência britânica e as grandiosas façanhas técnicas da ferrovia paulista.',
+          color: 'text-emerald-800 border-emerald-600 bg-emerald-600/10'
+        };
+      case 3:
+        return {
+          title: 'Domínio Intermediário (60% de Aproveitamento)',
+          desc: 'Bom desempenho! Com 3 acertos (60% de aproveitamento), você compreende bem a mecânica dos planos inclinados e o impacto histórico de Irineu Evangelista de Sousa no Império.',
+          color: 'text-stone-800 border-stone-400 bg-stone-100'
+        };
+      case 2:
+        return {
+          title: 'Domínio Básico (40% de Aproveitamento)',
+          desc: 'Aproveitamento satisfatório! Com 2 acertos (40% de aproveitamento), você já conhece os fatos essenciais sobre a ferrovia e o seu papel econômico crucial para o escoamento de café.',
+          color: 'text-stone-700 border-stone-300 bg-stone-50'
+        };
+      case 1:
+        return {
+          title: 'Domínio Inicial (20% de Aproveitamento)',
+          desc: 'Com 1 acerto (20% de aproveitamento), você deu o primeiro passo no percurso histórico! Que tal revisitar as seções ilustradas do e-book para descobrir mais sobre a herança de Mauá?',
+          color: 'text-stone-600 border-stone-200 bg-stone-50'
+        };
+      case 0:
+      default:
+        return {
+          title: 'Leitura Recomendada (0% de Aproveitamento)',
+          desc: 'Você não acertou nenhuma questão (0% de aproveitamento). O trajeto histórico está apenas começando! Convidamos você a explorar as ricas narrativas sobre as pontes e túneis da herança vitoriana no livro.',
+          color: 'text-stone-500 border-stone-200 bg-stone-50/50'
+        };
     }
   };
 
@@ -88,7 +133,7 @@ export default function HistoryQuiz() {
               <BookOpen className="h-4 w-4" /> Quiz de Aprendizado Histórico
             </span>
             <span className="opacity-80">
-              Questão {currentIndex + 1} de {quizQuestions.length}
+              Questão {currentIndex + 1} de {questions.length}
             </span>
           </div>
 
@@ -170,7 +215,7 @@ export default function HistoryQuiz() {
                 onClick={handleNext}
                 className="py-3 px-6 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium flex items-center gap-1.5 cursor-pointer transition-all"
               >
-                {currentIndex === quizQuestions.length - 1 ? 'Ver Resultado' : 'Próxima Questão'} <ArrowRight className="h-4 w-4" />
+                {currentIndex === questions.length - 1 ? 'Ver Resultado' : 'Próxima Questão'} <ArrowRight className="h-4 w-4" />
               </button>
             )}
           </div>
@@ -193,8 +238,39 @@ export default function HistoryQuiz() {
 
             <div className="w-16 h-[2px] bg-[#8A7055]/40 mx-auto"></div>
 
-            <div className={`inline-block py-1.5 px-4 border rounded-full text-xs font-mono font-bold ${rank.color}`}>
-              Título obtido: {rank.title}
+            <div className="space-y-2">
+              <div className={`inline-block py-1.5 px-4 border rounded-full text-xs font-mono font-bold ${rank.color}`}>
+                Nível de Domínio: {rank.title}
+              </div>
+
+              <div className="text-sm font-mono font-black text-[#8A7055] mt-1 uppercase block">
+                {score === 0 && (
+                  <span className="text-rose-700">Não acertou nenhuma questão, 0% de Aproveitamento</span>
+                )}
+                {score === 1 && (
+                  <span>Acertou 1 questão, 20% de Aproveitamento</span>
+                )}
+                {score === 2 && (
+                  <span>Acertou 2 questões, 40% de Aproveitamento</span>
+                )}
+                {score === 3 && (
+                  <span>Acertou 3 questões, 60% de Aproveitamento</span>
+                )}
+                {score === 4 && (
+                  <span>Acertou 4 questões, 80% de Aproveitamento</span>
+                )}
+                {score === 5 && (
+                  <span className="text-emerald-700">Acertou todas as questões, 100% de Aproveitamento</span>
+                )}
+              </div>
+
+              {/* Progress bar visualizer */}
+              <div className="w-full max-w-xs mx-auto bg-stone-200 h-2.5 rounded-full overflow-hidden border border-stone-300/50">
+                <div 
+                  className={`h-full transition-all duration-1000 ${score === 0 ? 'bg-rose-500' : 'bg-emerald-600'}`}
+                  style={{ width: `${score * 20}%` }}
+                />
+              </div>
             </div>
 
             <p className="text-xs text-[#52463A] leading-relaxed max-w-sm mx-auto">

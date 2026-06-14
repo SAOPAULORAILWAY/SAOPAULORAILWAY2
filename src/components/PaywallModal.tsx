@@ -413,7 +413,7 @@ export default function PaywallModal({
                   </div>
 
                   <p className="text-xs sm:text-sm text-[#4A3F35] leading-relaxed text-justify px-1">
-                    Ao destravar esta obra comercial, você garante acesso integral a todos os <b>{chapters.length} capítulos históricos</b>, tabelas de dados estatísticas imperiais, o compilador gráfico completo para <b>geração e exportação de PDF de gráfica (A4 fidedigno)</b> e o simulador completo de aprovação de domínio.
+                    Ao destravar esta obra comercial, você garante acesso integral a todos os <b>{chapters.length} capítulos históricos</b>, tabelas de dados estatísticas imperiais, <b>exportação mecânica completa em PDF (A4 fidedigno)</b> e o simulador completo de aprovação de domínio.
                   </p>
 
                   {/* Enter Access Code Form */}
@@ -565,7 +565,7 @@ export default function PaywallModal({
                   <div className="bg-emerald-50/50 border border-emerald-200/60 p-4 rounded-xl max-w-sm mx-auto space-y-1">
                     <span className="text-[10px] text-emerald-700 font-mono font-bold uppercase tracking-widest block">Licença Vitalícia Ativada</span>
                     <p className="text-xs text-stone-700 leading-relaxed max-w-xs mx-auto text-center">
-                      Agradecemos por prestigiar a obra e adquirir o exemplar! Agora você possui passe livre imediato para ler todos os capítulos e compilar a edição de gráfica.
+                      Agradecemos por prestigiar a obra e adquirir o exemplar! Agora você possui passe livre imediato para ler todos os capítulos e exportar em PDF.
                     </p>
                   </div>
 
