@@ -674,12 +674,12 @@ export default function EbookReader({
                         <div className="border-l-2 pl-4 space-y-1" style={{ borderColor: '#8A7055' }}>
                           <h4 className="font-serif font-bold text-base text-stone-950">1. Arquivo Público do Estado de São Paulo (APESP)</h4>
                           <p className="text-xs opacity-85 leading-relaxed text-stone-800">
-                            <i>Coleção de Relatórios de Presidentes de Província (1855-1868).</i> Contém os decretos de concessão assinados sob a égide imperial e os relatórios financeiros de subsídio técnico que comprovam o envolvimento fiduciário de Irineu Evangelista de Sousa (Barão de Mauá).
+                            <i>Coleção de Relatórios de Presidentes de Província (1855 a 1868).</i> Contém os decretos de concessão assinados sob a égide imperial e os relatórios financeiros de subsídio técnico que comprovam o envolvimento fiduciário de Irineu Evangelista de Sousa (Barão de Mauá).
                           </p>
                         </div>
 
                         <div className="border-l-2 pl-4 space-y-1" style={{ borderColor: '#8A7055' }}>
-                          <h4 className="font-serif font-bold text-base text-stone-950">2. Institution of Civil Engineers (ICE - Londres)</h4>
+                          <h4 className="font-serif font-bold text-base text-stone-950">2. Institution of Civil Engineers (ICE, Londres)</h4>
                           <p className="text-xs opacity-85 leading-relaxed text-stone-800">
                             <i>The São Paulo Railway: Engineering Records and Debates (1870).</i> Registro das sabatinas e defesas técnicas feitas pelo engenheiro-chefe James Brunlees provando a viabilidade física dos cabos do Sistema Funicular original (Serra Velha ou Serra de Trás) contra os céticos ingleses.
                           </p>
@@ -808,7 +808,7 @@ export default function EbookReader({
                               referrerPolicy="no-referrer"
                             />
                             <p className="text-[8px] print:text-[6.5px] font-mono text-center text-stone-400 mt-1 uppercase">Locomotiva a vapor vencendo os planos inclinados da Serra do Mar (Século XIX)</p>
-                            <p className="text-[7.5px] print:text-[6px] font-mono text-stone-400 uppercase text-center mt-0.5 select-none font-bold tracking-wider">— Imagem Ilustrativa —</p>
+                            <p className="text-[7.5px] print:text-[6px] font-mono text-stone-400 uppercase text-center mt-0.5 select-none font-bold tracking-wider">Imagem Ilustrativa</p>
                           </div>
 
                           <div className="text-center pt-8 print:pt-2 select-none">
@@ -916,7 +916,7 @@ export default function EbookReader({
                                 />
                                 <div className="h-[1px] w-2/3 bg-stone-200 mx-auto mt-2 print:mt-1"></div>
                                 <p className="text-[10px] print:text-[7.5px] font-mono text-stone-500 mt-2 print:mt-1 text-center max-w-xs mx-auto leading-normal">{chapter.imageCaption}</p>
-                                <p className="text-[7.5px] print:text-[6px] font-mono text-stone-400 uppercase text-center mt-1 select-none font-bold tracking-wider">— Imagem Ilustrativa —</p>
+                                <p className="text-[7.5px] print:text-[6px] font-mono text-stone-400 uppercase text-center mt-1 select-none font-bold tracking-wider">Imagem Ilustrativa</p>
                               </div>
                             </div>
 
@@ -1008,7 +1008,7 @@ export default function EbookReader({
                               referrerPolicy="no-referrer"
                             />
                             <p className="text-[10px] print:text-[7.5px] font-mono text-stone-400 mt-2 print:mt-1 text-center max-w-xs mx-auto leading-normal">{activeChapter.imageCaption}</p>
-                            <p className="text-[7.5px] print:text-[6px] font-mono text-stone-405 uppercase text-center mt-1 select-none font-bold tracking-wider">— Imagem Ilustrativa —</p>
+                            <p className="text-[7.5px] print:text-[6px] font-mono text-stone-405 uppercase text-center mt-1 select-none font-bold tracking-wider">Imagem Ilustrativa</p>
                           </div>
                         </div>
 
@@ -1076,7 +1076,7 @@ export default function EbookReader({
                         <p className="text-[10.5px] font-mono opacity-80 mt-2.5 text-center leading-normal px-2">
                           {activeChapter.imageCaption}
                         </p>
-                        <p className="text-[8px] font-mono text-stone-400 dark:text-stone-500 uppercase text-center mt-1 select-none font-bold tracking-wider">— Imagem Ilustrativa —</p>
+                        <p className="text-[8px] font-mono text-stone-400 dark:text-stone-500 uppercase text-center mt-1 select-none font-bold tracking-wider">Imagem Ilustrativa</p>
                       </div>
                     </div>
 

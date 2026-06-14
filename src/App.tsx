@@ -146,7 +146,7 @@ export default function App() {
                 <div className="lg:col-span-5 flex justify-center">
                   <div className="perspective-1000 select-none group">
                     <motion.div 
-                      className="relative w-72 sm:w-85 aspect-[3/4] bg-white rounded-2xl p-4 shadow-2xl border border-stone-300 transform transition-transform hover:rotate-y-6 hover:rotate-x-2' transition-all duration-500 ease-out flex flex-col justify-between overflow-hidden"
+                      className="relative w-[260px] min-[360px]:w-[290px] min-[375px]:w-80 sm:w-85 aspect-[3/4] bg-white rounded-2xl p-3 sm:p-4 shadow-2xl border border-stone-300 transform transition-all duration-500 ease-out flex flex-col justify-between overflow-hidden"
                       style={{
                         transformStyle: 'preserve-3d',
                         boxShadow: '0 25px 50px -12px rgba(44, 38, 32, 0.25)',
@@ -160,30 +160,30 @@ export default function App() {
                       <div className="absolute inset-2 border-2 border-stone-300 bg-transparent rounded-xl pointer-events-none z-10"></div>
                       <div className="absolute inset-2.5 border border-double border-stone-300 bg-transparent rounded-xl pointer-events-none z-10"></div>
                       
-                      <div className="z-10 text-center pt-6 space-y-1 select-none">
-                        <span className="text-[10px] uppercase font-mono tracking-widest text-[#8A7055] font-black">
+                      <div className="z-10 text-center pt-2 sm:pt-6 space-y-1 select-none">
+                        <span className="text-[8px] sm:text-[10px] uppercase font-mono tracking-widest text-[#8A7055] font-black">
                           Série Arquivo Nacional
                         </span>
-                        <div className="h-[1px] w-12 bg-[#8A7055]/30 mx-auto mt-1"></div>
+                        <div className="h-[1px] w-10 sm:w-12 bg-[#8A7055]/30 mx-auto mt-0.5 sm:mt-1"></div>
                       </div>
 
                       {/* Cover main core headings */}
-                      <div className="z-10 text-center space-y-3 px-4">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-stone-500">
+                      <div className="z-10 text-center space-y-1 sm:space-y-3 px-3">
+                        <span className="text-[8px] sm:text-[10px] font-mono uppercase tracking-widest text-stone-500">
                           Saga de Progresso • 1867
                         </span>
-                        <h1 className="text-3xl sm:text-4xl font-serif font-black tracking-tight leading-tight text-stone-900 uppercase">
+                        <h1 className="text-xl min-[360px]:text-2xl sm:text-4xl font-serif font-black tracking-tight leading-tight text-stone-900 uppercase">
                           A Saga da <br/>
                           <span className="text-[#8A7055]">São Paulo Railway</span>
                         </h1>
-                        <div className="h-1 w-14 bg-[#8A7055] mx-auto rounded-full"></div>
-                        <p className="text-[9.5px] font-mono tracking-wide text-stone-600 uppercase max-w-xs mx-auto leading-relaxed">
+                        <div className="h-0.5 sm:h-1 w-10 sm:w-14 bg-[#8A7055] mx-auto rounded-full"></div>
+                        <p className="text-[7.5px] sm:text-[9.5px] font-mono tracking-wide text-stone-600 uppercase max-w-xs mx-auto leading-relaxed">
                           Da Conexão Inglesa à Serra do Mar: o Império do Café e a Vila de Paranapiacaba
                         </p>
                       </div>
 
                       {/* Mini illustrative photograph badge */}
-                      <div className="z-10 w-full max-w-[180px] mx-auto border border-stone-300 p-1 bg-white shadow-md">
+                      <div className="z-10 w-full max-w-[100px] min-[360px]:max-w-[125px] sm:max-w-[180px] mx-auto border border-stone-300 p-1 bg-white shadow-md">
                         <img 
                           src="/assets/images/ebook_cover_realistic_clean_1781404957659.jpg" 
                           alt="Ebook Cover Miniature" 
@@ -192,8 +192,8 @@ export default function App() {
                         />
                       </div>
 
-                      <div className="z-10 text-center pb-6 select-none font-mono text-[9px] text-stone-500">
-                        <span className="font-serif font-medium text-stone-500 block text-[11px]">Evandro Felix Marcondes</span>
+                      <div className="z-10 text-center pb-2 sm:pb-6 select-none font-mono text-[9px] text-stone-500">
+                        <span className="font-serif font-medium text-stone-500 block text-[9px] sm:text-[11px]">Evandro Felix Marcondes</span>
                       </div>
                     </motion.div>
                   </div>
