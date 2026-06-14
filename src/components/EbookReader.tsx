@@ -667,7 +667,7 @@ export default function EbookReader({
                     {/* Bibliography blocks */}
                     <div className={`space-y-6 text-left ${fontStyles[font]}`} style={{ fontSize: `${fontSize}px` }}>
                       <p className="font-serif text-justify text-base">
-                        Para afastar quaisquer contestações de legitimidade e assegurar uma publicação acadêmica robusta, o corpo de dados históricos inserido nesta edição virtual apoia-se estritamente nas seguintes referências primárias e bibliografia consultada:
+                        Para afastar quaisquer contestações de legitimidade e assegurar uma publicação acadêmica robusta, o corpo de dados históricos inserido nesta edição virtual apoia-se estritamente nas referências primárias e fontes consultadas a seguir.
                       </p>
 
                       <div className="space-y-5 pt-2 text-stone-900">
@@ -695,14 +695,14 @@ export default function EbookReader({
                         <div className="border-l-2 pl-4 space-y-1" style={{ borderColor: '#8A7055' }}>
                           <h4 className="font-serif font-bold text-base text-stone-950">4. IPHAN e Museu Ferroviário de Paranapiacaba</h4>
                           <p className="text-xs opacity-85 leading-relaxed text-stone-800">
-                            <i>Inventário do Patrimônio Tecnológico e Arquitetônico da Vila Alto da Serra.</i> Dados do traçado urbano simétrico de feição vitoriana, plantas do galpão de máquinas fijas e o histórico sobre os operários da São Paulo Railway de 1860 a 1946.
+                            <i>Inventário do Patrimônio Tecnológico e Arquitetônico da Vila Alto da Serra.</i> Dados do traçado urbano simétrico de feição vitoriana, plantas das salas de máquinas fixas e o histórico sobre os operários da São Paulo Railway de 1860 a 1946.
                           </p>
                         </div>
 
                         <div className="border-l-2 pl-4 space-y-1" style={{ borderColor: '#8A7055' }}>
                           <h4 className="font-serif font-bold text-base text-stone-950">5. Fundação Charles Miller e História do Futebol</h4>
                           <p className="text-xs opacity-85 leading-relaxed text-stone-800">
-                            <i>Atas do São Paulo Athletic Club (SPAC).</i> Documentos e correspondências históricas que corroboram a introdução das balizas e bolas de couro infladas no Brasil de forma recreacional por Miller em 1894, partindo de Paranapiacaba e do Porto de Santos.
+                            <i>Atas do São Paulo Athletic Club (SPAC).</i> Documentos e correspondências históricas que corroboram a introdução das balizas e bolas de couro infladas no Brasil de forma recreativa por Charles Miller em 1894, a partir de seu desembarque no Porto de Santos, e a subsequente organização do esporte no estado, incluindo as partidas pioneiras em Paranapiacaba.
                           </p>
                         </div>
                       </div>
@@ -828,25 +828,25 @@ export default function EbookReader({
                               <div className="space-y-1">
                                 <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Autoria e Levantamento Documental:</b>
                                 <p className="text-justify text-stone-800 leading-relaxed print:text-[9.5px]">
-                                  Esta obra de jornalismo histórico e reconstrução documental foi inteiramente planejada, redigida e estruturada por <b>Evandro Felix Marcondes</b>, projetada sob estrito compromisso de fidelidade histórica. O trabalho baseia-se em uma pesquisa profunda que resgata os principais eventos sociais, políticos e econômicos da instalação da ferrovia no planalto paulista. Através do cruzamento de relatórios estatísticos provinciais, correspondências confidencias e registros da época, este livro reconstitui a trajetória visionária de Irineu Evangelista de Sousa (o Barão de Mauá) e sua luta para vencer os enormes abismos geográficos do Brasil Imperial.
+                                  Esta obra de síntese e jornalismo histórico foi inteiramente estruturada por <b>Evandro Felix Marcondes</b>, desenvolvida sob estrito compromisso de fidedignidade com a cronologia de época. A narrativa busca resgatar os principais marcos políticos, sociais e econômicos que cercaram a implementação dos caminhos de ferro no planalto paulista, apresentando de forma clara a audácia do Barão de Mauá frente às restrições geográficas e orçamentárias do Império.
                                 </p>
                               </div>
                               <div className="space-y-1">
                                 <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Acervo Histórico e Visual:</b>
                                 <p className="text-justify text-stone-800 leading-relaxed print:text-[9.5px]">
-                                  O projeto gráfico e o acervo visual que acompanham cada um dos capítulos foram cuidadosamente selecionados para ilustrar a grandiosidade desta epopeia de engenharia do século XIX. As imagens históricas restauradas e apresentadas neste volume retratam com extrema fidelidade o desenho técnico original dos planos inclinados funiculares, a vida cotidiana dos operários imigrantes alemães e italianos e o desenvolvimento urbanístico da mística vila ferroviária de Paranapiacaba. Cada gravura e fotografia serve como documento histórico visual que complementa a narrativa textual.
+                                  O projeto gráfico e o acervo visual que acompanham os capítulos foram cuidadosamente planejados para ilustrar a atmosfera técnica do século XIX. As imagens exibidas neste volume são representações ilustrativas criadas digitalmente para retratar com sensibilidade estética o desenho mecânico original dos planos inclinados, a rotina dos operários pioneiros e o urbanismo ferroviário de Paranapiacaba, atuando como um apoio gráfico imersivo à leitura de época.
                                 </p>
                               </div>
                               <div className="space-y-1">
-                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Metodologia e Estudos Comparados:</b>
+                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Fontes de Consulta e Referências:</b>
                                 <p className="text-justify text-stone-800 leading-relaxed print:text-[9.5px]">
-                                  As análises historiográficas contidas neste compêndio derivam da triangulação de dados entre anuários comerciais e estatísticos do Império do Brasil e correspondências diplomáticas coligidas em acervos e consulados britânicos. Buscou-se manter a máxima neutralidade de julgamento metodológico, permitindo que os próprios relatórios técnicos dos engenheiros James Brunlees e Daniel Fox esclareçam o dimensionamento das dificuldades geofísicas da Serra do Mar e seu subsequente impacto geopolítico e socioeconômico de escala internacional.
+                                  As passagens históricas e dados técnicos contidos nesta obra baseiam-se na compilação didática de registros estatísticos, relatórios provinciais e na correspondência pública dos próprios engenheiros James Brunlees e Daniel Fox. O estudo cronológico sintetiza informações consolidadas da historiografia oficial sobre a engenharia da Serra do Mar e seu subsequente impacto no escoamento do café paulista.
                                 </p>
                               </div>
                               <div className="space-y-1">
-                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Conservação de Patrimônio:</b>
+                                <b className="text-[#735639] uppercase tracking-wide text-xs sm:text-[12px] font-serif block font-black mb-1 print:text-[9px]">Preservação e Finalidade Educacional:</b>
                                 <p className="text-justify text-stone-800 leading-relaxed print:text-[9.5px]">
-                                  Este material foi sistematizado com profundo respeito à memória nacional, oferecendo um registro consolidado para fins de distribuição eletrônica educacional e preservação histórica para pesquisadores, estudantes e entusiastas do tema. O objetivo principal é preservar a valiosa memória ferroviária do século XIX e incentivar o estudo acadêmico, promovendo a valorização do turismo histórico paulista e reforçando o compromisso com a conservação e difusão de nosso patrimônio material e tecnológico de relevância nacional.
+                                  Este volume foi sistematizado de forma independente para servir de recurso de disseminação cultural, preservando a memória ferroviária nacional de forma digital e interativa. Seu principal objetivo é aproximar estudantes, pesquisadores e entusiastas do patrimônio material e imaterial do país, promovendo simultaneamente o fomento ao turismo histórico de Paranapiacaba.
                                 </p>
                               </div>
                             </div>
@@ -940,12 +940,11 @@ export default function EbookReader({
                         <div className="pdf-fixed-page p-8 sm:p-14 border-4 border-double border-stone-450 text-justify bg-[#FAF7F2] space-y-6 select-text font-serif min-h-[82vh] flex flex-col justify-between print:border-0 print:border-none print:p-0" style={{ pageBreakAfter: 'avoid', breakAfter: 'avoid' }}>
                           <div>
                             <div className="text-center space-y-1.5 pb-4 border-b border-stone-250 uppercase font-mono tracking-widest text-[#8A7055] print:pb-0 print:border-b-0">
-                              <span className="text-[10px] font-black print:text-[8px]">Conselho Editorial de Patrimônio • Página de Certidão</span>
                               <h3 className="text-xl sm:text-2xl font-serif font-black uppercase text-stone-950 leading-tight mt-1 print:text-base">Fontes e Memorial de Rigor Histórico</h3>
                             </div>
                             
                             <p className="text-[11.5px] sm:text-xs text-stone-800 leading-relaxed font-serif text-justify mt-5 print:mt-2 print:text-[9.5pt]">
-                              Para assegurar a perfeita idoneidade factual e afastar categoricamente qualquer contestação historiográfica após a publicação desta obra digital de patrimônio, certificamos que as datas históricas, marcos arquitetônicos ingleses, contingências demográficas e trajetórias biográficas contidas neste volume estão rigorosamente mapeadas e sustentadas pelos arquivos oficiais das seguintes referências:
+                              Para assegurar a perfeita idoneidade factual e afastar categoricamente qualquer contestação historiográfica após a publicação desta obra digital de patrimônio, certificamos que as datas históricas, marcos arquitetônicos ingleses, contingências demográficas e trajetórias biográficas contidas neste volume estão rigorosamente mapeadas e sustentadas pelos arquivos oficiais das seguintes referências.
                             </p>
 
                             <div className="space-y-4 pt-4 text-stone-900 print:space-y-1.5 print:pt-1">
@@ -973,14 +972,14 @@ export default function EbookReader({
                               <div className="space-y-0.5">
                                 <span className="font-mono text-[9px] font-extrabold text-[#8A7055] block">IV. REGISTRO ARQUEOLÓGICO OPERÁRIO (IPHAN)</span>
                                 <p className="text-[11px] text-stone-800 pl-3 border-l border-[#8A7055]/30 leading-relaxed">
-                                  • <b>Inventário de Paranapiacaba:</b> Cartografia habitacional, plantas de engenhos fixed a vapor e censos da São Paulo Railway Company preservando a memória da vila vitoriana Alto da Serra.
+                                  • <b>Inventário de Paranapiacaba:</b> Cartografia habitacional, plantas de engenhos de máquinas fixas a vapor e censos da São Paulo Railway Company preservando a memória da vila vitoriana Alto da Serra.
                                 </p>
                               </div>
 
                               <div className="space-y-0.5">
-                                <span className="font-mono text-[9px] font-extrabold text-[#8A7055] block">V. INTRODUÇÃO DOCUMENTADA DO VELOCÍPEDE E ESPORTE (1894)</span>
+                                <span className="font-mono text-[9px] font-extrabold text-[#8A7055] block">V. INTRODUÇÃO DOCUMENTADA DO FUTEBOL E ESPORTE (1894)</span>
                                 <p className="text-[11px] text-stone-800 pl-3 border-l border-[#8A7055]/30 leading-relaxed">
-                                  • <b>Atas do SPAC e Cartas de Charles Miller:</b> Certidão documental confirmando o regresso de Miller em navio inglês aportando em Santos com as bolas regulamentares e as regras escrituradas.
+                                  • <b>Atas do SPAC e Cartas de Charles Miller:</b> Certidão documental confirmando o regresso de Miller em navio inglês aportando em Santos com as bolas regulamentares e as regras escrituradas, impulsionando a prática em São Paulo e nos centros ferroviários pioneiros.
                                 </p>
                               </div>
                             </div>
