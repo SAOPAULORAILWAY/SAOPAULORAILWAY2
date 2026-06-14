@@ -10,7 +10,7 @@
 
 /* Print/Export PDF refinement styling sheets */
 @media print {
-  /* Suppress default browser-injected header (URL/link) and footer (date/time) */
+  /* Remove default browser headers and footers (link, date, time) */
   @page {
     size: A4 portrait;
     margin: 0 !important;
@@ -27,12 +27,24 @@
     print-color-adjust: exact !important;
   }
 
+  /* Reset outer print container to be 100% fluid and unconstrained */
+  .print-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
   /* Fixed page layouts (Cover, Title, Index, Certificate) */
+  /* Using A4 dimensions with a 2mm safe sub-pixel buffer for guaranteed single-sheet containment */
   .pdf-fixed-page {
     width: 210mm !important;
-    height: 295mm !important; /* Extremely crucial: slightly less than 297mm to prevent browser margin decimals from forcing blank spillover pages */
+    height: 295mm !important;
     max-height: 295mm !important;
-    padding: 16mm 16mm 16mm 16mm !important;
+    padding: 20mm 20mm 20mm 20mm !important; /* Elegant 2cm margin */
     margin: 0 auto !important;
     box-sizing: border-box !important;
     page-break-after: always !important;
@@ -45,14 +57,15 @@
     background-color: #FFFFFF !important;
     color: #111111 !important;
     border: none !important;
+    overflow: hidden !important;
   }
 
-  /* Flowing page layout for chapters (to make sure text paragraphs are perfectly wrapped with no empty pages) */
+  /* Flowing page layout for chapters - avoids restricting height so text never clips, while starting each chapter fresh */
   .pdf-flow-page {
     width: 210mm !important;
     min-height: 295mm !important;
-    max-height: 295mm !important; /* Force each chapter page to strictly stay on a single sheet of A4 */
-    padding: 16mm 16mm 16mm 16mm !important;
+    height: auto !important;
+    padding: 20mm 20mm 20mm 20mm !important; /* Elegant 2cm margin */
     margin: 0 auto !important;
     box-sizing: border-box !important;
     background-color: #FFFFFF !important;
@@ -63,7 +76,7 @@
     break-inside: avoid !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     border: none !important;
   }
 
