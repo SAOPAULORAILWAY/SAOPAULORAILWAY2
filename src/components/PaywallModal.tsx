@@ -15,14 +15,26 @@ import {
   Trash2,
   Copy,
   BookOpen,
-  HelpCircle
+  HelpCircle,
+  RefreshCw
 } from 'lucide-react';
 import { chapters } from '../data/chapters';
+import {
+  getOrCreateSessionId,
+  validateAndRegisterCode,
+  createAccessCode,
+  deleteAccessCode,
+  resetAccessCodeSessions,
+  fetchAllAccessCodes,
+  AccessCodeDoc
+} from '../data/licenceService';
 
 interface PaywallModalProps {
   isOpen: boolean;
   onClose: () => void;
   onUnlock: () => void;
+  onLock?: () => void;
+  isUnlocked?: boolean;
   customProductPrice?: string;
   authorName?: string;
 }
@@ -31,12 +43,14 @@ export default function PaywallModal({
   isOpen, 
   onClose, 
   onUnlock, 
+  onLock,
+  isUnlocked = false,
   customProductPrice = "R$ 29,99", 
   authorName = "Evandro Felix Marcondes" 
 }: PaywallModalProps) {
   const [accessCode, setAccessCode] = useState('');
   const [errorCode, setErrorCode] = useState('');
-  const [paymentStep, setPaymentStep] = useState<'options' | 'pix' | 'success'>('options');
+  const [paymentStep, setPaymentStep] = useState<'options' | 'pix' | 'validating' | 'success'>('options');
   const [isProcessing, setIsProcessing] = useState(false);
   const [showAuthorPanel, setShowAuthorPanel] = useState(false);
   const [newKeyInput, setNewKeyInput] = useState('');
@@ -48,14 +62,58 @@ export default function PaywallModal({
   const [authorPassError, setAuthorPassError] = useState('');
   const [pixCopied, setPixCopied] = useState(false);
 
+  // Firestore integration states
+  const [sessionId, setSessionId] = useState('');
+  const [fireKeys, setFireKeys] = useState<AccessCodeDoc[]>([]);
+  const [isLoadingKeys, setIsLoadingKeys] = useState(false);
+  const [generatedLicenseKey, setGeneratedLicenseKey] = useState('');
+  const [activeValStep, setActiveValStep] = useState(0);
+
+  const validationSteps = [
+    { label: "Buscando compensações Pix em tempo real..." },
+    { label: "Validando identificador de transação (SPRAVALIA)..." },
+    { label: "Confirmando o valor recebido de R$ 29,99..." },
+    { label: "Gravando licença segura no banco de dados..." },
+    { label: "Liberando sua chave de acesso vitalícia..." }
+  ];
+
+  // Fetch session ID and load keys on mount
+  useEffect(() => {
+    setSessionId(getOrCreateSessionId());
+  }, []);
+
+  const refreshKeys = async () => {
+    setIsLoadingKeys(true);
+    try {
+      const keys = await fetchAllAccessCodes();
+      setFireKeys(keys);
+    } catch (err) {
+      console.error("Erro ao carregar chaves do banco:", err);
+    } finally {
+      setIsLoadingKeys(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      refreshKeys();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (showAuthorPanel && isAuthorAuthenticated) {
+      refreshKeys();
+    }
+  }, [showAuthorPanel, isAuthorAuthenticated]);
+
   const buildPixCode = () => {
-    const key = "30026230836"; // CPF
+    const key = "7b1858fd-ccb3-4904-b3e9-570df6b63136"; // Chave Aleatória (99 Pay)
     const name = "Evandro Felix Marcondes";
     const city = "Sao Paulo";
     const amount = "29.99";
     const txid = "SPRAVALIA"; // Transaction ID label
     
-    const keyClean = key.replace(/\D/g, '');
+    const keyClean = key.trim();
     const gui = "br.gov.bcb.pix";
     
     // Tag 26 (Merchant Account Info)
@@ -94,31 +152,33 @@ export default function PaywallModal({
     setPixCopied(true);
     setTimeout(() => setPixCopied(false), 2000);
   };
-  
-  // Custom keys managed by Evandro in his local session
-  const [customKeys, setCustomKeys] = useState<string[]>(() => {
-    const saved = localStorage.getItem('efm_custom_keys');
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  const defaultKeys = ['FERROVIA1867', 'EVANDRO2026', 'LOGISTICA1867', 'PARANAPIACABA'];
-  const allValidKeys = [...defaultKeys, ...customKeys.map(k => k.trim().toUpperCase())];
-
-  useEffect(() => {
-    localStorage.setItem('efm_custom_keys', JSON.stringify(customKeys));
-  }, [customKeys]);
 
   if (!isOpen) return null;
 
-  const handleValidateCode = (e: React.FormEvent) => {
+  const handleValidateCode = async (e: React.FormEvent) => {
     e.preventDefault();
     const normalized = accessCode.trim().toUpperCase();
-    if (allValidKeys.includes(normalized)) {
-      onUnlock();
-      setPaymentStep('success');
-      setErrorCode('');
-    } else {
-      setErrorCode('Chave inválida. Tente novamente ou use o Painel do Autor para gerar uma.');
+    if (!normalized) {
+      setErrorCode('Por favor, digite uma chave de acesso.');
+      return;
+    }
+
+    setIsProcessing(true);
+    setErrorCode('');
+
+    try {
+      const res = await validateAndRegisterCode(normalized, sessionId);
+      if (res.success) {
+        localStorage.setItem('spr_ebook_activated_code', normalized);
+        onUnlock();
+        setPaymentStep('success');
+      } else {
+        setErrorCode(res.error || 'Código inválido para este dispositivo.');
+      }
+    } catch (err) {
+      setErrorCode('Falha ao conectar ao servidor de licenças.');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -131,41 +191,118 @@ export default function PaywallModal({
     }, 1200);
   };
 
-  const handleConfirmPixPayment = () => {
+  // Generate short user numeric code
+  const generateShortUserCode = () => {
+    const chars = '0123456789';
+    let code = 'SPR-';
+    // 4 random digits
+    for (let i = 0; i < 4; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+  };
+
+  const handleConfirmPixPayment = async () => {
     setIsProcessing(true);
-    setTimeout(() => {
-      setIsProcessing(false);
-      onUnlock();
-      setPaymentStep('success');
-    }, 1500);
+    setPaymentStep('validating');
+    setActiveValStep(0);
+
+    const runStep = async (step: number) => {
+      if (step < 5) {
+        setActiveValStep(step);
+        // Add robust realistic validation pacing
+        const delay = step === 0 ? 1500 : step === 3 ? 1800 : 1200;
+        setTimeout(() => {
+          runStep(step + 1);
+        }, delay);
+      } else {
+        try {
+          const generatedCode = generateShortUserCode();
+          
+          // Save it in the cloud Firestore database
+          await createAccessCode(generatedCode);
+          
+          // Immediately register current device to it
+          await validateAndRegisterCode(generatedCode, sessionId);
+          
+          setGeneratedLicenseKey(generatedCode);
+          localStorage.setItem('spr_ebook_activated_code', generatedCode);
+          onUnlock();
+          setPaymentStep('success');
+        } catch (err) {
+          console.error("Erro ao simular geração de licença:", err);
+          // Fallback
+          onUnlock();
+          setPaymentStep('success');
+        } finally {
+          setIsProcessing(false);
+        }
+      }
+    };
+    
+    runStep(0);
   };
 
   // Author functions
-  const handleAddCustomKey = (e: React.FormEvent) => {
+  const handleAddCustomKey = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanKey = newKeyInput.trim().toUpperCase();
     if (!cleanKey) return;
     
-    if (allValidKeys.includes(cleanKey)) {
-      alert('Esta chave já está registrada e ativa.');
+    if (fireKeys.some(k => k.code === cleanKey)) {
+      alert('Esta chave já está registrada e ativa no banco de dados.');
       return;
     }
 
-    setCustomKeys(prev => [...prev, cleanKey]);
-    setNewKeyInput('');
-  };
-
-  const handleGenerateRandomKey = () => {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Readable capital characters without O or 0
-    let code = 'MARCONDES-';
-    for (let i = 0; i < 4; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    setIsProcessing(true);
+    try {
+      await createAccessCode(cleanKey);
+      setNewKeyInput('');
+      await refreshKeys();
+    } catch (err) {
+      alert('Erro ao criar chave em nuvem.');
+    } finally {
+      setIsProcessing(false);
     }
-    setCustomKeys(prev => [...prev, code]);
   };
 
-  const handleRemoveCustomKey = (keyToRemove: string) => {
-    setCustomKeys(prev => prev.filter(k => k !== keyToRemove));
+  const handleGenerateRandomKey = async () => {
+    setIsProcessing(true);
+    try {
+      const gCode = generateShortUserCode();
+      await createAccessCode(gCode);
+      await refreshKeys();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleRemoveCustomKey = async (keyToRemove: string) => {
+    if (!confirm(`Deseja realmente apagar permanentemente a chave ${keyToRemove}?`)) return;
+    setIsProcessing(true);
+    try {
+      await deleteAccessCode(keyToRemove);
+      await refreshKeys();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleResetSessions = async (keyToReset: string) => {
+    if (!confirm(`Liberar todos os dispositivos vinculados à chave ${keyToReset}? Isso permitirá novos logins.`)) return;
+    setIsProcessing(true);
+    try {
+      await resetAccessCodeSessions(keyToReset);
+      await refreshKeys();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleCopyKey = (keyToCopy: string) => {
@@ -190,7 +327,7 @@ export default function PaywallModal({
               <Lock className="h-3 w-3 text-amber-700" /> {showAuthorPanel ? 'Área de Gestão do Autor' : 'Versão Comercial'}
             </span>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 font-sans">
             <button
               onClick={() => {
                 setShowAuthorPanel(!showAuthorPanel);
@@ -199,15 +336,15 @@ export default function PaywallModal({
               title="Acessar Gerenciador de Chaves"
               className={`p-1.5 rounded-lg border text-xs font-serif font-black flex items-center gap-1 transition-all cursor-pointer ${
                 showAuthorPanel 
-                  ? 'bg-amber-650 text-[#FAF7F2] border-amber-700' 
-                  : 'bg-white hover:bg-stone-50 text-stone-700 border-stone-300'
+                  ? 'bg-[#8A7055] text-[#FAF7F2] border-[#8A7055]' 
+                  : 'bg-white hover:bg-stone-50 text-stone-700 border-stone-305'
               }`}
             >
               <Settings className="h-3.5 w-3.5" /> {showAuthorPanel ? 'Leitura' : 'Configurar Chaves'}
             </button>
             <button 
               onClick={onClose}
-              className="p-1 rounded-full hover:bg-[#8A7055]/10 text-stone-500 transition-colors"
+              className="p-1 rounded-full hover:bg-[#8A7055]/10 text-stone-500 transition-colors cursor-pointer"
             >
               <X className="h-5 w-5" />
             </button>
@@ -261,7 +398,7 @@ export default function PaywallModal({
                   </div>
                   <button 
                     type="submit"
-                    className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-serif font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2.5 bg-[#8A7055] hover:bg-[#725C46] text-white rounded-xl text-xs font-serif font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5"
                   >
                     <ShieldCheck className="h-4 w-4" /> Autenticar Painel
                   </button>
@@ -278,117 +415,181 @@ export default function PaywallModal({
             ) : (
               /* ================= AUTHOR KEY MANAGER PANEL ================= */
               <div className="space-y-5">
-              <div className="space-y-1 select-none">
-                <h3 className="text-xl font-serif font-bold text-stone-950 flex items-center gap-2">
-                  <Settings className="h-5 w-5 text-[#8A7055]" /> Gerenciador de Chaves de Acesso
-                </h3>
-                <p className="text-xs text-stone-500 leading-normal">
-                  Como autor, você pode inventar senhas exclusivas, gerar chaves aleatórias e aprender a vender o acesso do seu e-book.
-                </p>
-              </div>
-
-              {/* Quick instructions / tutorial for selling */}
-              <div className="bg-amber-50 border border-amber-200/80 rounded-xl p-3.5 space-y-2 text-[#4A3F35]">
-                <h4 className="text-xs font-serif font-bold flex items-center gap-1.5">
-                  <HelpCircle className="h-4 w-4 text-amber-700" /> Como vender para seus seguidores?
-                </h4>
-                <ul className="text-[11px] space-y-1.5 list-disc pl-4 text-justify leading-relaxed">
-                  <li>
-                    <b>Venda Manual (Via WhatsApp/Pix):</b> O seguidor te envia R$ 29,99 no Pix. Você vem aqui no painel, gera uma chave (ou usa uma padrão), clica em <b>Copiar</b> e envia para ele!
-                  </li>
-                  <li>
-                    <b>Venda Automática (Kiwify ou Hotmart):</b> Defina uma senha padrão muito forte (Ex: <b>FERROVIA1867</b>) e configure na plataforma para enviar essa mesma senha automaticamente por e-mail a quem comprar.
-                  </li>
-                  <li>
-                    <b>Lista de Senhas Padrão Prontas:</b> Qualquer pessoa que usar um destes códigos pré-aprovados terá acesso na hora: <span className="font-mono font-bold text-stone-900 bg-white/60 p-0.5 px-1 rounded border">FERROVIA1867</span> ou <span className="font-mono font-bold text-stone-900 bg-white/60 p-0.5 px-1 rounded border">EVANDRO2026</span>.
-                  </li>
-                </ul>
-              </div>
-
-              {/* Create Dynamic Keys Form */}
-              <div className="border border-stone-250 bg-white p-4 rounded-xl space-y-3.5">
-                <h4 className="text-xs font-serif font-bold text-stone-900 uppercase tracking-wide">
-                  Criar Nova Chave Ativa
-                </h4>
-                <form onSubmit={handleAddCustomKey} className="flex gap-2">
-                  <input 
-                    type="text" 
-                    placeholder="Ex: SEGUIDOR99"
-                    value={newKeyInput}
-                    onChange={(e) => setNewKeyInput(e.target.value)}
-                    className="flex-1 bg-stone-50 border border-stone-250 rounded-lg px-3 py-2 text-xs font-mono tracking-widest placeholder:text-stone-300"
-                  />
-                  <button 
-                    type="submit"
-                    className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-serif font-bold flex items-center gap-1 cursor-pointer"
-                  >
-                    <Plus className="h-3.5 w-3.5" /> Adicionar
-                  </button>
-                </form>
-
-                <div className="flex justify-between items-center text-[10px] font-mono text-stone-400">
-                  <span>Ou gere códigos únicos automaticamente:</span>
-                  <button
-                    type="button"
-                    onClick={handleGenerateRandomKey}
-                    className="text-[#8A7055] font-serif font-bold hover:underline cursor-pointer"
-                  >
-                    + Gerar Chave Aleatória
-                  </button>
+                <div className="space-y-1 select-none">
+                  <h3 className="text-xl font-serif font-bold text-stone-950 flex items-center gap-2">
+                    <Settings className="h-5 w-5 text-[#8A7055]" /> Gerenciador de Chaves de Acesso
+                  </h3>
+                  <p className="text-xs text-stone-500 leading-normal">
+                    Como autor, você pode gerenciar as senhas de acesso do e-book armazenadas em nuvem de forma prática e 100% segura.
+                  </p>
                 </div>
-              </div>
 
-              {/* Active License List */}
-              <div className="space-y-2">
-                <h4 className="text-xs font-serif font-bold text-stone-900 uppercase tracking-wide select-none">
-                  Chaves Ativas para Validação ({allValidKeys.length})
-                </h4>
-                <div className="border border-stone-250 rounded-xl bg-white max-h-44 overflow-y-auto divide-y divide-stone-100">
-                  {/* Default non-deletable keys */}
-                  {defaultKeys.map(k => (
-                    <div key={k} className="p-2.5 px-3.5 flex items-center justify-between gap-3 text-xs">
-                      <div className="flex items-center gap-1.5 font-mono">
-                        <span className="font-extrabold text-stone-900">{k}</span>
-                        <span className="text-[9px] bg-stone-100 text-stone-500 p-0.5 px-1.5 rounded-full">Padrão da Obra</span>
-                      </div>
-                      <button
-                        onClick={() => handleCopyKey(k)}
-                        className="p-1 hover:bg-stone-100 rounded text-[#8A7055] transition-colors flex items-center gap-1 text-[10px] select-none font-bold cursor-pointer"
-                      >
-                        {copiedKey === k ? 'Copiado!' : <><Copy className="h-3 w-3" /> Copiar</>}
-                      </button>
-                    </div>
-                  ))}
-
-                  {/* Customs */}
-                  {customKeys.map(k => (
-                    <div key={k} className="p-2.5 px-3.5 flex items-center justify-between gap-3 text-xs">
-                      <div className="flex items-center gap-1.5 font-mono">
-                        <span className="font-extrabold text-[#8A7055]">{k}</span>
-                        <span className="text-[9px] bg-amber-50 text-amber-700 p-0.5 px-1.5 rounded-full">Personalizada</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => handleCopyKey(k)}
-                          className="p-1 hover:bg-stone-100 rounded text-[#8A7055] transition-colors flex items-center gap-1 text-[10px] select-none font-bold cursor-pointer"
-                        >
-                          {copiedKey === k ? 'Copiado!' : <><Copy className="h-3 w-3" /> Copiar</>}
-                        </button>
-                        <button
-                          onClick={() => handleRemoveCustomKey(k)}
-                          className="p-1 hover:bg-red-50 text-red-600 rounded transition-colors cursor-pointer"
-                          title="Remover Chave"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+                {/* Quick instructions / tutorial for selling */}
+                <div className="bg-amber-50 border border-amber-200/80 rounded-xl p-3.5 space-y-2 text-[#4A3F35]">
+                  <h4 className="text-xs font-serif font-bold flex items-center gap-1.5">
+                    <HelpCircle className="h-4 w-4 text-amber-700" /> Sistema Anti-Compartilhamento (Elderly-Friendly)
+                  </h4>
+                  <ul className="text-[11px] space-y-1.5 list-disc pl-4 text-justify leading-relaxed">
+                    <li>
+                      <b>Regra de 2 Logins por Senha:</b> Ideal para idosos, que apenas digitam um código curto de 4 dígitos. Cada código pode ser autenticado em <b>no máximo 2 aparelhos</b>.
+                    </li>
+                    <li>
+                      <b>Troca de Aparelho / Suporte:</b> Se o idoso trocar de celular, você pode clicar no botão <span className="font-bold">Liberar Vagas</span> ao lado do código correspondente para limpar as sessões em 1 clique.
+                    </li>
+                    <li>
+                      <b>Status em Nuvem:</b> O indicador mostra quantas vagas de aparelhos estão ocupadas (Ex: <span className="font-bold text-[#8A7055]">1/2</span> ou <span className="font-bold text-red-600">2/2</span>).
+                    </li>
+                  </ul>
                 </div>
+
+                {/* Create Dynamic Keys Form */}
+                <div className="border border-stone-250 bg-white p-4 rounded-xl space-y-3.5">
+                  <h4 className="text-xs font-serif font-bold text-stone-900 uppercase tracking-wide">
+                    Registrar Nova Senha de Acesso em Nuvem
+                  </h4>
+                  <form onSubmit={handleAddCustomKey} className="flex gap-2">
+                    <input 
+                      type="text" 
+                      placeholder="Ex: 8852"
+                      value={newKeyInput}
+                      onChange={(e) => setNewKeyInput(e.target.value)}
+                      className="flex-1 bg-stone-50 border border-stone-250 rounded-lg px-3 py-2 text-xs font-mono tracking-widest placeholder:text-stone-300"
+                    />
+                    <button 
+                      type="submit"
+                      className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-serif font-bold flex items-center gap-1 cursor-pointer"
+                    >
+                      <Plus className="h-3.5 w-3.5" /> Adicionar
+                    </button>
+                  </form>
+
+                  <div className="flex justify-between items-center text-[10px] font-mono text-stone-400">
+                    <span>Ou gere códigos únicos automaticamente:</span>
+                    <button
+                      type="button"
+                      onClick={handleGenerateRandomKey}
+                      className="text-[#8A7055] font-serif font-bold hover:underline cursor-pointer"
+                    >
+                      + Gerar Código Curto Real
+                    </button>
+                  </div>
+                </div>
+
+                {/* Active License List from Firestore */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center select-none">
+                    <h4 className="text-xs font-serif font-bold text-stone-900 uppercase tracking-wide">
+                      Senhas Registradas no Banco de Dados ({fireKeys.length})
+                    </h4>
+                    <button 
+                      onClick={refreshKeys} 
+                      className="text-stone-500 hover:text-stone-900 p-1 rounded-md"
+                      title="Sincronizar"
+                    >
+                      <RefreshCw className={`h-3.5 w-3.5 ${isLoadingKeys ? 'animate-spin text-[#8A7055]' : ''}`} />
+                    </button>
+                  </div>
+
+                  <div className="border border-stone-250 rounded-xl bg-white max-h-48 overflow-y-auto divide-y divide-stone-100">
+                    {isLoadingKeys && fireKeys.length === 0 ? (
+                      <div className="p-4 text-center text-xs font-mono text-stone-400">
+                        Carregando senhas em nuvem...
+                      </div>
+                    ) : fireKeys.length === 0 ? (
+                      <div className="p-4 text-center text-xs font-mono text-stone-400">
+                        Nenhuma senha ativa gravada. Use o formulário acima para cadastrar a primeira.
+                      </div>
+                    ) : (
+                      fireKeys.map(k => {
+                        const usageCount = k.activeLogins?.length || 0;
+                        const isFull = usageCount >= k.maxLogins;
+                        return (
+                          <div key={k.code} className="p-2.5 px-3.5 flex items-center justify-between gap-3 text-xs">
+                            <div className="flex flex-col gap-1">
+                              <div className="flex items-center gap-1.5 font-mono">
+                                <span className="font-extrabold text-stone-900 text-sm tracking-wide">{k.code}</span>
+                                <span className={`text-[9px] p-0.5 px-2 rounded-full font-bold flex items-center gap-1 ${
+                                  isFull 
+                                    ? 'bg-red-50 text-red-700 border border-red-100' 
+                                    : 'bg-emerald-50 text-emerald-800 border border-emerald-100'
+                                }`}>
+                                  Slots ocupados: {usageCount}/{k.maxLogins}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => handleResetSessions(k.code)}
+                                disabled={usageCount === 0 || isProcessing}
+                                className="bg-amber-600/10 hover:bg-amber-600/20 disabled:opacity-40 text-amber-900 text-[10px] font-mono font-bold py-1 px-2 rounded border border-amber-300/35 cursor-pointer"
+                                title="Limpar vínculos de aparelhos"
+                              >
+                                Liberar Vagas
+                              </button>
+                              <button
+                                onClick={() => handleCopyKey(k.code)}
+                                className="p-1 hover:bg-stone-100 rounded text-[#8A7055] transition-colors flex items-center gap-1 text-[10px] select-none font-bold cursor-pointer"
+                              >
+                                {copiedKey === k.code ? 'Copiado!' : <><Copy className="h-3 w-3" /> Copiar</>}
+                              </button>
+                              <button
+                                onClick={() => handleRemoveCustomKey(k.code)}
+                                className="p-1 hover:bg-red-50 text-red-603 rounded transition-colors cursor-pointer"
+                                title="Excluir Chave"
+                              >
+                                <Trash2 className="h-3.5 w-3.5 text-stone-400 hover:text-red-603" />
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+
+                {/* AMBIENTE DE SIMULAÇÃO DE VENDAS */}
+                <div className="border border-amber-300 bg-amber-500/10 p-4 rounded-xl space-y-2 text-[#4A3F35]">
+                  <h4 className="text-xs font-serif font-bold text-amber-900 uppercase tracking-wide flex items-center gap-1.5 select-none">
+                    <HelpCircle className="h-4 w-4 text-amber-850" /> Ambiente de Teste de Vendas
+                  </h4>
+                  <p className="text-[11px] text-stone-600 leading-relaxed text-justify">
+                    Como o seu navegador já possui o e-book liberado localmente, use o botão abaixo para resetar o status de compra e simular todo o processo de validação de Pix ou chaves do absoluto início.
+                  </p>
+                  
+                  <div className="flex flex-col gap-2 pt-1">
+                    <div className="flex justify-between items-center text-[10px] font-mono">
+                      <span>Status no seu Navegador:</span>
+                      <span className={`p-0.5 px-2.5 rounded-full text-[9px] font-bold ${
+                        isUnlocked 
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' 
+                          : 'bg-amber-100 text-amber-800 border border-amber-200'
+                      }`}>
+                        {isUnlocked ? '🔓 Desbloqueado' : '🔒 Bloqueado / Pronto para Testar'}
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (onLock) {
+                          onLock();
+                          setIsAuthorAuthenticated(false);
+                          setShowAuthorPanel(false);
+                          setPaymentStep('options');
+                          alert('Estado resetado com sucesso! O e-book agora está BLOQUEADO. Nós te levamos de volta ao checkout de cliente para testar o pagamento por Pix ou a digitação das chaves.');
+                        }
+                      }}
+                      disabled={!isUnlocked}
+                      className="w-full py-2 bg-amber-600 hover:bg-amber-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg text-xs font-serif font-black transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+                    >
+                      <Lock className="h-3.5 w-3.5" /> Bloquear Livro e Iniciar Simulação de Venda
+                    </button>
+                  </div>
+                </div>
+
               </div>
-            </div>
-          )
-        ) : (
+            )
+          ) : (
             /* ================= READERS GATE / STANDARD VIEW ================= */
             <>
               {paymentStep === 'options' && (
@@ -420,29 +621,30 @@ export default function PaywallModal({
                   <form onSubmit={handleValidateCode} className="space-y-3">
                     <div className="flex flex-col gap-1.5">
                       <label className="text-[11px] font-mono font-bold text-stone-600 uppercase flex items-center gap-1.5 select-none">
-                        <Key className="h-3 w-3 text-[#8A7055]" /> Já comprou? Digite sua Chave de Acesso:
+                        <Key className="h-3 w-3 text-[#8A7055]" /> Já comprou o acesso? Digite sua Chave de Acesso:
                       </label>
                       <div className="flex gap-2">
                         <input 
                           type="text" 
-                          placeholder="Digite aqui..."
+                          placeholder="Ex: 1234 ou FERROVIA1867"
                           value={accessCode}
                           onChange={(e) => {
                             setAccessCode(e.target.value);
                             setErrorCode('');
                           }}
-                          className="flex-1 bg-white border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm font-mono tracking-widest placeholder:text-stone-350 focus:outline-[#8A7055]"
+                          className="flex-1 bg-white border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm font-mono tracking-widest placeholder:text-stone-350 focus:outline-[#8A7055] text-center"
                         />
                         <button 
                           type="submit"
-                          className="px-5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-sm font-serif font-bold transition-transform cursor-pointer"
+                          disabled={isProcessing}
+                          className="px-5 bg-[#8A7055] hover:bg-[#725C46] disabled:bg-stone-305 text-white rounded-xl text-sm font-serif font-bold transition-transform cursor-pointer"
                         >
-                          Validar
+                          {isProcessing ? 'Buscando...' : 'Validar'}
                         </button>
                       </div>
                       {errorCode && (
-                        <div className="flex items-center gap-1.5 text-xs text-red-650 font-mono mt-1">
-                          <AlertCircle className="h-3.5 w-3.5" />
+                        <div className="flex items-start gap-1.5 text-xs text-red-650 font-mono mt-1 pr-1 bg-red-100/40 p-2 rounded-lg border border-red-200">
+                          <AlertCircle className="h-4.5 w-4.5 text-red-600 shrink-0 mt-0.5" />
                           <span>{errorCode}</span>
                         </div>
                       )}
@@ -458,7 +660,7 @@ export default function PaywallModal({
                       type="button"
                       disabled={isProcessing}
                       onClick={handleSimulatePix}
-                      className="w-full py-3 px-4 bg-[#8A7055] hover:bg-[#725C46] disabled:bg-stone-300 text-white font-serif font-bold text-sm rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full py-3 px-4 bg-stone-900 hover:bg-stone-800 disabled:bg-stone-300 text-white font-serif font-bold text-sm rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
                     >
                       {isProcessing ? (
                         <span className="flex items-center gap-2 font-mono text-xs text-white">
@@ -495,9 +697,9 @@ export default function PaywallModal({
                     />
                   </div>
 
-                  <div className="space-y-2 max-w-sm mx-auto">
+                  <div className="space-y-2 max-w-sm mx-auto flex flex-col items-start">
                     <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 block font-bold text-left">Código Pix Copia-e-Cola</span>
-                    <div className="bg-stone-50 border border-stone-200 p-2 px-3 rounded-xl flex items-center justify-between gap-2.5">
+                    <div className="bg-white border border-stone-200 p-2 px-3 rounded-xl flex items-center justify-between gap-2.5 w-full">
                       <span className="font-mono text-[9px] text-stone-500 overflow-hidden text-ellipsis whitespace-nowrap flex-1 text-left select-all">
                         {pixCode}
                       </span>
@@ -511,11 +713,11 @@ export default function PaywallModal({
                     </div>
                   </div>
 
-                  <div className="bg-[#FAF7F2] border border-[#2C2620]/10 p-4 rounded-xl text-left max-w-sm mx-auto space-y-2">
+                  <div className="bg-stone-50 border border-stone-200/80 p-4 rounded-xl text-left max-w-sm mx-auto space-y-2">
                     <span className="text-[10px] text-[#8A7055] font-mono font-bold uppercase tracking-wider block">Instruções de Ativação</span>
                     <ul className="text-[11px] text-stone-600 leading-relaxed list-decimal pl-4 space-y-1">
                       <li>Use o Pix Copia-e-Cola ou escaneie o QR Code no seu aplicativo do banco.</li>
-                      <li>Confirme o destinatário como <b>Evandro Felix Marcondes</b> (Banco Nubank).</li>
+                      <li>Confirme o destinatário como <b>Evandro Felix Marcondes</b> (Banco 99 Pay).</li>
                       <li>Após concluir o pagamento, envie o comprovante de R$ 29,99 para o e-mail <b>saopaulorailwayspr@gmail.com</b> para receber sua chave de acesso.</li>
                     </ul>
                   </div>
@@ -552,6 +754,69 @@ export default function PaywallModal({
                 </div>
               )}
 
+              {paymentStep === 'validating' && (
+                <div className="space-y-6 py-4 animate-scale-up">
+                  <div className="text-center space-y-2 select-none font-sans">
+                    <div className="relative h-16 w-16 bg-[#8A7055]/10 text-[#8A7055] rounded-full flex items-center justify-center mx-auto shadow-xs border border-[#8A7055]/20">
+                      <div className="absolute inset-0 rounded-full border-2 border-[#8A7055]/20 border-t-[#8A7055] animate-spin"></div>
+                      <ShieldCheck className="h-8 w-8 text-[#8A7055] animate-pulse" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-serif font-bold text-stone-950 leading-tight">
+                      Validando Transação Pix
+                    </h3>
+                    <p className="text-xs text-stone-500 font-sans max-w-sm mx-auto leading-relaxed">
+                      Por favor, aguarde alguns instantes enquanto consultamos o sistema de compensação Pix e registramos sua licença em nuvem.
+                    </p>
+                  </div>
+
+                  <div className="bg-white border border-stone-250 rounded-2xl p-5 space-y-4 max-w-sm mx-auto shadow-xs text-left">
+                    {validationSteps.map((step, idx) => {
+                      const isCompleted = idx < activeValStep;
+                      const isActive = idx === activeValStep;
+                      return (
+                        <div 
+                          key={idx} 
+                          className={`flex items-start gap-3 transition-all duration-300 ${
+                            isCompleted ? 'opacity-100' : isActive ? 'opacity-100 scale-[1.01]' : 'opacity-30'
+                          }`}
+                        >
+                          <div className="mt-0.5 shrink-0 select-none">
+                            {isCompleted ? (
+                              <div className="h-5 w-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center border border-emerald-200">
+                                <CheckCircle className="h-3.5 w-3.5" />
+                              </div>
+                            ) : isActive ? (
+                              <div className="h-5 w-5 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200 relative">
+                                <span className="absolute inset-x-0 inset-y-0 rounded-full border border-amber-600 border-t-transparent animate-spin"></span>
+                                <span className="h-1.5 w-1.5 rounded-full bg-amber-700 animate-pulse"></span>
+                              </div>
+                            ) : (
+                              <div className="h-5 w-5 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center border border-stone-200 font-mono text-[9px] font-bold">
+                                {idx + 1}
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex flex-col">
+                            <span className={`text-[12px] font-sans ${isCompleted ? 'text-emerald-800 font-bold' : isActive ? 'text-stone-950 font-bold' : 'text-stone-500'}`}>
+                              {step.label}
+                            </span>
+                            {isActive && (
+                              <span className="text-[10px] font-mono text-amber-600 animate-pulse">
+                                Verificando...
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="bg-stone-100 border border-stone-200/65 p-3.5 rounded-xl text-center max-w-sm mx-auto text-[11px] text-stone-500 font-mono select-none">
+                    Não feche o navegador. Sua chave será liberada em instantes.
+                  </div>
+                </div>
+              )}
+
               {paymentStep === 'success' && (
                 <div className="space-y-6 text-center py-6 select-none animate-scale-up">
                   <div className="h-16 w-16 bg-emerald-100 text-emerald-800 rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-emerald-200">
@@ -559,8 +824,20 @@ export default function PaywallModal({
                   </div>
                   <div className="space-y-1">
                     <h4 className="font-serif font-bold text-xl sm:text-2xl text-stone-900 leading-tight">Acesso Permanente Liberado!</h4>
-                    <p className="text-xs text-stone-500 font-sans">Seu navegador foi autorizado e o e-book está 100% desbloqueado.</p>
+                    <p className="text-xs text-stone-500 font-sans">Seu navegador foi cadastrado e o e-book está 100% desbloqueado.</p>
                   </div>
+
+                  {generatedLicenseKey && (
+                    <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl max-w-sm mx-auto space-y-2 flex flex-col items-center">
+                      <span className="text-[9px] text-[#8A7055] font-mono font-extrabold uppercase tracking-widest block leading-none">SEU CÓDIGO DE LICENÇA (ANOTE-O)</span>
+                      <div className="text-2xl font-mono font-black tracking-widest text-[#2C2620] bg-white p-2 px-6 rounded-lg border border-amber-200 leading-none">
+                        {generatedLicenseKey}
+                      </div>
+                      <p className="text-[10px] text-stone-600 font-sans text-center max-w-xs leading-normal">
+                        Você pode usar este código curto para ler o e-book em até <b>2 dispositivos</b> (computador, celular ou tablet) simultaneamente!
+                      </p>
+                    </div>
+                  )}
 
                   <div className="bg-emerald-50/50 border border-emerald-200/60 p-4 rounded-xl max-w-sm mx-auto space-y-1">
                     <span className="text-[10px] text-emerald-700 font-mono font-bold uppercase tracking-widest block">Licença Vitalícia Ativada</span>

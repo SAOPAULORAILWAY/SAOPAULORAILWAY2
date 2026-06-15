@@ -25,6 +25,7 @@ import {
 import EbookReader from './components/EbookReader';
 import { chapters } from './data/chapters';
 import PaywallModal from './components/PaywallModal';
+import { seedDefaultCodes } from './data/licenceService';
 
 export default function App() {
   const [view, setView] = useState<'cover' | 'reader'>('cover');
@@ -35,6 +36,10 @@ export default function App() {
     return localStorage.getItem('spr_ebook_unlocked') === 'true';
   });
   const [paywallOpen, setPaywallOpen] = useState(false);
+
+  React.useEffect(() => {
+    seedDefaultCodes();
+  }, []);
 
   const unlockEbook = () => {
     setIsUnlocked(true);
@@ -165,7 +170,7 @@ export default function App() {
                       {/* Cover main core headings */}
                       <div className="z-10 text-center space-y-1 sm:space-y-3 px-3">
                         <span className="text-[8px] sm:text-[10px] font-mono uppercase tracking-widest text-stone-500">
-                          Saga de Progresso • 1867
+                          Saga de Progresso
                         </span>
                         <h1 className="text-xl min-[360px]:text-2xl sm:text-4xl font-serif font-black tracking-tight leading-tight text-stone-900 uppercase">
                           A Saga da <br/>
@@ -199,7 +204,7 @@ export default function App() {
                   {isUnlocked ? (
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-600/10 border border-emerald-600/20 rounded-full text-xs font-mono text-emerald-800 w-fit font-bold uppercase select-none">
                       <Compass className="h-3.5 w-3.5 text-emerald-700 font-bold animate-pulse" />
-                      E-book Desbloqueado • Acesso Vitalício Liberado
+                      E-book Desbloqueado • Acesso Liberado
                     </div>
                   ) : (
                     <button
@@ -403,6 +408,8 @@ export default function App() {
         isOpen={paywallOpen} 
         onClose={() => setPaywallOpen(false)} 
         onUnlock={unlockEbook}
+        onLock={lockEbook}
+        isUnlocked={isUnlocked}
       />
     </div>
   );

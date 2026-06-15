@@ -21,6 +21,8 @@ import {
   Award,
   Lock
 } from 'lucide-react';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 import { Chapter, ReaderTheme, ReaderFont } from '../types';
 import { chapters } from '../data/chapters';
 import HistoryQuiz from './HistoryQuiz';
@@ -54,6 +56,10 @@ export default function EbookReader({
   const [printScope, setPrintScope] = useState<'chapter' | 'full'>('full');
   const [showReferences, setShowReferences] = useState(false);
   const [readerPaywallOpen, setReaderPaywallOpen] = useState(false);
+  
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [pdfProgress, setPdfProgress] = useState(0);
+  const [pdfStatusText, setPdfStatusText] = useState('');
 
   const [isInIframe, setIsInIframe] = useState(false);
   const [showIframeWarning, setShowIframeWarning] = useState(false);
@@ -186,15 +192,106 @@ export default function EbookReader({
     }
   };
 
-  const handlePrint = () => {
-    if (isInIframe) {
-      setShowIframeWarning(true);
-    } else {
+  const handlePrint = async () => {
+    setIsGeneratingPDF(true);
+    setPdfProgress(5);
+    setPdfStatusText("Iniciando conversão de alta fidelidade...");
+
+    try {
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      const pages: HTMLElement[] = [];
+      
+      if (printScope === 'full') {
+        const container = document.querySelector('.print-container');
+        if (container) {
+          const pdfPages = container.querySelectorAll('.pdf-fixed-page, .pdf-flow-page');
+          pdfPages.forEach((page) => pages.push(page as HTMLElement));
+        }
+      } else {
+        const element = document.querySelector('.pdf-flow-page');
+        if (element) {
+          pages.push(element as HTMLElement);
+        }
+      }
+
+      if (pages.length === 0) {
+        throw new Error("Elementos para exportação não foram encontrados.");
+      }
+
+      for (let i = 0; i < pages.length; i++) {
+        const pageEl = pages[i];
+        const percent = Math.round(5 + (i / pages.length) * 85);
+        setPdfProgress(percent);
+        
+        let pageTitle = `Página ${i + 1}`;
+        if (printScope === 'full') {
+          if (i === 0) pageTitle = "Capa do Livro";
+          else if (i === 1) pageTitle = "Folha de Créditos";
+          else if (i === 2) pageTitle = "Sumário dos Capítulos";
+          else if (i === pages.length - 1) pageTitle = "Fontes Consultadas";
+          else {
+            const chNum = i - 2;
+            pageTitle = `Capítulo ${chNum}`;
+          }
+        } else {
+          pageTitle = chapters[currentChapterIndex]?.title || "Capítulo";
+        }
+        
+        setPdfStatusText(`Renderizando: ${pageTitle}...`);
+
+        // Wait a slight fraction of a second to allow UI rendering to stabilize
+        await new Promise((resolve) => setTimeout(resolve, 50));
+
+        const canvas = await html2canvas(pageEl, {
+          scale: 1.5, // optimal compromise for high details and fluid generation
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#FAF7F2',
+          logging: false
+        });
+
+        const imgData = canvas.toDataURL('image/jpeg', 0.90);
+
+        if (i > 0) {
+          pdf.addPage();
+        }
+
+        pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
+      }
+
+      setPdfProgress(95);
+      setPdfStatusText("Estruturando metadados e salvando PDF...");
+      
+      const fileName = printScope === 'full' 
+        ? "Saga_da_Sao_Paulo_Railway_Volume_Completo.pdf" 
+        : `Saga_da_Sao_Paulo_Railway_Capitulo_${chapters[currentChapterIndex]?.number || 1}.pdf`;
+        
+      pdf.save(fileName);
+      
+      setPdfProgress(100);
+      setPdfStatusText("Download iniciado com sucesso!");
+      setTimeout(() => {
+        setIsGeneratingPDF(false);
+      }, 1500);
+
+    } catch (err) {
+      console.error("Erro ao gerar PDF diretamente:", err);
+      alert("Houve um problema ao gerar o PDF direto. Tentando abrir o Painel de Impressão nativo como alternativa.");
+      setIsGeneratingPDF(false);
+      
+      // Fallback to native printing if browser or DOM elements fail
       try {
         window.print();
-      } catch (err) {
-        console.error("Print blocked/failed:", err);
-        setShowIframeWarning(true);
+      } catch (printErr) {
+        console.error("Native print also failed:", printErr);
       }
     }
   };
@@ -452,7 +549,7 @@ export default function EbookReader({
                   <FileText className="h-5 w-5 shrink-0 text-[#8A7055]" />
                   <div className="flex-1 min-w-0 flex items-center justify-between gap-1.5">
                     <div>
-                      <h4 className="text-xs font-serif font-bold">Rigor Histórico</h4>
+                      <h4 className="text-xs font-serif font-bold">Fontes Consultadas</h4>
                       <p className="text-[10px] font-mono opacity-70">Fontes primárias e referências</p>
                     </div>
                     {!isUnlocked && <Lock className="h-3 w-3 text-amber-600/70 shrink-0" />}
@@ -572,7 +669,7 @@ export default function EbookReader({
                 >
                   <FileText className="h-5 w-5 shrink-0 text-[#8A7055]" />
                   <div>
-                    <h4 className="text-xs font-serif font-bold">Rigor Histórico</h4>
+                    <h4 className="text-xs font-serif font-bold">Fontes Consultadas</h4>
                     <p className="text-[10px] font-mono opacity-80">Fontes primárias e referências</p>
                   </div>
                 </button>
@@ -641,7 +738,7 @@ export default function EbookReader({
                       </div>
                       
                       <h1 className="text-3xl sm:text-4.5xl font-serif font-black tracking-tight leading-tight">
-                        Rigor Histórico e Fontes
+                        Fontes Consultadas
                       </h1>
                       
                       <p className="text-sm font-serif italic opacity-85 leading-relaxed max-w-2xl">
@@ -729,7 +826,7 @@ export default function EbookReader({
                       </button>
 
                       <div className="text-xs font-mono opacity-80 italic">
-                        Memorial de Rigor Histórico
+                        Fontes Consultadas
                       </div>
 
                       <button
@@ -886,7 +983,7 @@ export default function EbookReader({
                                 <div className="flex-1 flex items-baseline gap-2">
                                   <span className="font-mono text-xs text-[#8A7055] font-black shrink-0 print:text-[8px]">REF.</span>
                                   <div className="flex flex-col">
-                                    <span className="text-stone-950 font-bold tracking-tight">Memorial de Rigor Histórico</span>
+                                    <span className="text-stone-950 font-bold tracking-tight">Fontes Consultadas</span>
                                     <span className="text-[11px] print:text-[8.5px] text-stone-500 italic font-medium leading-none mt-0.5">Fontes Primárias e Fatos Referenciados</span>
                                   </div>
                                   <div className="flex-1 border-b border-dashed border-stone-300 h-1 min-w-[20px] print:border-b-0"></div>
@@ -927,11 +1024,20 @@ export default function EbookReader({
 
                             {/* Multi-paragraph historical content in classic style */}
                             <div className="space-y-5 print:space-y-3 text-left text-stone-850 text-[15px] sm:text-[16px] print:text-[10pt] leading-relaxed font-serif px-2 sm:px-6 print:px-4">
-                              {chapter.content.map((p, pIdx) => (
-                                <p key={pIdx} className="text-left leading-relaxed">
-                                  {p}
-                                </p>
-                              ))}
+                              {chapter.content.map((p, pIdx) => {
+                                if (p === 'Por Evandro Felix Marcondes.') {
+                                  return (
+                                    <p key={pIdx} className="text-right font-sans font-bold text-xs tracking-widest text-stone-600 uppercase pt-6 border-t border-stone-200/50 mt-6">
+                                      {p}
+                                    </p>
+                                  );
+                                }
+                                return (
+                                  <p key={pIdx} className="text-left leading-relaxed">
+                                    {p}
+                                  </p>
+                                );
+                              })}
                             </div>
                           </div>
                         ))}
@@ -940,11 +1046,11 @@ export default function EbookReader({
                         <div className="pdf-fixed-page p-8 sm:p-14 border-4 border-double border-stone-450 text-justify bg-[#FAF7F2] space-y-6 select-text font-serif min-h-[82vh] flex flex-col justify-between print:border-0 print:border-none print:p-0" style={{ pageBreakAfter: 'avoid', breakAfter: 'avoid' }}>
                           <div>
                             <div className="text-center space-y-1.5 pb-4 border-b border-stone-250 uppercase font-mono tracking-widest text-[#8A7055] print:pb-0 print:border-b-0">
-                              <h3 className="text-xl sm:text-2xl font-serif font-black uppercase text-stone-950 leading-tight mt-1 print:text-base">Fontes e Memorial de Rigor Histórico</h3>
+                              <h3 className="text-xl sm:text-2xl font-serif font-black uppercase text-stone-950 leading-tight mt-1 print:text-base">Fontes Consultadas</h3>
                             </div>
                             
                             <p className="text-[11.5px] sm:text-xs text-stone-800 leading-relaxed font-serif text-justify mt-5 print:mt-2 print:text-[9.5pt]">
-                              Para assegurar a perfeita idoneidade factual e afastar categoricamente qualquer contestação historiográfica após a publicação desta obra digital de patrimônio, certificamos que as datas históricas, marcos arquitetônicos ingleses, contingências demográficas e trajetórias biográficas contidas neste volume estão rigorosamente mapeadas e sustentadas pelos arquivos oficiais das seguintes referências.
+                              A fim de garantir a precisão histórica e o rigor factual deste volume, as datas, os marcos arquitetônicos, os dados demográficos e as trajetórias biográficas apresentados foram amplamente pesquisados e fundamentados em documentos e arquivos oficiais das seguintes instituições de referência.
                             </p>
 
                             <div className="space-y-4 pt-4 text-stone-900 print:space-y-1.5 print:pt-1">
@@ -1018,11 +1124,20 @@ export default function EbookReader({
 
                         {/* Multi-paragraph historical content in classic style */}
                         <div className="space-y-5 print:space-y-3 text-left text-stone-850 text-[15px] sm:text-[16px] print:text-[10pt] leading-relaxed font-serif px-2 sm:px-6 print:px-4">
-                          {activeChapter.content.map((p, pIdx) => (
-                            <p key={pIdx} className="text-left leading-relaxed">
-                              {p}
-                            </p>
-                          ))}
+                          {activeChapter.content.map((p, pIdx) => {
+                            if (p === 'Por Evandro Felix Marcondes.') {
+                              return (
+                                <p key={pIdx} className="text-right font-sans font-bold text-xs tracking-widest text-stone-600 uppercase pt-6 border-t border-stone-200/50 mt-6">
+                                  {p}
+                                </p>
+                              );
+                            }
+                            return (
+                              <p key={pIdx} className="text-left leading-relaxed">
+                                {p}
+                              </p>
+                            );
+                          })}
                         </div>
 
                         <div className="border-t border-stone-200 pt-6 print:pt-2 flex justify-between items-center text-xs font-mono text-stone-450 select-none print:border-t-0 print:border-none print:text-[8px]">
@@ -1038,10 +1153,10 @@ export default function EbookReader({
                         onClick={handlePrint}
                         className="py-4 px-10 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-serif font-bold text-lg flex items-center justify-center gap-2.5 shadow-lg hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer duration-150"
                       >
-                        <Printer className="h-5 w-5" /> Abrir Painel de Impressão / Salvar como PDF
+                        <Printer className="h-5 w-5" /> Iniciar Download Direto em PDF
                       </button>
                       <p className="text-xs text-[#6C5B4C] font-mono max-w-lg text-center leading-normal">
-                        Dica Gráfica: No menu de impressão do seu navegador, alterne o Destino para <b>"Salvar como PDF"</b>. Defina as margens como <b>"Nenhuma"</b> ou <b>"Padrão"</b>, e certifique-se de manter ativada a opção <b>"Gráficos de plano de fundo"</b> para fixar as molduras duplas luxuosas e o pergaminho de fundo!
+                        <b>Tecnologia de Alta Fidelidade:</b> O arquivo é renderizado e compilado dinamicamente em seu navegador, iniciando o download imediato do e-book configurado, preservando as molduras e o pergaminho de fundo originais.
                       </p>
                     </div>
                   </div>
@@ -1090,11 +1205,20 @@ export default function EbookReader({
                       className={`space-y-6 text-left ${fontStyles[font]}`}
                       style={{ fontSize: `${fontSize}px` }}
                     >
-                      {activeChapter.content.map((p, pIdx) => (
-                        <p key={pIdx} className="text-left leading-relaxed">
-                          {p}
-                        </p>
-                      ))}
+                      {activeChapter.content.map((p, pIdx) => {
+                        if (p === 'Por Evandro Felix Marcondes.') {
+                          return (
+                            <p key={pIdx} className="text-right font-sans font-extrabold text-sm tracking-widest uppercase opacity-80 pt-6 border-t border-black/10 dark:border-white/10 mt-6">
+                              {p}
+                            </p>
+                          );
+                        }
+                        return (
+                          <p key={pIdx} className="text-left leading-relaxed">
+                            {p}
+                          </p>
+                        );
+                      })}
                     </div>
 
                     {/* Aesthetic section divider */}
@@ -1201,6 +1325,77 @@ export default function EbookReader({
                   Aba de Testes Segura • Império do Brasil (2026/1867)
                 </p>
               </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* 5. DYNAMIC HIGH-FIDELITY PDF GENERATOR LOADER */}
+      <AnimatePresence>
+        {isGeneratingPDF && (
+          <div className="fixed inset-0 bg-stone-950/85 backdrop-blur-md flex items-center justify-center p-4 z-55 print:hidden select-none">
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-[#FAF7F2] border border-[#D5C9B3] rounded-3xl p-6 sm:p-10 max-w-md w-full text-[#2C2620] shadow-2xl text-center space-y-6"
+            >
+              {/* Spinner animation */}
+              <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
+                <svg className="w-full h-full transform -rotate-90">
+                  <circle
+                    cx="48"
+                    cy="48"
+                    r="40"
+                    stroke="rgba(138, 112, 85, 0.15)"
+                    strokeWidth="8"
+                    fill="transparent"
+                  />
+                  <circle
+                    cx="48"
+                    cy="48"
+                    r="40"
+                    stroke="#8A7055"
+                    strokeWidth="8"
+                    fill="transparent"
+                    strokeDasharray={2 * Math.PI * 40}
+                    strokeDashoffset={2 * Math.PI * 40 * (1 - pdfProgress / 100)}
+                    className="transition-all duration-300"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-xl font-mono font-black text-[#8A7055]">{pdfProgress}%</span>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="text-[10px] uppercase font-mono font-black text-[#8A7055] tracking-widest bg-[#8A7055]/10 py-1 px-3 rounded-full inline-block">
+                  Compilação Digital Ativa
+                </div>
+                <h3 className="text-lg font-serif font-bold text-stone-900">
+                  Preparando Documento Histórico
+                </h3>
+                <p className="text-xs text-stone-500 font-serif italic">
+                  Convertendo tipografia vitoriana e gravuras de época em formato PDF certificado...
+                </p>
+              </div>
+
+              {/* Status bar & Subtext */}
+              <div className="space-y-2 pt-2">
+                <div className="text-xs text-[#52463A] font-mono leading-tight truncate">
+                  {pdfStatusText || "Processando elementos..."}
+                </div>
+                <div className="w-full bg-stone-200 h-1.5 rounded-full overflow-hidden border border-stone-300/40">
+                  <div 
+                    className="h-full bg-emerald-700 transition-all duration-300"
+                    style={{ width: `${pdfProgress}%` }}
+                  />
+                </div>
+              </div>
+
+              <p className="text-[9px] font-mono text-stone-400">
+                A tecnologia de download direto gera e transmite o PDF de forma nativa e imediata.
+              </p>
             </motion.div>
           </div>
         )}

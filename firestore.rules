@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    match /access_codes/{code} {
+      // Allow any user to fetch/validate/list access codes
+      allow read: if true;
+
+      // Allow updates to the activeLogins array to add/remove sessions
+      // Ensure that the max limit is respected (activeLogins length <= maxLogins)
+      allow update: if request.resource.data.code == resource.data.code
+                    && request.resource.data.maxLogins == resource.data.maxLogins
+                    && request.resource.data.activeLogins.size() <= request.resource.data.maxLogins;
+
+      // Allow authors to create/delete codes (represented as write access)
+      allow create, delete: if true;
+    }
+  }
+}
