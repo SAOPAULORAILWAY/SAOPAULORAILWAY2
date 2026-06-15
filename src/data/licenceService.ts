@@ -12,6 +12,7 @@ import {
   collection, 
   getDocs, 
   arrayUnion, 
+  arrayRemove,
   writeBatch
 } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -166,5 +167,26 @@ export async function fetchAllAccessCodes(): Promise<AccessCodeDoc[]> {
   } catch (error) {
     console.error('Failed to fetch access codes:', error);
     return [];
+  }
+}
+
+/**
+ * Removes a session ID from the active log-in list for a specific code.
+ * Ensures slots are freed up instantly when logging out.
+ */
+export async function removeSessionFromCode(
+  rawCode: string,
+  sessionId: string
+): Promise<void> {
+  const code = rawCode.trim().toUpperCase();
+  if (!code) return;
+  try {
+    const docRef = doc(db, 'access_codes', code);
+    await updateDoc(docRef, {
+      activeLogins: arrayRemove(sessionId)
+    });
+    console.log(`Session ${sessionId} removed from code ${code} successfully.`);
+  } catch (error) {
+    console.error('Failed to remove session during logout:', error);
   }
 }

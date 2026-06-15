@@ -19,7 +19,8 @@ import {
   Share2,
   Sliders,
   Award,
-  Lock
+  Lock,
+  LogOut
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -35,6 +36,7 @@ interface EbookReaderProps {
   initialPrintMode?: boolean;
   isUnlocked: boolean;
   onUnlock: () => void;
+  onLock?: () => void;
 }
 
 export default function EbookReader({ 
@@ -43,7 +45,8 @@ export default function EbookReader({
   initialShowQuiz = false, 
   initialPrintMode = false,
   isUnlocked,
-  onUnlock
+  onUnlock,
+  onLock
 }: EbookReaderProps) {
   const [currentChapterIndex, setCurrentChapterIndex] = useState(initialChapterIndex);
   const [theme, setTheme] = useState<ReaderTheme>('cream');
@@ -345,6 +348,24 @@ export default function EbookReader({
             <Printer className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">{isPrintMode ? 'Sair do PDF' : 'Versão PDF / Impressão'}</span>
           </button>
+
+          {/* Botão de Deslogar Licença/Dispositivo */}
+          {isUnlocked && onLock && (
+            <button
+              onClick={async () => {
+                if (confirm('Deseja realmente deslogar deste livro? Seu navegador será bloqueado e a vaga que você ocupava no banco de dados será liberada para outros dispositivos.')) {
+                  await onLock();
+                  onBackToCover();
+                  alert('Chave desvinculada com sucesso! O livro agora está trancado. Para acessar, basta usar qualquer código ativo ou simular uma nova compra por Pix.');
+                }
+              }}
+              className="py-1.5 sm:py-2 px-3 rounded-lg text-xs font-mono font-extrabold bg-[#C2593F] hover:bg-[#A8452E] text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-sm border border-[#A8452E]/30"
+              title="Deslogar e Liberar Vaga"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Deslogar do Livro</span>
+            </button>
+          )}
 
           {/* Preferences controls */}
           <button

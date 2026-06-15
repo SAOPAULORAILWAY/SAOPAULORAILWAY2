@@ -25,7 +25,7 @@ import {
 import EbookReader from './components/EbookReader';
 import { chapters } from './data/chapters';
 import PaywallModal from './components/PaywallModal';
-import { seedDefaultCodes } from './data/licenceService';
+import { seedDefaultCodes, removeSessionFromCode, getOrCreateSessionId } from './data/licenceService';
 
 export default function App() {
   const [view, setView] = useState<'cover' | 'reader'>('cover');
@@ -46,9 +46,21 @@ export default function App() {
     localStorage.setItem('spr_ebook_unlocked', 'true');
   };
 
-  const lockEbook = () => {
+  const lockEbook = async () => {
     setIsUnlocked(false);
     localStorage.removeItem('spr_ebook_unlocked');
+    
+    // Release active device session in Firestore if exists
+    const activeCode = localStorage.getItem('spr_ebook_activated_code');
+    if (activeCode) {
+      try {
+        const sessionId = getOrCreateSessionId();
+        await removeSessionFromCode(activeCode, sessionId);
+      } catch (e) {
+        console.error('Error removing session on lock:', e);
+      }
+      localStorage.removeItem('spr_ebook_activated_code');
+    }
   };
 
   const openChapter = (index: number) => {
@@ -398,6 +410,7 @@ export default function App() {
                 initialPrintMode={targetPrintMode}
                 isUnlocked={isUnlocked}
                 onUnlock={unlockEbook}
+                onLock={lockEbook}
               />
             </motion.div>
           )}
