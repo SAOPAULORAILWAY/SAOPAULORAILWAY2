@@ -24,7 +24,7 @@ export interface AccessCodeDoc {
   createdAt?: string;
 }
 
-const DEFAULT_CODES = ['FERROVIA1867', 'EVANDRO2026', 'LOGISTICA1867', 'PARANAPIACABA'];
+const DEFAULT_CODES = ['FERROVIA1867', 'EVANDRO2026', 'LOGISTICA1867', 'PARANAPIACABA', 'EVANDRO1979'];
 
 /**
  * Ensures user has a unique identifier stored on their browser session/device.
@@ -40,25 +40,30 @@ export function getOrCreateSessionId(): string {
 }
 
 /**
- * Seeds default passwords on background if the database collection is empty.
+ * Seeds default passwords on background, ensuring all standard keys are present.
  */
 export async function seedDefaultCodes(): Promise<void> {
   try {
-    const colRef = collection(db, 'access_codes');
-    const snapshot = await getDocs(colRef);
-    if (snapshot.empty) {
-      const batch = writeBatch(db);
-      for (const code of DEFAULT_CODES) {
-        const docRef = doc(db, 'access_codes', code);
+    const batch = writeBatch(db);
+    let hasKeysToInsert = false;
+
+    for (const code of DEFAULT_CODES) {
+      const docRef = doc(db, 'access_codes', code);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
         batch.set(docRef, {
           code: code,
           maxLogins: 2,
           activeLogins: [],
           createdAt: new Date().toISOString()
         });
+        hasKeysToInsert = true;
       }
+    }
+
+    if (hasKeysToInsert) {
       await batch.commit();
-      console.log('Seeded default access codes in Firestore successfully.');
+      console.log('Seeded missing default access codes in Firestore successfully.');
     }
   } catch (error) {
     console.error('Failed to seed default codes:', error);

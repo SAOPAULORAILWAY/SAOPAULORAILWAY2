@@ -369,7 +369,7 @@ export default function PaywallModal({
                   onSubmit={(e) => {
                     e.preventDefault();
                     const cleanVal = authorPassword.trim().toUpperCase();
-                    if (cleanVal === 'EVANDRO' || cleanVal === 'EVANDRO2026' || cleanVal === 'MARCONDES' || cleanVal === '30026230836') {
+                    if (cleanVal === 'EVANDRO' || cleanVal === 'EVANDRO1979' || cleanVal === 'EVANDRO2026' || cleanVal === 'MARCONDES' || cleanVal === '30026230836') {
                       setIsAuthorAuthenticated(true);
                       setAuthorPassError('');
                     } else {
