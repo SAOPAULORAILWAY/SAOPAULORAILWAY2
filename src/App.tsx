@@ -233,9 +233,11 @@ export default function App() {
                     São Paulo Railway a <span className="text-red-700 font-black">primeira ferrovia paulista</span>.
                   </h2>
 
-                  <p className="text-base sm:text-[16.5px] text-[#52463A] leading-relaxed text-justify">
-                    Esta obra reconstitui a trajetória histórica e o impacto econômico da São Paulo Railway, a primeira linha ferroviária do território paulista. Acompanhe as complexas negociações diplomáticas e financeiras entre o Império do Brasil e investidores vitorianos em Londres, sob o protagonismo inicial de Irineu Evangelista de Sousa (Barão de Mauá) e do conselheiro José Antônio Pimenta Bueno. Pautado em rigor documental, o livro narra as soluções técnicas inovadoras que tornaram possível transpor a intransponível muralha da Serra do Mar, sob liderança técnica de James Brunlees e a genialidade em campo do engenheiro residente Daniel Fox. Através de planos inclinados funiculares, o volume descortina ainda o cotidiano britânico em Paranapiacaba, a marcante introdução do futebol no Brasil por Charles Miller e o amadurecimento comercial que moldou o destino de São Paulo até a encampação pacífica da malha ferroviária pela União em 1946. Trata-se de um amplo convite à preservação de nossa memória ferroviária e de nosso patrimônio nacional.
-                  </p>
+                  <div className="text-base sm:text-[16px] text-[#52463A] leading-relaxed text-left">
+                    <p>
+                      A história da São Paulo Railway está diretamente ligada ao desenvolvimento econômico de São Paulo e à expansão da economia cafeeira no Brasil. Inaugurada em 1867, a ferrovia superou os desafios da Serra do Mar e estabeleceu uma ligação eficiente entre o interior paulista e o Porto de Santos, transformando o transporte e o comércio da época. Ao longo desta obra, o leitor conhecerá os personagens envolvidos na criação da ferrovia, os desafios de engenharia que marcaram sua construção, a formação de Paranapiacaba, a influência britânica na região e os impactos econômicos e sociais gerados pela linha férrea. Mais do que uma história sobre trilhos e locomotivas, este livro apresenta um capítulo importante da modernização do transporte brasileiro e do crescimento de São Paulo, destacando o legado deixado por uma das mais importantes ferrovias da história nacional.
+                    </p>
+                  </div>
 
                   {/* Curated features grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 py-4">

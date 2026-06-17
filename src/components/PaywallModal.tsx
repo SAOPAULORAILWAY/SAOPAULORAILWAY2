@@ -625,13 +625,13 @@ export default function PaywallModal({
                     <span className="text-[10px] text-emerald-700 font-mono font-bold block mt-0.5 uppercase tracking-wide">Pago uma única vez</span>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#4A3F35] leading-relaxed text-justify px-1">
+                  <p className="text-xs sm:text-sm text-[#4A3F35] leading-relaxed text-left px-1">
                     Ao adquirir o seu exemplar digital, você garante acesso integral online a todos os <b>{chapters.length} capítulos históricos</b>, <b>visualização em PDF</b> diretamente no navegador, e o <b>QUIZ DE PERGUNTAS</b> interativo. Descubra a fascinante história da ferrovia paulista com este conteúdo completo e exclusivo!
                   </p>
 
                   <div className="bg-amber-50/70 border border-[#D5C9B3]/40 rounded-xl p-3.5 space-y-1.5 text-left select-none">
                     <span className="text-[9.5px] uppercase font-mono font-bold tracking-wider text-[#8A7055] block">Aviso Legal & Termos Adicionais</span>
-                    <p className="text-[10.5px] text-stone-600 leading-normal font-sans text-justify">
+                    <p className="text-[10.5px] text-stone-600 leading-normal font-sans text-left">
                       <b>Conteúdo Estritamente Digital e Online:</b> Ao adquirir o acesso, você compreende e aceita que está comprando uma <b>chave de acesso digital individual</b> para leitura online desta plataforma. <u>Não há envio de livro físico/impresso</u> por correio e <u>não disponibilizamos download do arquivo PDF para armazenamento offline</u> ou impressão comercial. Após a validação da chave, o serviço é considerado usufruído e entregue eletronicamente de forma imediata.
                     </p>
                   </div>
