@@ -72,44 +72,44 @@ export default function HistoryQuiz() {
 
   // Rank thresholds based on correct answers
   const getRank = () => {
-    switch (score) {
-      case 5:
-        return {
-          title: 'Domínio Integral (100% de Aproveitamento)',
-          desc: 'Brilhante! Você acertou todas as questões (100% de aproveitamento) e compreendeu com absoluta maestria a epopeia da São Paulo Railway: das audaciosas engrenagens de Mauá ao monumental sistema de planos inclinados que desafiou a gravidade.',
-          color: 'text-amber-800 border-amber-500 bg-amber-500/10'
-        };
-      case 4:
-        return {
-          title: 'Domínio Avançado (80% de Aproveitamento)',
-          desc: 'Excelente! Com 4 acertos (80% de aproveitamento), você demonstrou profundo conhecimento sobre os desafios políticos, a forte influência britânica e as grandiosas façanhas técnicas da ferrovia paulista.',
-          color: 'text-emerald-800 border-emerald-600 bg-emerald-600/10'
-        };
-      case 3:
-        return {
-          title: 'Domínio Intermediário (60% de Aproveitamento)',
-          desc: 'Bom desempenho! Com 3 acertos (60% de aproveitamento), você compreende bem a mecânica dos planos inclinados e o impacto histórico de Irineu Evangelista de Sousa no Império.',
-          color: 'text-stone-800 border-stone-400 bg-stone-100'
-        };
-      case 2:
-        return {
-          title: 'Domínio Básico (40% de Aproveitamento)',
-          desc: 'Aproveitamento satisfatório! Com 2 acertos (40% de aproveitamento), você já conhece os fatos essenciais sobre a ferrovia e o seu papel econômico crucial para o escoamento de café.',
-          color: 'text-stone-700 border-stone-300 bg-stone-50'
-        };
-      case 1:
-        return {
-          title: 'Domínio Inicial (20% de Aproveitamento)',
-          desc: 'Com 1 acerto (20% de aproveitamento), você deu o primeiro passo no percurso histórico! Que tal revisitar as seções ilustradas do e-book para descobrir mais sobre a herança de Mauá?',
-          color: 'text-stone-600 border-stone-200 bg-stone-50'
-        };
-      case 0:
-      default:
-        return {
-          title: 'Leitura Recomendada (0% de Aproveitamento)',
-          desc: 'Você não acertou nenhuma questão (0% de aproveitamento). O trajeto histórico está apenas começando! Convidamos você a explorar as ricas narrativas sobre as pontes e túneis da herança vitoriana no livro.',
-          color: 'text-stone-500 border-stone-200 bg-stone-50/50'
-        };
+    const percent = Math.round((score / questions.length) * 100);
+    
+    if (percent === 100) {
+      return {
+        title: `Domínio Integral (${percent}% de Aproveitamento)`,
+        desc: `Brilhante! Você acertou todas as ${questions.length} questões (100% de aproveitamento) e compreendeu com absoluta maestria a história da São Paulo Railway.`,
+        color: 'text-amber-800 border-amber-500 bg-amber-500/10'
+      };
+    } else if (percent >= 80) {
+      return {
+        title: `Domínio Avançado (${percent}% de Aproveitamento)`,
+        desc: `Excelente! Com ${score} acertos de ${questions.length} (${percent}% de aproveitamento), você demonstrou profundo conhecimento sobre os desafios políticos, a forte influência britânica e as grandiosas façanhas técnicas da ferrovia paulista.`,
+        color: 'text-emerald-800 border-emerald-600 bg-emerald-600/10'
+      };
+    } else if (percent >= 60) {
+      return {
+        title: `Domínio Intermediário (${percent}% de Aproveitamento)`,
+        desc: `Bom desempenho! Com ${score} acertos de ${questions.length} (${percent}% de aproveitamento), você compreende bem a mecânica dos planos inclinados e o impacto histórico da ferrovia no Império.`,
+        color: 'text-stone-800 border-stone-400 bg-stone-100'
+      };
+    } else if (percent >= 40) {
+      return {
+        title: `Domínio Básico (${percent}% de Aproveitamento)`,
+        desc: `Aproveitamento satisfatório! Com ${score} acertos de ${questions.length} (${percent}% de aproveitamento), você já conhece os fatos essenciais sobre a ferrovia e o seu papel econômico crucial para o escoamento de café.`,
+        color: 'text-stone-700 border-stone-300 bg-stone-50'
+      };
+    } else if (percent > 0) {
+      return {
+        title: `Domínio Inicial (${percent}% de Aproveitamento)`,
+        desc: `Com ${score} acerto(s) de ${questions.length} (${percent}% de aproveitamento), você deu o primeiro passo no percurso histórico! Que tal revisitar as seções ilustradas do e-book para descobrir mais sobre a herança ferroviária?`,
+        color: 'text-stone-600 border-stone-200 bg-stone-50'
+      };
+    } else {
+      return {
+        title: `Leitura Recomendada (0% de Aproveitamento)`,
+        desc: `Você não acertou nenhuma questão (0% de aproveitamento). O trajeto histórico está apenas começando! Convidamos você a explorar as ricas narrativas sobre as pontes e túneis da herança vitoriana no livro.`,
+        color: 'text-stone-500 border-stone-200 bg-stone-50/50'
+      };
     }
   };
 

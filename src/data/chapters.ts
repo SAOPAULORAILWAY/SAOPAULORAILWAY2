@@ -4,93 +4,115 @@ export const chapters: Chapter[] = [
   {
     id: 'intro',
     number: 1,
-    title: 'O Sonho Imperial da Estrada de Ferro.',
-    subtitle: 'Irineu Evangelista de Sousa e o início da modernização nacional.',
-    image: '/assets/images/barao_de_maua_1781298320469.jpg',
-    imageCaption: 'Irineu Evangelista de Sousa, o Barão de Mauá (1813 a 1889), pioneiro absoluto da industrialização e dos transportes ferroviários no Império do Brasil.',
-    readingTime: 7,
+    title: 'A ferrovia que venceu a Serra do Mar.',
+    subtitle: 'Como a São Paulo Railway superou a Serra do Mar para integrar o interior paulista ao Porto de Santos.',
+    image: '/assets/images/serra_mar_challenge_spr_1781707082900.jpg',
+    imageCaption: 'Ilustração artística de época recriando a ousada engenharia na Serra do Mar: uma locomotiva a vapor com as marcas da SPR vencendo os aclives íngremes sob a densa névoa da floresta tropical.',
+    readingTime: 6,
     content: [
-      'Durante o Império de Dom Pedro II, a vastidão do território brasileiro seguia um ritmo lento e colonial. Tropas de mulas subiam e desciam as encostas da Serra do Mar, enquanto trabalhadores carregavam pesadas sacas nas costas. A Serra do Mar, uma imensa muralha, representava o maior desafio de transporte do país, onde o café, o principal motor da economia nacional, demorava muito para chegar aos navios no porto de Santos.',
-      'Nesse cenário difícil, o empresário Irineu Evangelista de Sousa, futuro Barão de Mauá, apresentou um plano inovador. Inspirado pelo forte progresso industrial que conheceu em suas viagens de negócios a Londres, ele sabia que os trilhos ditavam o ritmo do desenvolvimento mundial. Mauá via as ferrovias não apenas como rotas de comércio, mas como o caminho para modernizar a economia de um país ainda muito preso ao passado agrícola.',
-      'Em 1855, ao obter o direito de planejar a ferrovia que ligaria Jundiaí ao litoral paulista, ele enfrentou a desconfiança dos políticos e grandes proprietários da época. Muitos consideravam o projeto impossível ou inútil de ser realizado. Sem apoio financeiro no Brasil, o pioneiro gaúcho viajou para a Inglaterra em busca de investidores e recursos técnicos para vencer o abismo da Serra do Mar.',
-      'Apesar de não contar com a confiança imediata dos cafeicultores tradicionais, as negociações que ele realizou nos bancos britânicos renderam uma importante parceria de cooperação técnica e financeira. Seria o início de uma das maiores obras de engenharia do século XIX.',
-      'Além de todas as dificuldades técnicas, o projeto de Mauá também sofria uma forte oposição política no Rio de Janeiro. Muitos parlamentares conservadores defendiam que investir em estradas de ferro era um luxo desnecessário para um país essencialmente agrário, preferindo a manutenção dos antigos caminhos terrestres. Apesar dessas críticas e da falta de incentivos estatais diretos, Irineu de Sousa perseverou, convencido de que o futuro do desenvolvimento nacional dependia diretamente da velocidade e da capacidade de transporte que só os trilhos poderiam oferecer.'
+      'Durante o Império de Dom Pedro II, o transporte de mercadorias entre o interior paulista e o litoral era lento e custoso. O café, motor da economia nacional no dezenove, dependia de tropas de mulas descendo caminhos íngremes e sinuosos na barreira da Serra do Mar, viagem constantemente interrompida por violentas tempestades tropicais que bloqueavam as trilhas.',
+      'Com o avanço veloz dos cafezais rumo ao oeste da província, a infraestrutura tradicional de transporte tornou-se insustentável. Havia urgência em estabelecer uma conexão moderna e de alta capacidade até o Porto de Santos, mas a imponente muralha de granito e mata preservada continuava a impor severos obstáculos geográficos e técnicos à integração regional.',
+      'Dentre as personalidades visionárias da época, Irineu Evangelista de Sousa, o emblemático Barão de Mauá, destacou-se pela defesa convicta da interiorização dos trilhos férreos. Ele liderou articulações diplomáticas importantes na Inglaterra e desenhou parcerias de grande vulto financeiro para impulsionar os primeiros projetos e concessões do Império.',
+      'Nesse cenário, desenhou-se o traçado audacioso entre a produtiva Jundiaí e a costa santista, passando pelas matas virgens do planalto. O desafio de engenharia civil era monumental, visto que a região apresentava encostas escarpadas, altíssima umidade e solo sob risco constante de deslizamentos, exigindo técnicas ferroviárias que desafiavam os limites de época.',
+      'Em 1856, o governo imperial outorgou a concessão para a primeira linha férrea paulista, unindo esforços de Mauá, do conselheiro Pimenta Bueno e do mestre da ferrovia Joseph Locke. Juntos, alinharam as garantias fiduciárias necessárias para atrair o capital britânico e consolidar, anos depois, a renomada corporação São Paulo Railway Company na City de Londres.',
+      'Ao longo da década de 1860, as obras mobilizaram centenas de técnicos e trabalhadores submetidos a condições árduas em plena Serra do Mar. A transposição da barreira exigiu a genial implantação de um inovador dispositivo de planos inclinados funiculares com cabos de aço e máquinas fixas para operar a subida segura das cargas por mais de oitocentos metros.',
+      'Inaugurado oficialmente em fevereiro de 1867 sob expressivos aplausos do comércio e do Império, o novo corredor redefiniria as relações espaciais e humanas do planalto. A São Paulo Railway reduziu de dias para poucas horas as viagens de passageiros e rompeu de vez o isolamento logístico paulista, abrindo as portas do cenário global para a produção nacional.',
+      'Nos anos sequentes ao triunfo, a mítica ferrovia converteu-se em referência mundial de engenharia tropical e impulsionou outras linhas pelo interior cafeeiro do país. Unindo desenvolvimento econômico, imigração e urbanismo no cume da serra, a SPR moldou a grande industrialização nacional e assentou bases indeléveis para a posteridade de toda a região.'
     ]
   },
   {
     id: 'capital-ingles',
     number: 2,
-    title: 'A parceria com a Inglaterra e o desafio da serra.',
-    subtitle: 'O engenheiro Daniel Fox e a busca por um caminho na Serra do Mar.',
-    image: '/assets/images/spr_logo_1781536980657.jpg',
-    imageCaption: 'Representação artística inspirada no tradicional monograma da São Paulo Railway (SPR), símbolo que estampava locomotivas e documentos da companhia britânica e consolidava seu legado no progresso ferroviário de São Paulo.',
+    title: 'A engenharia por trás da serra.',
+    subtitle: 'O planejamento técnico, a mobilização de capitais e os desafios de engenharia para transpor a barreira natural da serra.',
+    image: '/assets/images/spr_engineering_blueprints_1781713020808.jpg',
+    imageCaption: 'Ilustração técnica de época em sépia recriando os esboços de engenharia mecânica, plantas de maquinário a vapor e diagramas dos planos inclinados sob supervisão técnica de James Brunlees.',
     readingTime: 8,
     content: [
-      'Em 1859, foi fundada em Londres a São Paulo Railway Company Limited, empresa britânica criada para construir e operar a estrada de ferro entre Santos e Jundiaí. O projeto contava com garantias financeiras do governo imperial brasileiro e unia a riqueza dos produtores de café de São Paulo com o dinheiro e as máquinas dos investidores ingleses.',
-      'Mesmo com os recursos assegurados, a engenharia técnica enfrentava um verdadeiro desafio geográfico: como subir a cordilheira íngreme da Serra do Mar sob o clima úmido da densa floresta tropical. Para encontrar uma saída viável, a empresa enviou ao Brasil o engenheiro Daniel Fox, um jovem profissional reconhecido por sua perseverança e rigor técnico.',
-      'Daniel Fox explorou a região da serra a pé, coletando medições geográficas detalhadas. Ao compreender que os modelos de trilhos comuns não funcionariam em subidas tão íngremes de quase 800 metros de altura, propôs uma solução inovadora: a divisão do trecho em rampas seguidas por meio de planos inclinados de tração. Essa ideia aliou a determinação pioneira de Irineu de Sousa (Barão de Mauá) com o método prático da engenharia vitoriana.',
-      'Ao chegar a São Paulo, Daniel Fox encontrou uma topografia extremamente hostil e pouco mapeada. A densa vegetação da Mata Atlântica e as constantes neblinas dificultavam a visibilidade, exigindo semanas de exploração cansativa para encontrar qualquer passagem viável. O engenheiro britânico teve de desenhar dezenas de esboços e testar caminhos alternativos antes de se convencer de que a subida direta por meio de cabos de aço era o único meio tecnicamente seguro para garantir o tráfego contínuo de cargas pesadas.'
+      'Em 1859, foi formalizada na capital inglesa a São Paulo Railway Company Limited, corporação encarregada da construção e subsequente exploração da inovadora linha férrea. O vultoso empreendimento associou investidores estrangeiros de prestígio a garantias substanciais de juros oferecidas formalmente pela administração governamental sob a autoridade direta de Dom Pedro II.',
+      'Esta bem-sucedida captação de recursos no exterior visava conectar o pujante interior cafeeiro paulista com o escoamento global, visto o café despontar como o principal sustentáculo financeiro da economia imperial brasileira. O desenvolvimento de infraestrutura tornava-se essencial face às sérias limitações dos transportes de tração puramente animal.',
+      'O trajeto de Jundiaí a Santos impunha, todavia, uma desafiadora e severa barreira natural: a escarpada e imensa cordilheira da Serra do Mar. Coberta por uma densa e úmida floresta tropical, com solo geologicamente instável e tempestades violentas recorrentes, a região exigia um nível de planejamento técnico inédito no continente.',
+      'Para resolver tão complexo dilema estrutural, a prestigiosa companhia reuniu experientes engenheiros e técnicos britânicos para realizar minuciosas vistorias e levantamentos topográficos fundamentais. A meta das exaustivas expedições consistia em mapear cuidadosamente a declividade de cada garganta serrana antes de escolher o definitivo e ideal curso da estrada.',
+      'A chefia tática de toda a coordenação esteve sob a responsabilidade direta de James Brunlees, engenheiro de grande prestígio internacional na Europa da Revolução Industrial. Suas detalhadas conclusões matemáticas sugeriram que os métodos de aderência de locomotivas a vapor tradicionais falhariam de modo incontestável diante de inclinações tão acentuadas.',
+      'A solução encontrada consistiu na adoção do complexo sistema de planos inclinados funiculares, já testado com sucesso relativo em projetos de relevo acidentado na Grã-Bretanha. O método dividia a difícil descida em seções sequenciais amparadas por inovadoras máquinas termodinâmicas fixas estacionadas no topo de patamares construídos na montanha.',
+      'Uma engenharia tão arrojada demandou a aquisição de equipamentos de altíssima precisão e a contratação de mão de obra altamente qualificada em solo brasileiro e internacional. O desnível vertical que superava a impressionante marca de oitocentos metros de altitude coroou o ousado projeto como uma das maiores façanhas técnicas de toda a engenharia global do século dezenove.',
+      'Vencer tal declividade requereria ainda uma minuciosa coordenação entre as bases litorâneas e os escritórios centrais instalados tanto no planalto quanto na City de Londres. Com as garantias aprovadas, as primeiras frentes de trabalho iniciaram a abertura da densa floresta, inaugurando uma das etapas mais dramáticas e memoráveis dos transportes nacionais.'
     ]
   },
   {
     id: 'desafio-muralha',
     number: 3,
-    title: 'Trabalho Duro e Engenharia Extrema.',
-    subtitle: 'O funcionamento do sistema funicular e o desafio humano da obra.',
-    image: '/assets/images/funicular_cable_1781298331429.jpg',
-    imageCaption: 'O revolucionário sistema funicular: imensas caldeiras e cabos de aço permitiam que composições pesadas vencessem o monstruoso desnível de 800 metros da serra.',
-    readingTime: 10,
+    title: 'Engenharia e trabalho na serra.',
+    subtitle: 'O sistema que venceu a serra e os desafios da construção.',
+    image: '/assets/images/funicular_engineering_spr_v2_1781707063737.jpg',
+    imageCaption: 'Ilustração artística de época mostrando operários e engenheiros enfrentando a lama, relva e chuvas na Serra do Mar para instalar os grandiosos planos inclinados do Sistema Funicular, com a marca oficial da SPR estampada.',
+    readingTime: 9,
     content: [
-      'As obras começaram efetivamente em 1860 sob a supervisão do experiente engenheiro-chefe James Brunlees. Os trabalhadores enfrentaram a tarefa monumental de moldar as encostas de pedra da Serra do Mar, criando quatro planos inclinados seguidos com uma inclinação média de 10%. Para puxar as composições carregadas de café por esse trecho íngreme, Brunlees planejou o engenhoso e prático Sistema Funicular original.',
-      'O mecanismo funcionava impulsionado por grandes máquinas a vapor fixadas no topo de cada uma das rampas. Utilizando cabos de aço extremamente resistentes, os motores de tração movimentavam as composições em um inteligente sistema de contrapeso: os vagões carregados com café que desciam a serra rumo ao porto ajudavam a elevar os trens que subiam o planalto trazendo mercadorias, insumos e carvão. No entanto, o canteiro de obras enfrentava o rigor do clima local: as fortes chuvas de verão causavam deslizamentos de terra constantes que cobriam parte do percurso.',
-      'A construção exigiu um imenso sacrifício físico, e muitos trabalhadores adoeceram no percurso. Operários brasileiros, imigrantes alemães e italianos, e engenheiros vindos de Londres dividiam o espaço nas montanhas lutando contra surtos de cólera e febres tropicais. Com esforço extraordinário de toda a equipe, a estrada de ferro foi aberta ao tráfego em fevereiro de 1867, coroando com sucesso o ousado projeto do Barão de Mauá.',
-      'Toda a logística de manutenção do sistema funicular era monitorada com precisão absoluta pelas equipes britânicas. As imensas caldeiras a carvão exigiam um abastecimento constante de combustível, que era transportado serra acima pelos próprios vagões. Nos períodos de pico da colheita do café, o sistema funcionava ininterruptamente de sol a sol, exigindo revisões diárias nos cabos de aço para evitar acidentes fatais e garantir que a preciosa carga paulista descesse a montanha com segurança e sem interrupções.'
+      'As céleres frentes de construção avançaram de forma persistente após 1860 sob o comando em campo do habilidoso engenheiro residente inglês Daniel Fox. Na encosta acidentada da serra paulista, centenas de homens uniram esforços obstinados para instalar as bases fundamentais do Sistema Funicular ao longo de quatro grandiosos planos inclinados estruturados e sucessivos.',
+      'Este inteligente dispositivo mecânico era movimentado por potentes casas de força a vapor localizadas estrategicamente no ponto culminante de cada setor de subida. Por intermédio de robustos e esticados cabos de aço especiais, os vagões ferroviários eram puxados ou freados de forma coordenada graças ao inovador princípio físico de contrapeso mútuo.',
+      'Nesse engenhoso sincronismo operacional de pesos, o trem carregado de grãos descendo ao litoral exercia papel fundamental ao tracionar o comboio que subia ao planalto com mantimentos diversos. O uso balanceado das cargas reduzia expressivamente o consumo das caldeiras e demonstrava a eficiência e vanguarda do projeto executado engenhosamente na serra.',
+      'No entanto, as hostis condições ambientais da Mata Atlântica cobravam esforços descomunais das persistentes equipes de trabalho que atuavam dia e noite na encosta. Chuvas contínuas provocavam frequentes e perigosas avalanches de terra que soterravam caminhos abertos, destruíam pontilhões recém-construídos e causavam interrupções drásticas no andamento das obras físicas.',
+      'A superação de tais dilemas exigia a participação laboriosa de trabalhadores dos mais distantes e diversos rincões habitados no Brasil e na Europa vitoriana. Mineradores experientes, operários braçais, engenheiros dedicados e pedreiros dedicavam-se conjuntamente a cortar pedras brutas nas escarpas, erguer viadutos monumentais e estabilizar solos sob chuvas e neblinas persistentes.',
+      'Mais do que uma simples via de escoamento rápido de mercadorias paulistas, a implantação representava o triunfo absoluto da técnica mecânica moderna contra uma barreira outrora indomável. As inovações ali forjadas desafiavam a tudo o que já havia sido testado em solos frios europeus, exigindo adaptações constantes à ecologia tropical.',
+      'Em dezesseis de fevereiro de 1867, a estrada completou sua longa trajetória de edificação e iniciou o tráfego regular de trens comerciais sob fortes aplausos imperiais. A majestosa e impecável infraestrutura reduziu drasticamente os fretes, estendeu os horizontes do planalto e coroou definitivamente a São Paulo Railway como o pilar logístico de maior eficiência nacional.',
+      'A complexa manutenção preventiva das engrenagens ocorria sem descanso, pois os cabos de tração demandavam exaustivas vistorias ao longo de todo o percurso montanhoso. A operação eficiente e segura dos planos manteria sua importância intocada pelas décadas seguintes, consolidando o místico percurso ferroviário na memória viva do pujante desenvolvimento econômico do país.'
     ]
   },
   {
     id: 'paranapiacaba-fog',
     number: 4,
-    title: 'Uma Vila Inglesa no Topo da Serra.',
+    title: 'Uma vila inglesa no topo da serra.',
     subtitle: 'A vida em Paranapiacaba e a chegada do futebol ao Brasil.',
-    image: '/assets/images/luz_paranapiacaba_1781298346748.jpg',
-    imageCaption: 'A histórica vila de Paranapiacaba desenvolveu-se no topo do sistema funicular, vivenciando o singular choque cultural entre operários brasileiros e o modo de vida vitoriano inglês.',
-    readingTime: 8,
+    image: '/assets/images/paranapiacaba_clock_spr_1781707467393.jpg',
+    imageCaption: 'Ilustração artística de época recriando a mítica neblina cobrindo a arquitetura vitoriana da estação ferroviária e o icônico relógio em Paranapiacaba.',
+    readingTime: 6,
     content: [
-      'No topo mais alto da Serra do Mar, onde a neblina frequente costuma envolver toda a paisagem, a estação ferroviária do Alto da Serra, inaugurada pela São Paulo Railway, deu origem ao povoado conhecido hoje como Paranapiacaba. Sendo o ponto de parada e transição técnica onde as composições deixavam os cabos do sistema funicular para seguir por tração de locomotivas convencionais no trecho plano do planalto, o local desenvolveu costumes e visual tipicamente britânicos.',
-      'A empresa construiu na vila uma colônia residencial planejada com moradias de madeira padronizadas para operários e engenheiros, baseadas nas vilas operárias da Grã-Bretanha. No topo do morro, o icônico relógio instalado na estação servia de referência para as partidas e chegadas dos trens, marcando o ritmo da operação com a famosa pontualidade britânica.',
-      'A influência britânica na vila também se estendeu ao esporte. Embora Charles Miller, cujo pai era um funcionário escocês da São Paulo Railway, tenha organizado as primeiras partidas oficiais de futebol na capital paulista em 1895, Paranapiacaba logo se tornou um dos primeiros núcleos ativos desse esporte no país. Engenheiros e operários ingleses realizavam partidas amadoras nos campos locais e ali fundaram agremiações pioneiras, ajudando a espalhar a prática do jogo que viria a se tornar a grande paixão nacional.',
-      'Com o passar dos anos, Paranapiacaba deixou de ser apenas um acampamento técnico de operários para se transformar em uma comunidade autossuficiente. A vila ganhou sua própria escola primária, um clube recreativo para as famílias e até mesmo um hospital equipado com materiais vindos diretamente de Londres. Essa organização social exemplar não só criava um forte sentimento de pertencimento entre os moradores, mas também servia de referência para as cidades que cresciam ao longo da ferrovia.'
+      'No cume da encosta da Serra do Mar, onde a névoa perene envolve carinhosamente a paisagem da antiga Estação Alto da Serra, nasceu a bela vila de Paranapiacaba. O local assumiu imediata relevância estratégica dentro de toda a logística operacional da estrada, pois funcionava como o centro de transição dos trens do sistema funicular para o convencional.',
+      'Face ao expressivo contingente de engenheiros, maquinistas e administradores vindos da Grã-Bretanha, o pequeno povoado paulista absorveu uma rica e única carga identitária. A arquitetura de pinho recortado e os marcantes hábitos cotidianos ditaram um rastro de elegância em meio ao clima úmido característico das serras tropicais brasileiras.',
+      'Com foco no bom funcionamento da malha férrea, a corporação inglesa ergueu uma charmosa comunidade totalmente planejada para abrigar dignamente as famílias de funcionários e operários. O desenho das residências em madeira envernizada e o imponente relógio da estação mimetizavam com esmero o panorama das mais tradicionais vilas industriais inglesas.',
+      'O imenso relógio centralizador, projetado nos moldes do icônico parlamento britânico, cumpria a nobre tarefa de sinalizar com extrema exatidão os turnos de trabalho e as saídas. A rotina operária vivia em total conformidade com a precisão dos ponteiros, transformando o Alto da Serra em uma referência singular de pontualidade no Império.',
+      'A marcante influência dos imigrantes ingleses também semeou sementes fecundas que alteraram radicalmente a história social das futuras gerações de todo o país sul-americano. Nos gramados úmidos da vila ferroviária, registraram-se os pioneiros jogos amadores de futebol, trazidos à luz pelo lendário retorno de Charles Miller ao Brasil em 1894.',
+      'O jovem desportista, cujo pai trabalhava ativamente no corpo principal de engenharia da São Paulo Railway, trouxe em sua bagagem regras e bolas oficiais de couro vitorianas. A empolgante prática logo se alastrou entre os dedicados funcionários, transformando Paranapiacaba no fértil e histórico berço diletante do futebol brasileiro organizado.',
+      'Com a consolidação interna de sua próspera estrutura urbana, o povoado conquistou importantes melhorias em áreas como educação primária, atendimento médico e serviços de lazer comuns. Tais benefícios criaram um notável ambiente de coesão social para as famílias residentes sob a frequente cortina de névoa, elevando o padrão habitacional de época.',
+      'Este inestimável e original acervo arquitetônico e mecânico encontra-se tombado pelas chancelas do patrimônio histórico e atrai visitantes de todas as origens até os dias atuais. Caminhar por suas ruas cobertas de pedras representa uma autêntica e emocionante viagem de volta ao apogeu do ferro, do carvão e da herança britânica cravada na serra.'
     ]
   },
   {
     id: 'legado-cafe',
     number: 5,
-    title: 'A Transformação de São Paulo.',
+    title: 'A transformação de São Paulo.',
     subtitle: 'Como os lucros do café remodelaram o cenário urbano paulistano.',
-    image: '/assets/images/estacao_da_luz_1781531836127.jpg',
-    imageCaption: 'Inaugurada em 1901, a monumental Estação da Luz e sua icônica torre do relógio em estilo vitoriano tornaram-se o grande símbolo da modernização e da expansão urbana paulistana.',
-    readingTime: 9,
+    image: '/assets/images/estacao_da_luz_spr_1781708439536.jpg',
+    imageCaption: 'Ilustração artística de época recriando a monumental Estação da Luz com sua icônica torre do relógio vitoriana e locomotivas a vapor ostentando a marca SPR.',
+    readingTime: 8,
     content: [
-      'O sucesso financeiro da São Paulo Railway superou as previsões mais otimistas de seus organizadores em Londres. Como única via que ligava a imensa produção cafeeira do interior paulista com o escoamento no litoral, a ferrovia idealizada e viabilizada por Irineu Evangelista de Sousa converteu-se na principal via econômica da região, alterando completamente a dinâmica urbana da cidade de São Paulo.',
-      'A pacata capital paulista logo começou a crescer em ritmo acelerado. Com ruas pavimentadas, iluminação pública a gás e os primeiros bondes, a cidade se modernizou. Os lucros do café ajudaram a abrir indústrias e atraíram imigrantes de todo o mundo, transformando São Paulo na principal força econômica do país.',
-      'O principal marco monumental desse progresso foi a inauguração da nova Estação da Luz em 1901. Projetada pelo arquiteto britânico Charles Driver e inspirada no estilo vitoriano de ferro e vidro, a enorme estrutura metálica foi manufaturada em Glasgow, transportada em navios e montada como um grande quebra-cabeça tecnológico no coração da capital. A torre do relógio da estação tornou-se a principal referência visual da paisagem paulistana, servindo como o grande portão de entrada para aqueles que chegavam à metrópole em rápida expansão.',
-      'Essa rápida circulação de capital estimulou a abertura de novos bancos, seguradoras e escritórios comerciais no centro paulistano. A riqueza gerada pela ferrovia também dinamizou a vida cultural da cidade, financiando as obras do Teatro Municipal e viabilizando o surgimento de jornais diários que debatiam os rumos do país. Com isso, São Paulo consolidou-se como ponto de convergência profissional e intelectual, centralizando as decisões econômicas que redefiniram o futuro nacional.',
-      'O fim do monopólio britânico sobre a ferrovia ocorreu em 9 de novembro de 1946, quando a concessão de oitenta anos da São Paulo Railway Company expirou. A partir dessa data, a linha foi encampada pelo governo federal brasileiro, passando a ser operada sob administração estatal direta e, posteriormente, rebatizada como Estrada de Ferro Santos-Jundiaí (EFSJ), o que encerrou um longo capítulo de controle estrangeiro sobre a via de transporte paulista.'
+      'Os formidáveis ganhos financeiros gerados pela São Paulo Railway receberam enorme e positivo impacto social logo nas primeiras etapas de vigência das transações de mercado. Como o elo fundamental de ligação entre os férteis cafezais paulistas e a costa santista, a estrada tornou-se o principal canal de tráfego de riquezas do território.',
+      'Ao aproximar o dinâmico interior do polo aduaneiro internacional, a pioneira malha ferroviária gerou um imenso acúmulo de capitais que impulsionou o crescimento da capital. São Paulo abandonou rapidamente suas modestas feições coloniais do passado para assumir a prestigiosa condição de maior centro comercial e financeiro da nação soberana.',
+      'A maciça injeção de lucros das exportações agrícolas financiou a pavimentação de ruas centrais, estimulou a rede de iluminação a gás e viabilizou bondes coletivos. A mítica cidade recebia diariamente uma formidável corrente de imigrantes de todas as pátrias do globo, ansiosos para trabalhar nos serviços urbanos emergentes.',
+      'Este notável progresso demográfico e financeiro exigiu a edificação de novos e arejados bairros residenciais que expandiram com rapidez os antigos limites geográficos da capital paulista. Áreas antes cobertas por colinas e matas foram loteadas para abrigar indústrias nascentes e vivendas urbanas sob o ritmo frenético do comércio das ferrovias.',
+      'O mais expressivo monumento desse fértil período de modernidade urbana foi a magnífica e suntuosa inauguração da Estação da Luz, no primeiro ano do século vinte. O grandioso projeto vitoriano foi inteiramente idealizado pelo arquiteto britânico Charles Driver e montado no centro da cidade com peças pré-fabricadas trazidas de navio.',
+      'A imponente e altiva torre do relógio, inspirada nas grandes catedrais de ferro e vidro europeias, dominava soberana a dinâmica diária dos apressados passageiros e comerciantes paulistanos. A estação agia como a exuberante porta de entrada da riqueza do café paulista, despertando orgulho cívico e simbolizando a inserção nacional na modernidade.',
+      'A extraordinária convergência sob o teto da Luz atraiu a fundação de bancos centrais, elegantes casas de exportação, seguradoras sólidas e sofisticados teatros públicos de prestígio. Ao fomentar a expansão cultural associada à universidade e à imprensa livre, os trilhos desenharam a pujante e moderna paulicéia industrial que emergiria do café.',
+      'O controle vitoriano formal das concessões da ferrovia encerrou-se de modo pacífico no ano de 1946, após noventa anos de contínua e exemplar administração da SPR. Integrada ao patrimônio público sob o nome de Santos-Jundiaí, a lendária linha assentou as bases vitais e indeléveis sobre as quais se ergueria a maior metrópole da América do Sul.'
     ]
   },
   {
     id: 'escoamento-santos',
     number: 6,
-    title: 'A Ligação com o Mercado Mundial.',
+    title: 'A ligação com o mercado mundial.',
     subtitle: 'O desenvolvimento do Porto de Santos e o comércio internacional.',
-    image: '/assets/images/porto_de_santos_1781307571913.jpg',
-    imageCaption: 'O Porto de Santos no final do século XIX, transformado em um dinâmico centro de comércio mundial integrado diretamente ao escoamento ágil da ferrovia.',
-    readingTime: 8,
+    image: '/assets/images/porto_de_santos_spr_vintage_1781709193710.jpg',
+    imageCaption: 'Ilustração artística de época recriando a dinâmica do Porto de Santos no final do século XIX, com navios mercantes e trens da SPR operando em plena sintonia.',
+    readingTime: 6,
     content: [
-      'Se o interior paulista produzia o café em escala expressiva, o Porto de Santos garantia o escoamento comercial de toda a produção. Antes da linha de trem transpor a encosta íngreme da Serra do Mar, o café viajava em lombos de mulas exaustas, numa jornada lenta por caminhos precários de terra batida que ficavam intransitáveis nos dias de chuva intensa.',
-      'A ligação ferroviária mudou profundamente essa dinâmica mercantil. Com trens descendo e subindo a serra diariamente, o frete da carga de café passou a durar poucas horas em vez de dias ou semanas. A perda de mercadorias no caminho reduziu-se bastante e a eficiência logística barateou o preço final, tornando o grão paulista altamente competitivo no exterior.',
-      'Para atender à exportação ágil gerada pela ferrovia, a estrutura do Porto de Santos foi modernizada com cais de alvenaria e modernos guindastes para acelerar o processo de embarque nos cargueiros internacionais. Essa integração eficiente entre a malha ferroviária e um porto bem estruturado consolidou de vez o café brasileiro na liderança absoluta de vendas para as capitais da Europa e da América do Norte.',
-      'Essa impressionante infraestrutura portuária mudou também o perfil demográfico e social de Santos. O porto transformou-se em um imenso caldeirão multicultural, onde marinheiros, comerciantes e imigrantes de dezenas de nacionalidades se encontravam diariamente nas docas. O vai e vem constante de sacas de café alimentava uma engrenagem financeira global de altíssima velocidade, conectando de forma definitiva a produção do interior de São Paulo aos hábitos diários de consumo nas grandes cafeterias europeias.'
+      'Se o interior do estado produzia café em escalas impressionantes de volume, o Porto de Santos funcionava como a ponte final rumo ao exigente mercado externo. Antes da inauguração dos trilhos, o translado até o cais dependia inteiramente de lentas caravanas de mulas que enfrentavam trilhas enlameadas e perigosas na encosta.',
+      'A entrada em operação de toda a malha da São Paulo Railway transformou inteiramente aquela precária e tradicional dinâmica do comércio do açúcar e café imperiais. A rapidez e a fabulosa capacidade dos trens a vapor garantiram que as colheitas do planalto alcançassem os porões dos navios na exata correspondência dos contratos.',
+      'Por dispor de prazos confiáveis e taxas de frete altamente competitivas, os exportadores paulistas ampliaram seu domínio de vendas nas principais capitais refinadas do mundo vitoriano. A eficiência gerada pela sinergia ferroviária contribuiu imensamente para que o PIB nacional atingisse patamares extremamente elevados e sadios ao final do século.',
+      'O espetacular aumento no volume das exportações exigiu, igualmente, uma radical e profunda expansão em toda a orla portuária e suas antigas instalações de acostagem. Modernos cais de alvenaria e galpões de armazenamento gigantescos foram erguidos, sepultando o antigo e doentio porto de lama que limitava o avanço dos negócios comerciais.',
+      'Estas robustas melhorias na infraestrutura marítima operaram uma formidável metamorfose também no urbanismo e na diversidade demográfica da próspera cidade litorânea de Santos. A foz tornou-se o destino de acolhimento de vigorosas correntes migratórias e estimulou um próspero intercâmbio de ideias, mercadorias raras e influências culturais com o exterior.',
+      'As águas calmas da baía santista recebiam cotidianamente dezenas de imponentes vapores mercantes hasteando as mais variadas bandeiras das potências comerciais de diversas partes do mundo. O tráfego de cargas criava laços comerciais inquebráveis e contínuos entre as lavouras do planalto e os grandes centros produtivos da Europa e da América do Norte.',
+      'Dessa união indissolúvel entre a ferrovia "Ingleza", o suor dos operários e as suntuosas embarcações estrangeiras, consolidou-se a época áurea do café no Brasil. O binômio trilho-porto deu sustentação econômica de longa duração à jovem República nascente e impulsionou as mais ousadas inovações tecnológicas e fabris de todo o território paulista.',
+      'Nas dobras do tempo histórico, a herança destas pioneiras infraestruturas de ferro subsiste no orgulho dos municípios e na beleza das vilas e monumentos preservados pela posteridade brasileira. Os caminhos abertos pelo Barão de Mauá e Daniel Fox continuam a inspirar o reconhecimento de uma mítica e audaciosa jornada de progresso nacional.'
     ]
   }
 ];
@@ -155,5 +177,65 @@ export const quizQuestions: QuizQuestion[] = [
     ],
     correctIndex: 2,
     explanation: 'A Estação da Luz, reinaugurada em 1901 com estruturas de ferro alemãs e design vitoriano britânico inteiramente projetados em Londres, representava a grande catedral paulista do café.'
+  },
+  {
+    id: 6,
+    question: 'Qual era a principal mercadoria vinda do interior do estado que motivou a construção da São Paulo Railway?',
+    options: [
+      'Cana-de-açúcar e etanol',
+      'Ouro e diamantes',
+      'O Café (conhecido como "ouro verde")',
+      'Algodão e manufaturas'
+    ],
+    correctIndex: 2,
+    explanation: 'O crescimento espetacular das lavouras de café no interior paulista exigia um sistema logístico moderno e de alta capacidade para transportar a colheita até o Porto de Santos.'
+  },
+  {
+    id: 7,
+    question: 'Por que a ferrovia São Paulo Railway ficou conhecida pelo apelido de "Ingleza" no jargão popular e de época?',
+    options: [
+      'Pelo fato de somente cidadãos ingleses terem permissão para viajar nela',
+      'Pela total dominância de capital inglês, projetos de engenharia britânicos, materiais e administração do país europeu',
+      'Porque o idioma oficial e placas de sinalização eram exclusivamente em inglês',
+      'Pelo clima frio e neblina constante da região de São Paulo'
+    ],
+    correctIndex: 1,
+    explanation: 'A ferrovia pertencia à empresa britânica "The San Paulo (Brazilian) Railway Company Limited", financiada por acionistas ingleses e projetada sob a rígida escola de engenharia vitoriana.'
+  },
+  {
+    id: 8,
+    question: 'Qual era a principal barreira geográfica que parecia intransponível e que a ferrovia precisou vencer?',
+    options: [
+      'O Rio Tietê com suas cheias constantes',
+      'A escarpa íngreme e instável da Serra do Mar',
+      'O vale profundo do Paraíba',
+      'As montanhas de granito da Serra da Mantiqueira'
+    ],
+    correctIndex: 1,
+    explanation: 'A descida abrupta da Serra do Mar, com quase 800 metros de desnível vertical coberto por densa mata atlântica úmbrea, representou o maior desafio técnico do projeto.'
+  },
+  {
+    id: 9,
+    question: 'Como eram alimentados e operavam os cabos de aço e caldeiras do sistema funicular da ferrovia na Serra do Mar?',
+    options: [
+      'Por energia elétrica gerada em usinas na represa Billings',
+      'Por motores de popa acoplados nos eixos das rodas',
+      'Por imensas caldeiras a vapor fixas instaladas em patamares ao longo da subida da serra',
+      'Por tração animal de mulas de carga em carrosséis gigantes'
+    ],
+    correctIndex: 2,
+    explanation: 'Grandes casas de máquinas a vapor fixas eram instaladas no topo de cada patamar ou plano inclinado para movimentar e sustentar as bobinas de cabos de aço que tracionavam as composições.'
+  },
+  {
+    id: 10,
+    question: 'Após expirado o prazo de concessão britânica de 90 anos, em 1946, o que ocorreu com a malha da ferrovia?',
+    options: [
+      'Foi abandonada e totalmente convertida em estradas de rodagem comuns',
+      'Foi comprada por uma corporação ferroviária dos Estados Unidos',
+      'Foi encampada pela União (governo federal do Brasil), mudando de nome para Estrada de Ferro Santos-Jundiaí',
+      'Teve seus trilhos inteiramente arrancados e exportados para a Inglaterra'
+    ],
+    correctIndex: 2,
+    explanation: 'Com o fim dos 90 anos de concessão da SPR em 1946, o patrimônio ferroviário reverteu ao governo federal brasileiro de forma pacífica, originando a Estrada de Ferro Santos-Jundiaí.'
   }
 ];

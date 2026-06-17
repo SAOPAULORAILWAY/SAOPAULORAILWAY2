@@ -223,16 +223,18 @@ export default function App() {
                       onClick={() => setPaywallOpen(true)}
                       className="inline-flex items-center gap-2 px-3 py-1 bg-amber-600/10 border border-amber-600/20 hover:bg-amber-600/20 hover:border-amber-600/30 rounded-full text-xs font-mono text-amber-950 w-fit font-bold uppercase transition-all select-none cursor-pointer"
                     >
-                      🔒 Versão Comercial (R$ 29,99 • Obter Chave)
+                      <span>🔒 Versão Comercial (</span>
+                      <span className="text-red-500 font-black">R$ 29,99</span>
+                      <span> • Obter Chave)</span>
                     </button>
                   )}
 
                   <h2 className="text-4xl sm:text-5xl font-serif tracking-tight text-stone-950 font-medium leading-tight">
-                    A primeira ferrovia paulista em <span className="text-[#8A7055] font-black">fidelidade histórica</span>.
+                    São Paulo Railway a <span className="text-red-700 font-black">primeira ferrovia paulista</span>.
                   </h2>
 
-                  <p className="text-base sm:text-lg text-[#52463A] leading-relaxed text-justify">
-                    Esta obra reconstitui em detalhes o pioneirismo de Irineu Evangelista de Sousa (Barão de Mauá) e os bastidores das negociações políticas e financeiras que ligaram o Império do Brasil à Londres vitoriana. Muito além de estatísticas frias, a narrativa acompanha o audacioso projeto do engenheiro Daniel Fox, que superou os quase 800 metros de desnível da Serra do Mar por meio de um engenhoso sistema de planos inclinados funiculares, uma façanha técnica que revolucionou o escoamento do café rumo ao porto de Santos e ergueu em Paranapiacaba um pedaço fascinante de herança britânica cravado na serra paulista.
+                  <p className="text-base sm:text-[16.5px] text-[#52463A] leading-relaxed text-justify">
+                    Esta obra reconstitui a trajetória histórica e o impacto econômico da São Paulo Railway, a primeira linha ferroviária do território paulista. Acompanhe as complexas negociações diplomáticas e financeiras entre o Império do Brasil e investidores vitorianos em Londres, sob o protagonismo inicial de Irineu Evangelista de Sousa (Barão de Mauá) e do conselheiro José Antônio Pimenta Bueno. Pautado em rigor documental, o livro narra as soluções técnicas inovadoras que tornaram possível transpor a intransponível muralha da Serra do Mar, sob liderança técnica de James Brunlees e a genialidade em campo do engenheiro residente Daniel Fox. Através de planos inclinados funiculares, o volume descortina ainda o cotidiano britânico em Paranapiacaba, a marcante introdução do futebol no Brasil por Charles Miller e o amadurecimento comercial que moldou o destino de São Paulo até a encampação pacífica da malha ferroviária pela União em 1946. Trata-se de um amplo convite à preservação de nossa memória ferroviária e de nosso patrimônio nacional.
                   </p>
 
                   {/* Curated features grid */}
@@ -241,7 +243,7 @@ export default function App() {
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
                         <h4 className="font-serif font-black text-[#2C2620] text-sm">Rigor e Conteúdo Exclusivo</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Destrave a pesquisa histórica definitiva. Garanta seu acesso vitalício à reconstituição completa da ferrovia paulista, com dados técnicos originais e revelações inéditas.</p>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Garanta seu acesso à história da ferrovia paulista, com dados técnicos originais e revelações incríveis.</p>
                       </div>
                     </div>
                     
@@ -264,8 +266,8 @@ export default function App() {
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Edição para Impressão em PDF</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Adquira o livro completo diagramado em PDF de alta resolução, pronto para impressão em A4.</p>
+                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Modo Livro de Alta Fidelidade</h4>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Experimente a diagramação e tipografia vitoriana clássica otimizada totalmente integrada em seu navegador para uma imersão máxima.</p>
                       </div>
                     </div>
                   </div>
@@ -274,15 +276,15 @@ export default function App() {
                   <div className="grid grid-cols-3 gap-3 border-t border-b border-[#2C2620]/10 py-5 select-none">
                     <div className="text-center sm:text-left">
                       <span className="font-serif font-black text-2xl text-stone-900">{chapters.length}</span>
-                      <p className="text-[10px] font-mono text-stone-500 uppercase tracking-widest mt-1">Capítulos Densos</p>
+                      <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Capítulos Históricos</p>
                     </div>
                     <div className="text-center sm:text-left border-l border-[#2C2620]/10 px-4">
                       <span className="font-serif font-black text-2xl text-stone-900">{chapters.filter(c => c.image).length}</span>
-                      <p className="text-[10px] font-mono text-stone-500 uppercase tracking-widest mt-1">Imagens Plates</p>
+                      <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas Exclusivas</p>
                     </div>
                     <div className="text-center sm:text-left border-l border-[#2C2620]/10 px-4">
-                      <span className="font-serif font-black text-2xl text-stone-900">R$ 29,99</span>
-                      <p className="text-[10px] font-mono text-stone-500 uppercase tracking-widest mt-1">Preço Único</p>
+                      <span className="font-serif font-black text-2xl text-red-600">R$ 29,99</span>
+                      <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Preço Único</p>
                     </div>
                   </div>
 
@@ -297,9 +299,9 @@ export default function App() {
                     
                     <button
                       onClick={() => openFullPDF()}
-                      className="py-4 px-8 border-2 border-emerald-700 text-emerald-800 hover:bg-emerald-50/50 rounded-xl font-serif font-bold text-base transition-colors flex items-center justify-center gap-2 cursor-pointer duration-150"
+                      className="py-4 px-8 border-2 border-[#8A7055] text-[#8A7055] hover:bg-stone-50 rounded-xl font-serif font-bold text-base transition-colors flex items-center justify-center gap-2 cursor-pointer duration-150"
                     >
-                      <Printer className="h-5 w-5" /> Exportar em PDF
+                      <BookOpen className="h-5 w-5" /> Visualizar em PDF
                     </button>
                   </div>
                 </div>
@@ -309,9 +311,9 @@ export default function App() {
               {/* TABLE OF CONTENTS SECTION */}
               <section className="bg-white/40 border border-[#2C2620]/10 rounded-3xl p-6 sm:p-10 space-y-8">
                 <div className="text-center space-y-1">
-                  <span className="text-[10px] font-mono tracking-widest uppercase text-[#8A7055] font-extrabold">Sumário Executivo</span>
+                  <span className="text-[10px] font-mono tracking-widest uppercase text-[#8A7055] font-extrabold">Sumário</span>
                   <h3 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900">Cronograma do Volume</h3>
-                  <p className="text-xs text-stone-500 max-w-md mx-auto italic font-serif">Explore o índice de matérias históricas veridicamente preservadas no e-book.</p>
+                  <p className="text-xs text-stone-500 max-w-md mx-auto italic font-serif">Explore o índice de capítulos neste e-book histórico.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">

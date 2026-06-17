@@ -24,7 +24,7 @@ export interface AccessCodeDoc {
   createdAt?: string;
 }
 
-const DEFAULT_CODES = ['FERROVIA1867', 'EVANDRO2026', 'LOGISTICA1867', 'PARANAPIACABA', 'EVANDRO1979'];
+const DEFAULT_CODES = ['EVANDRO2026', 'LOGISTICA1867', 'PARANAPIACABA', 'EVANDRO1979'];
 
 /**
  * Ensures user has a unique identifier stored on their browser session/device.
@@ -44,6 +44,17 @@ export function getOrCreateSessionId(): string {
  */
 export async function seedDefaultCodes(): Promise<void> {
   try {
+    // 1. Clean up obsolete key combinations if they exist in the DB
+    const obsoleteKeys = ['FERROVIA1867', '1234'];
+    for (const key of obsoleteKeys) {
+      const docRef = doc(db, 'access_codes', key);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        await deleteDoc(docRef);
+        console.log(`Pruned obsolete access key: ${key}`);
+      }
+    }
+
     const batch = writeBatch(db);
     let hasKeysToInsert = false;
 

@@ -167,6 +167,16 @@ export default function PaywallModal({
     setErrorCode('');
 
     try {
+      if (normalized === 'EVANDRO1979') {
+        setIsAuthorAuthenticated(true);
+        setShowAuthorPanel(true);
+        localStorage.setItem('spr_ebook_activated_code', normalized);
+        onUnlock();
+        setPaymentStep('success');
+        setIsProcessing(false);
+        return;
+      }
+
       const res = await validateAndRegisterCode(normalized, sessionId);
       if (res.success) {
         localStorage.setItem('spr_ebook_activated_code', normalized);
@@ -328,20 +338,22 @@ export default function PaywallModal({
             </span>
           </div>
           <div className="flex items-center gap-1.5 font-sans">
-            <button
-              onClick={() => {
-                setShowAuthorPanel(!showAuthorPanel);
-                setErrorCode('');
-              }}
-              title="Acessar Gerenciador de Chaves"
-              className={`p-1.5 rounded-lg border text-xs font-serif font-black flex items-center gap-1 transition-all cursor-pointer ${
-                showAuthorPanel 
-                  ? 'bg-[#8A7055] text-[#FAF7F2] border-[#8A7055]' 
-                  : 'bg-white hover:bg-stone-50 text-stone-700 border-stone-305'
-              }`}
-            >
-              <Settings className="h-3.5 w-3.5" /> {showAuthorPanel ? 'Leitura' : 'Configurar Chaves'}
-            </button>
+            {isAuthorAuthenticated && (
+              <button
+                onClick={() => {
+                  setShowAuthorPanel(!showAuthorPanel);
+                  setErrorCode('');
+                }}
+                title="Acessar Gerenciador de Chaves"
+                className={`p-1.5 rounded-lg border text-xs font-serif font-black flex items-center gap-1 transition-all cursor-pointer ${
+                  showAuthorPanel 
+                    ? 'bg-[#8A7055] text-[#FAF7F2] border-[#8A7055]' 
+                    : 'bg-white hover:bg-stone-50 text-stone-700 border-stone-305'
+                }`}
+              >
+                <Settings className="h-3.5 w-3.5" /> {showAuthorPanel ? 'Leitura' : 'Configurar Chaves'}
+              </button>
+            )}
             <button 
               onClick={onClose}
               className="p-1 rounded-full hover:bg-[#8A7055]/10 text-stone-500 transition-colors cursor-pointer"
@@ -361,7 +373,7 @@ export default function PaywallModal({
                     <Lock className="h-5 w-5 text-[#8A7055]" /> Painel Administrativo
                   </h3>
                   <p className="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
-                    Acesso restrito para o autor, Evandro. Insira a sua senha de gerenciamento de chaves para prosseguir.
+                    Acesso restrito para o autor. Insira a sua senha de gerenciamento de chaves para prosseguir.
                   </p>
                 </div>
 
@@ -369,7 +381,7 @@ export default function PaywallModal({
                   onSubmit={(e) => {
                     e.preventDefault();
                     const cleanVal = authorPassword.trim().toUpperCase();
-                    if (cleanVal === 'EVANDRO' || cleanVal === 'EVANDRO1979' || cleanVal === 'EVANDRO2026' || cleanVal === 'MARCONDES' || cleanVal === '30026230836') {
+                    if (cleanVal === 'EVANDRO1979') {
                       setIsAuthorAuthenticated(true);
                       setAuthorPassError('');
                     } else {
@@ -450,7 +462,7 @@ export default function PaywallModal({
                   <form onSubmit={handleAddCustomKey} className="flex gap-2">
                     <input 
                       type="text" 
-                      placeholder="Ex: 8852"
+                      placeholder="Nova chave de acesso"
                       value={newKeyInput}
                       onChange={(e) => setNewKeyInput(e.target.value)}
                       className="flex-1 bg-stone-50 border border-stone-250 rounded-lg px-3 py-2 text-xs font-mono tracking-widest placeholder:text-stone-300"
@@ -608,14 +620,21 @@ export default function PaywallModal({
                   </div>
 
                   <div className="bg-white border border-[#2C2620]/15 rounded-xl p-4 text-center shadow-xs">
-                    <span className="text-[10px] text-stone-400 font-mono tracking-wider uppercase block leading-none">Preço do Volume Digital</span>
-                    <span className="text-3xl font-serif font-black text-[#8A7055] block mt-1">{customProductPrice}</span>
-                    <span className="text-[10px] text-emerald-700 font-mono font-bold block mt-0.5 uppercase tracking-wide">Pago uma única vez • Acesso perpétuo</span>
+                    <span className="text-[10px] text-stone-400 font-mono tracking-wider uppercase block leading-none">Preço do Acesso Digital</span>
+                    <span className="text-3xl font-serif font-black text-red-600 block mt-1">{customProductPrice}</span>
+                    <span className="text-[10px] text-emerald-700 font-mono font-bold block mt-0.5 uppercase tracking-wide">Pago uma única vez</span>
                   </div>
 
                   <p className="text-xs sm:text-sm text-[#4A3F35] leading-relaxed text-justify px-1">
-                    Ao destravar esta obra comercial, você garante acesso integral a todos os <b>{chapters.length} capítulos históricos</b>, tabelas de dados estatísticas imperiais, <b>exportação mecânica completa em PDF (A4 fidedigno)</b> e o simulador completo de aprovação de domínio.
+                    Ao adquirir o seu exemplar digital, você garante acesso integral online a todos os <b>{chapters.length} capítulos históricos</b>, <b>visualização em PDF</b> diretamente no navegador, e o <b>QUIZ DE PERGUNTAS</b> interativo. Descubra a fascinante história da ferrovia paulista com este conteúdo completo e exclusivo!
                   </p>
+
+                  <div className="bg-amber-50/70 border border-[#D5C9B3]/40 rounded-xl p-3.5 space-y-1.5 text-left select-none">
+                    <span className="text-[9.5px] uppercase font-mono font-bold tracking-wider text-[#8A7055] block">Aviso Legal & Termos Adicionais</span>
+                    <p className="text-[10.5px] text-stone-600 leading-normal font-sans text-justify">
+                      <b>Conteúdo Estritamente Digital e Online:</b> Ao adquirir o acesso, você compreende e aceita que está comprando uma <b>chave de acesso digital individual</b> para leitura online desta plataforma. <u>Não há envio de livro físico/impresso</u> por correio e <u>não disponibilizamos download do arquivo PDF para armazenamento offline</u> ou impressão comercial. Após a validação da chave, o serviço é considerado usufruído e entregue eletronicamente de forma imediata.
+                    </p>
+                  </div>
 
                   {/* Enter Access Code Form */}
                   <form onSubmit={handleValidateCode} className="space-y-3">
@@ -626,7 +645,7 @@ export default function PaywallModal({
                       <div className="flex gap-2">
                         <input 
                           type="text" 
-                          placeholder="Ex: 1234 ou FERROVIA1867"
+                          placeholder="Digite sua chave de acesso"
                           value={accessCode}
                           onChange={(e) => {
                             setAccessCode(e.target.value);
@@ -637,7 +656,7 @@ export default function PaywallModal({
                         <button 
                           type="submit"
                           disabled={isProcessing}
-                          className="px-5 bg-[#8A7055] hover:bg-[#725C46] disabled:bg-stone-305 text-white rounded-xl text-sm font-serif font-bold transition-transform cursor-pointer"
+                          className="px-5 bg-red-600 hover:bg-red-700 active:bg-red-800 disabled:bg-stone-305 text-white rounded-xl text-sm font-serif font-bold transition-all cursor-pointer"
                         >
                           {isProcessing ? 'Buscando...' : 'Validar'}
                         </button>
@@ -651,16 +670,16 @@ export default function PaywallModal({
                     </div>
                   </form>
 
-                  {/* Interactive simulated PIX trigger */}
+                  {/* Real PIX Trigger */}
                   <div className="pt-2 border-t border-[#2C2620]/10 flex flex-col gap-2">
                     <span className="text-[10px] text-center font-mono uppercase text-stone-500 font-bold block select-none">
-                      Ou Simule o Fluxo Comercial de Compra da sua Audiência
+                      Pague via Pix para obter sua Chave de Acesso
                     </span>
                     <button
                       type="button"
                       disabled={isProcessing}
                       onClick={handleSimulatePix}
-                      className="w-full py-3 px-4 bg-stone-900 hover:bg-stone-800 disabled:bg-stone-300 text-white font-serif font-bold text-sm rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full py-3 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 disabled:bg-stone-300 text-white font-serif font-bold text-sm rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
                     >
                       {isProcessing ? (
                         <span className="flex items-center gap-2 font-mono text-xs text-white">
@@ -668,11 +687,11 @@ export default function PaywallModal({
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                           </svg>
-                          PROCESSANDO COMPRA...
+                          GERANDO PIX...
                         </span>
                       ) : (
                         <>
-                          <QrCode className="h-4.5 w-4.5" /> Simular Pagamento Pix ({customProductPrice})
+                          <QrCode className="h-4.5 w-4.5" /> Pagamento Pix ({customProductPrice})
                         </>
                       )}
                     </button>
@@ -722,33 +741,18 @@ export default function PaywallModal({
                     </ul>
                   </div>
 
-                  <div className="space-y-2 pt-2">
-                    <button
-                      type="button"
-                      disabled={isProcessing}
-                      onClick={handleConfirmPixPayment}
-                      className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-stone-300 text-white rounded-xl text-sm font-serif font-bold transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm hover:shadow-md"
-                    >
-                      {isProcessing ? (
-                        <span className="flex items-center gap-2 font-mono text-xs">
-                          <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          CONFIRMANDO LIQUIDAÇÃO...
-                        </span>
-                      ) : (
-                        <>
-                          <ShieldCheck className="h-4.5 w-4.5" /> Confirmar Simulação de Pagamento
-                        </>
-                      )}
-                    </button>
+                  <div className="space-y-3 pt-2">
+                    <div className="bg-amber-500/10 border border-amber-500/20 p-3.5 rounded-xl text-center select-none">
+                      <p className="text-xs text-amber-900 font-sans font-semibold leading-relaxed">
+                        ⚠️ Confirmação Manual: Envie o comprovante Pix para o e-mail acima. Assim que verificado, sua chave de acesso exclusiva será enviada para você.
+                      </p>
+                    </div>
                     <button
                       type="button"
                       onClick={() => setPaymentStep('options')}
-                      className="text-stone-500 text-xs font-mono underline hover:text-stone-850 uppercase block mx-auto py-1 cursor-pointer"
+                      className="w-full py-3 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl text-sm font-serif font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm hover:shadow-md uppercase text-xs tracking-wider"
                     >
-                      Voltar às Opções
+                      Voltar para Validar Chave Recebida
                     </button>
                   </div>
                 </div>
@@ -842,7 +846,7 @@ export default function PaywallModal({
                   <div className="bg-emerald-50/50 border border-emerald-200/60 p-4 rounded-xl max-w-sm mx-auto space-y-1">
                     <span className="text-[10px] text-emerald-700 font-mono font-bold uppercase tracking-widest block">Licença Vitalícia Ativada</span>
                     <p className="text-xs text-stone-700 leading-relaxed max-w-xs mx-auto text-center">
-                      Agradecemos por prestigiar a obra e adquirir o exemplar! Agora você possui passe livre imediato para ler todos os capítulos e exportar em PDF.
+                      Agradecemos por prestigiar a obra e adquirir o exemplar! Agora você possui passe livre imediato para ler todos os capítulos e visualizar em PDF.
                     </p>
                   </div>
 
