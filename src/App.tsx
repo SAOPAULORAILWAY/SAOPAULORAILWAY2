@@ -32,6 +32,10 @@ export default function App() {
   const [targetChapterIndex, setTargetChapterIndex] = useState<number>(0);
   const [targetShowQuiz, setTargetShowQuiz] = useState<boolean>(false);
   const [targetPrintMode, setTargetPrintMode] = useState<boolean>(false);
+  const [targetShowConclusion, setTargetShowConclusion] = useState<boolean>(false);
+  const [targetShowReferences, setTargetShowReferences] = useState<boolean>(false);
+  const [targetShowAboutAuthor, setTargetShowAboutAuthor] = useState<boolean>(false);
+  const [targetShowApresentacao, setTargetShowApresentacao] = useState<boolean>(true);
   const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
     return localStorage.getItem('spr_ebook_unlocked') === 'true';
   });
@@ -71,6 +75,22 @@ export default function App() {
     setTargetChapterIndex(index);
     setTargetShowQuiz(false);
     setTargetPrintMode(false);
+    setTargetShowConclusion(false);
+    setTargetShowReferences(false);
+    setTargetShowAboutAuthor(false);
+    setTargetShowApresentacao(false);
+    setView('reader');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const openApresentacao = () => {
+    setTargetChapterIndex(0);
+    setTargetShowQuiz(false);
+    setTargetPrintMode(false);
+    setTargetShowConclusion(false);
+    setTargetShowReferences(false);
+    setTargetShowAboutAuthor(false);
+    setTargetShowApresentacao(true);
     setView('reader');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
@@ -82,6 +102,43 @@ export default function App() {
     }
     setTargetShowQuiz(true);
     setTargetPrintMode(false);
+    setTargetShowConclusion(false);
+    setTargetShowReferences(false);
+    setTargetShowAboutAuthor(false);
+    setTargetShowApresentacao(false);
+    setView('reader');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const openConclusion = () => {
+    setTargetShowQuiz(false);
+    setTargetPrintMode(false);
+    setTargetShowConclusion(true);
+    setTargetShowReferences(false);
+    setTargetShowAboutAuthor(false);
+    setTargetShowApresentacao(false);
+    setView('reader');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const openReferences = () => {
+    setTargetShowQuiz(false);
+    setTargetPrintMode(false);
+    setTargetShowConclusion(false);
+    setTargetShowReferences(true);
+    setTargetShowAboutAuthor(false);
+    setTargetShowApresentacao(false);
+    setView('reader');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const openAboutAuthor = () => {
+    setTargetShowQuiz(false);
+    setTargetPrintMode(false);
+    setTargetShowConclusion(false);
+    setTargetShowReferences(false);
+    setTargetShowAboutAuthor(true);
+    setTargetShowApresentacao(false);
     setView('reader');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
@@ -94,6 +151,10 @@ export default function App() {
     setTargetChapterIndex(0);
     setTargetShowQuiz(false);
     setTargetPrintMode(true);
+    setTargetShowConclusion(false);
+    setTargetShowReferences(false);
+    setTargetShowAboutAuthor(false);
+    setTargetShowApresentacao(false);
     setView('reader');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
@@ -112,7 +173,7 @@ export default function App() {
               A Saga da São Paulo Railway
             </span>
             <span className="text-[10px] font-mono text-stone-500 mt-1 uppercase tracking-wider leading-none">
-              Estudo Filológico Historicamente Verificado • 1867
+              CONTEUDO HISTÓRICO
             </span>
           </div>
         </div>
@@ -130,7 +191,7 @@ export default function App() {
           </button>
           
           <button
-            onClick={() => openChapter(0)}
+            onClick={() => openApresentacao()}
             className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
               view === 'reader'
                 ? 'bg-[#8A7055]/10 text-[#8A7055]'
@@ -159,55 +220,118 @@ export default function App() {
               {/* Split layout: Cover Mockup vs. Presentation Metadata */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                 
-                {/* Left Column: Exquisite 3D Skew Cover Mockup */}
-                <div className="lg:col-span-5 flex justify-center">
-                  <div className="perspective-1000 select-none group">
-                    <motion.div 
-                      className="relative w-[260px] min-[360px]:w-[290px] min-[375px]:w-80 sm:w-85 aspect-[3/4] bg-white rounded-2xl p-3 sm:p-4 shadow-2xl border border-stone-300 transform transition-all duration-500 ease-out flex flex-col justify-between overflow-hidden"
+                {/* Left Column: Exquisite Deep Black Hardcover Book Mockup */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-center py-6 sm:py-10">
+                  {/* Subtle ambient light floor shadow under the book */}
+                  <div className="relative select-none group">
+                    
+                    {/* ENQUADRADO / STABILIZED CLASSIC BOOK COVER */}
+                    <div 
+                      className="relative w-[250px] min-[360px]:w-[285px] sm:w-[325px] aspect-[1/1.4] transition-all duration-500 ease-out group-hover:scale-[1.03]"
                       style={{
                         transformStyle: 'preserve-3d',
-                        boxShadow: '0 25px 50px -12px rgba(44, 38, 32, 0.25)',
+                        transform: 'rotateY(0deg) rotateX(0deg) rotateZ(0deg)',
                       }}
-                      whileHover={{ scale: 1.02 }}
                     >
-                      {/* Leather cover background simulation */}
-                      <div className="absolute inset-0 bg-[#FAF7F2] opacity-50 z-0 pointer-events-none"></div>
-                      
-                      {/* Editorial vintage double border lines */}
-                      <div className="absolute inset-2 border-2 border-stone-300 bg-transparent rounded-xl pointer-events-none z-10"></div>
-                      <div className="absolute inset-2.5 border border-double border-stone-300 bg-transparent rounded-xl pointer-events-none z-10"></div>
-                      
+                      {/* 1. BACK COVER OVERLAY (Slightly larger for thickness) */}
+                      <div 
+                        className="absolute inset-[-1px] bg-gradient-to-r from-[#1c1c1e] to-[#0a0a0a] rounded-r-md border border-stone-900/40 shadow-2xl"
+                        style={{
+                          transform: 'translateZ(-6px)',
+                        }}
+                      />
 
+                      {/* 2. PAGE STACK SIMULATION (Visible tiny edge) */}
+                      <div 
+                        className="absolute top-[3px] bottom-[3px] right-[-4px] w-[6px] bg-[#fbf9f5] border-y border-stone-200 shadow-inner"
+                        style={{
+                          backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 1.5px, #e2dac9 1.5px, #e2dac9 3px)',
+                        }}
+                      />
 
-                      {/* Cover main core headings */}
-                      <div className="z-10 text-center space-y-1 sm:space-y-3 px-3">
-                        <span className="text-[8px] sm:text-[10px] font-mono uppercase tracking-widest text-stone-500">
-                          Saga de Progresso
-                        </span>
-                        <h1 className="text-xl min-[360px]:text-2xl sm:text-4xl font-serif font-black tracking-tight leading-tight text-stone-900 uppercase">
-                          A Saga da <br/>
-                          <span className="text-[#8A7055]">São Paulo Railway</span>
-                        </h1>
-                        <div className="h-0.5 sm:h-1 w-10 sm:w-14 bg-[#8A7055] mx-auto rounded-full"></div>
-                        <p className="text-[7.5px] sm:text-[9.5px] font-mono tracking-wide text-stone-600 uppercase max-w-xs mx-auto leading-relaxed">
-                          Da Conexão Inglesa à Serra do Mar: o Império do Café e a Vila de Paranapiacaba
-                        </p>
+                      {/* 3. FRONT COVER (Exquisite Deep Black Leather Look) */}
+                      <div 
+                        className="absolute inset-0 bg-gradient-to-br from-[#242426] via-[#121212] to-black rounded-r-lg border border-[#1e1e20] shadow-xl flex flex-col justify-between p-6 overflow-hidden"
+                        style={{
+                          transform: 'translateZ(6px)',
+                          boxShadow: 'inset 0 0 24px rgba(0,0,0,0.6)',
+                        }}
+                      >
+                        {/* Rich Leather pattern watermark overlay */}
+                        <div className="absolute inset-0 bg-radial-to-bl from-transparent to-black/50 mix-blend-overlay opacity-90 pointer-events-none z-0" />
+
+                        {/* Traditional Gold Embossed Double-Line Border framing the cover */}
+                        <div className="absolute inset-2.5 border-2 border-[#ffd700]/35 rounded-md pointer-events-none z-10" />
+                        <div className="absolute inset-3.5 border border-[#ffd700]/20 rounded-sm pointer-events-none z-10" />
+
+                        {/* Gold Filigree corner decorations */}
+                        <div className="absolute top-4 left-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+                        <div className="absolute top-4 right-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+                        <div className="absolute bottom-4 left-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+                        <div className="absolute bottom-4 right-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+
+                        {/* Spine-join line shadow */}
+                        <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-black/40 z-20 pointer-events-none" />
+
+                        {/* Top Metadata */}
+                        <div className="z-10 text-center space-y-1">
+                          <span className="text-[8px] sm:text-[9.5px] font-mono uppercase tracking-[0.25em] text-[#ffd700]/90 font-black block">
+                            SPR
+                          </span>
+                          <div className="h-[1px] w-8 bg-[#ffd700]/30 mx-auto" />
+                        </div>
+
+                        {/* Main Luxurious Typography Title (Restoring exact original writings) */}
+                        <div className="z-10 text-center space-y-3 px-1 mt-1">
+                          <h1 className="text-xl min-[360px]:text-2xl sm:text-[34px] font-serif font-black tracking-tight leading-none text-white uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                            A Saga da <br/>
+                            <span className="text-[#ffd700] animate-pulse font-extrabold block text-2xl sm:text-[32px] mt-1.5 font-serif">
+                              São Paulo Railway
+                            </span>
+                          </h1>
+                          <div className="h-0.5 sm:h-1 w-10 sm:w-14 bg-[#ffd700]/60 mx-auto rounded-full my-1"></div>
+                          <p className="text-[7.5px] sm:text-[9.5px] font-mono tracking-wide text-stone-300 uppercase max-w-xs mx-auto leading-relaxed font-semibold">
+                            o Império do Café e a Vila de Paranapiacaba
+                          </p>
+                        </div>
+
+                        {/* Exquisite Gilded Image Badge (framed elegantly) */}
+                        <div className="z-10 w-[65%] mx-auto border border-[#ffd700]/30 p-[2px] bg-black rounded-md shadow-lg my-1">
+                          <div className="border border-[#ffd700]/15 rounded-[3px] overflow-hidden bg-black">
+                            <img 
+                              src="/assets/images/spr_logo_1781536980657.jpg" 
+                              alt="Ebook Cover Miniature" 
+                              className="w-full h-full aspect-[4/3] object-cover"
+                              referrerPolicy="no-referrer"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Bottom Author Credentials */}
+                        <div className="z-10 text-center mb-1 select-none">
+                          <span className="font-serif font-semibold text-white block text-[10px] sm:text-[11px] tracking-wide">
+                            Evandro Felix Marcondes
+                          </span>
+                          <span className="text-[7px] font-mono text-stone-400 block uppercase tracking-widest mt-0.5">
+                            SERIE MEMORIA NACIONAL
+                          </span>
+                        </div>
                       </div>
 
-                      {/* Mini illustrative photograph badge */}
-                      <div className="z-10 w-full max-w-[100px] min-[360px]:max-w-[125px] sm:max-w-[180px] mx-auto border border-stone-300 p-1 bg-white shadow-md">
-                        <img 
-                          src="/assets/images/ebook_cover_realistic_clean_1781404957659.jpg" 
-                          alt="Ebook Cover Miniature" 
-                          className="w-full h-auto aspect-[4/3] object-cover grayscale"
-                          referrerPolicy="no-referrer"
-                        />
+                      {/* 4. PHYSICAL RED RIBBON SEGMENT */}
+                      <div 
+                        className="absolute bottom-[-18px] left-[52%] w-4 h-12 bg-gradient-to-r from-red-800 to-red-600 shadow-lg origin-top transform rotate-2 rounded-b-sm border-r border-[#691111]/30 z-0 group-hover:rotate-0 transition-transform duration-500"
+                        style={{
+                          transformStyle: 'preserve-3d',
+                        }}
+                      >
+                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300/60" />
                       </div>
 
-                      <div className="z-10 text-center pb-2 sm:pb-6 select-none font-mono text-[9px] text-stone-500">
-                        <span className="font-serif font-medium text-stone-500 block text-[9px] sm:text-[11px]">Evandro Felix Marcondes</span>
-                      </div>
-                    </motion.div>
+                    </div>
+
+                    {/* Book Floor shadow mimicking angle changes strictly with hover */}
+                    <div className="absolute bottom-[-10px] left-[5%] right-[5%] h-4 bg-[#2c2620]/25 rounded-full blur-xl group-hover:bg-[#2c2620]/15 transition-all duration-500 pointer-events-none" />
                   </div>
                 </div>
 
@@ -224,13 +348,13 @@ export default function App() {
                       className="inline-flex items-center gap-2 px-3 py-1 bg-amber-600/10 border border-amber-600/20 hover:bg-amber-600/20 hover:border-amber-600/30 rounded-full text-xs font-mono text-amber-950 w-fit font-bold uppercase transition-all select-none cursor-pointer"
                     >
                       <span>🔒 Versão Comercial (</span>
-                      <span className="text-red-500 font-black">R$ 29,99</span>
+                      <span className="text-red-700 font-black animate-pulse">R$ 29,99</span>
                       <span> • Obter Chave)</span>
                     </button>
                   )}
 
                   <h2 className="text-4xl sm:text-5xl font-serif tracking-tight text-stone-950 font-medium leading-tight">
-                    São Paulo Railway a <span className="text-red-700 font-black">primeira ferrovia paulista</span>.
+                    São Paulo Railway a <span className="text-red-700 font-black animate-pulse">primeira ferrovia paulista.</span>
                   </h2>
 
                   <div className="text-base sm:text-[16px] text-[#52463A] leading-relaxed text-left">
@@ -244,32 +368,32 @@ export default function App() {
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Rigor e Conteúdo Exclusivo</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Garanta seu acesso à história da ferrovia paulista, com dados técnicos originais e revelações incríveis.</p>
+                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Rigor e Conteúdo Histórico</h4>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Pesquisa detalhada desenvolvida com base em relatórios técnicos originais, jornais do século XIX e registros oficiais da companhia.</p>
                       </div>
                     </div>
                     
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Arte Visual de Colecionador</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Ao destravar seu exemplar, acesse as recriações fotográficas exclusivas que ilustram este projeto pioneiro, resgatando a rica atmosfera estética dos daguerreótipos históricos.</p>
+                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Acervo Visual de Época</h4>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Acesso a ilustrações conceituais e esboços recuperados que resgatam a atmosfera histórica e estética dos antigos daguerreótipos imperiais.</p>
                       </div>
                     </div>
 
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Plataforma de Leitura Otimizada</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Garanta uma experiência histórica imersiva e livre de anúncios. Ajuste as fontes e leia com conforto absoluto em qualquer tela.</p>
+                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Leitura Fluida e Confortável</h4>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Interface minimalista e focada em texto, com ferramentas para ajustar o tamanho da tipografia e o contraste para qualquer tela.</p>
                       </div>
                     </div>
 
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Modo Livro de Alta Fidelidade</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Experimente a diagramação e tipografia vitoriana clássica otimizada totalmente integrada em seu navegador para uma imersão máxima.</p>
+                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Estética Literária Clássica</h4>
+                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Uma cuidadosa diagramação digital inspirada nos livros antigos de engenharia vitoriana, unindo história e fluidez visual.</p>
                       </div>
                     </div>
                   </div>
@@ -285,7 +409,7 @@ export default function App() {
                       <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas Exclusivas</p>
                     </div>
                     <div className="text-center sm:text-left border-l border-[#2C2620]/10 px-4">
-                      <span className="font-serif font-black text-2xl text-red-600">R$ 29,99</span>
+                      <span className="font-serif font-black text-2xl text-red-700 animate-pulse">R$ 29,99</span>
                       <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Preço Único</p>
                     </div>
                   </div>
@@ -293,7 +417,7 @@ export default function App() {
                   {/* Immediate Core CTAs */}
                   <div className="pt-4 flex flex-col sm:flex-row gap-4 w-full">
                     <button
-                      onClick={() => openChapter(0)}
+                      onClick={() => openApresentacao()}
                       className="py-4 px-8 bg-[#8A7055] hover:bg-[#725C46] text-white rounded-xl font-serif font-bold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer duration-150"
                     >
                       <BookOpen className="h-5 w-5" /> Iniciar Leitura Digital
@@ -318,9 +442,10 @@ export default function App() {
                   <p className="text-xs text-stone-500 max-w-md mx-auto italic font-serif">Explore o índice de capítulos neste e-book histórico.</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {chapters.map((ch, idx) => {
                     const isChapterLocked = idx >= 2 && !isUnlocked;
+
                     return (
                       <div 
                         key={ch.id} 
@@ -333,10 +458,10 @@ export default function App() {
                       >
                         <div className="space-y-2">
                           <div className="flex items-center justify-between gap-1">
-                            <span className={`font-mono text-[10px] font-black uppercase block ${
-                              isChapterLocked ? 'text-amber-800' : 'text-[#8A7055]'
+                            <span className={`font-mono text-[10px] font-black uppercase tracking-wider block ${
+                              ch.number <= 5 ? 'text-red-700' : (isChapterLocked ? 'text-amber-800' : 'text-[#8A7055]')
                             }`}>
-                              Seção {ch.number}
+                              Capítulo {ch.number < 10 ? `0${ch.number}` : ch.number}
                             </span>
                             {isChapterLocked && (
                               <Lock className="h-3 w-3 text-amber-700/60 shrink-0" />
@@ -369,6 +494,88 @@ export default function App() {
                       </div>
                     );
                   })}
+
+                  {/* CONCLUSION CARD */}
+                  <div 
+                    onClick={openConclusion}
+                    className="bg-white border border-[#2C2620]/5 hover:border-[#8A7055] p-5 rounded-2xl flex flex-col justify-between h-48 cursor-pointer transition-all hover:shadow-md group"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="font-mono text-[10px] font-black uppercase tracking-wider block text-red-700">
+                          Seção Especial
+                        </span>
+                      </div>
+                      <h4 className="font-serif font-bold leading-snug text-sm sm:text-base transition-colors text-stone-900 group-hover:text-[#8A7055]">
+                        Conclusão: O impacto histórico da São Paulo Railway.
+                      </h4>
+                      <p className="text-[10.5px] text-stone-500 leading-snug line-clamp-2">A consolidação histórica e o legado duradouro de uma das maiores obras ferais do país.</p>
+                    </div>
+
+                    <div className="flex justify-between items-center text-[10px] font-mono text-stone-400 border-t pt-3 mt-2">
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" /> 5 min
+                      </span>
+                      <span className="font-bold flex items-center gap-0.5 group-hover:translate-x-1 transition-transform text-stone-600">
+                        <span className="flex items-center gap-0.5">Ver <ChevronRight className="h-3 w-3" /></span>
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* REFERENCES CARD */}
+                  <div 
+                    onClick={openReferences}
+                    className="bg-white border border-[#2C2620]/5 hover:border-[#8A7055] p-5 rounded-2xl flex flex-col justify-between h-48 cursor-pointer transition-all hover:shadow-md group"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="font-mono text-[10px] font-black uppercase tracking-wider block text-stone-500">
+                          Pesquisa Acadêmica
+                        </span>
+                      </div>
+                      <h4 className="font-serif font-bold leading-snug text-sm sm:text-base transition-colors text-stone-900 group-hover:text-[#8A7055]">
+                        Fontes e referências.
+                      </h4>
+                      <p className="text-[10.5px] text-stone-500 leading-snug line-clamp-2">Fundamentação e documentação acadêmica detalhada para publicação garantida.</p>
+                    </div>
+
+                    <div className="flex justify-between items-center text-[10px] font-mono text-stone-400 border-t pt-3 mt-2">
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" /> 3 min
+                      </span>
+                      <span className="font-bold flex items-center gap-0.5 group-hover:translate-x-1 transition-transform text-stone-600">
+                        <span className="flex items-center gap-0.5">Ver <ChevronRight className="h-3 w-3" /></span>
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* ABOUT AUTHOR CARD */}
+                  <div 
+                    onClick={openAboutAuthor}
+                    className="bg-white border border-[#2C2620]/5 hover:border-[#8A7055] p-5 rounded-2xl flex flex-col justify-between h-48 cursor-pointer transition-all hover:shadow-md group"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="font-mono text-[10px] font-black uppercase tracking-wider block text-[#8A7055]">
+                          Créditos editoriais
+                        </span>
+                      </div>
+                      <h4 className="font-serif font-bold leading-snug text-sm sm:text-base transition-colors text-stone-900 group-hover:text-[#8A7055]">
+                        Sobre o autor.
+                      </h4>
+                      <p className="text-[10.5px] text-stone-500 leading-snug line-clamp-2">Conheça o autor e idealizador amador deste trabalho técnico de fomento histórico.</p>
+                    </div>
+
+                    <div className="flex justify-between items-center text-[10px] font-mono text-stone-400 border-t pt-3 mt-2">
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" /> 2 min
+                      </span>
+                      <span className="font-bold flex items-center gap-0.5 group-hover:translate-x-1 transition-transform text-stone-600">
+                        <span className="flex items-center gap-0.5">Ver <ChevronRight className="h-3 w-3" /></span>
+                      </span>
+                    </div>
+                  </div>
+
                 </div>
               </section>
 
@@ -378,7 +585,7 @@ export default function App() {
                   <span className="text-[10px] font-mono tracking-widest uppercase text-[#8A7055] font-extrabold block">Ambiente Intelectual</span>
                   <h3 className="text-2xl sm:text-3xl font-serif font-bold text-stone-950">Seu Conhecimento Verificado</h3>
                   <p className="text-sm text-[#52463A] leading-relaxed">
-                    Preparamos um **Simulador de Fatos Históricos** completo. Teste sua assimilação intelectual sobre as engrenagens a vapor de Mauá, a arquitetura de ferro vitoriana e as curiosidades de Paranapiacaba. Ao concluir, descubra o seu rank acadêmico oficial de assimilação de conteúdo histórico.
+                    Preparamos um <span className="text-red-700 font-bold">Simulador de Fatos Históricos</span> completo. Teste seus conhecimentos respondendo às perguntas do nosso quiz histórico e, ao final, veja a sua nota total de acertos.
                   </p>
                 </div>
                 <div className="md:col-span-4 flex justify-center md:justify-end">
@@ -412,6 +619,10 @@ export default function App() {
                 initialChapterIndex={targetChapterIndex}
                 initialShowQuiz={targetShowQuiz}
                 initialPrintMode={targetPrintMode}
+                initialShowConclusion={targetShowConclusion}
+                initialShowReferences={targetShowReferences}
+                initialShowAboutAuthor={targetShowAboutAuthor}
+                initialShowApresentacao={targetShowApresentacao}
                 isUnlocked={isUnlocked}
                 onUnlock={unlockEbook}
                 onLock={lockEbook}
