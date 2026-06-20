@@ -61,7 +61,7 @@ export const chapters: Chapter[] = [
   {
     id: 'paranapiacaba-fog',
     number: 4,
-    title: 'Uma vila inglesa no topo da serra.',
+    title: 'Uma Vila Inglesa na Serra do Mar.',
     subtitle: 'A vida em Paranapiacaba e a chegada do futebol ao Brasil.',
     image: '/assets/images/paranapiacaba_clock_spr_1781707467393.jpg',
     imageCaption: 'Ilustração artística de época recriando a mítica neblina cobrindo a arquitetura vitoriana da estação ferroviária e o icônico relógio em Paranapiacaba.',

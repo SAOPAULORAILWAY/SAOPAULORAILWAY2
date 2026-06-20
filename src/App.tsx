@@ -588,7 +588,7 @@ export default function App() {
                         <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas</p>
                       </div>
                       <div className="text-left border-l border-[#2C2620]/10 px-4">
-                        <span className="font-serif font-black text-2xl text-emerald-700">Acesso Grátis</span>
+                        <span className="font-serif font-black text-2xl text-red-600">Acesso Livre</span>
                         <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Distribuição Aberta</p>
                       </div>
                     </div>
@@ -920,7 +920,7 @@ export default function App() {
                       <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas</p>
                     </div>
                     <div className="text-left border-l border-[#2C2620]/10 px-6">
-                      <span className="font-serif font-black text-2xl text-emerald-700 font-bold">Acesso Grátis</span>
+                      <span className="font-serif font-black text-2xl text-red-600 font-bold">Acesso Livre</span>
                       <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Distribuição Aberta</p>
                     </div>
                   </div>
