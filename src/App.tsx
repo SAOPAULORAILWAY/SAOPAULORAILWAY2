@@ -577,40 +577,7 @@ export default function App() {
                     </p>
                   </div>
 
-                  {/* Curated features grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 py-2">
-                    <div className="flex items-start gap-2.5">
-                      <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
-                      <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Rigor e Conteúdo Histórico</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Pesquisa detalhada desenvolvida com base em relatórios técnicos originais, jornais do século XIX e registros oficiais da companhia.</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-2.5">
-                      <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
-                      <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Acervo Visual de Época</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Acesso a ilustrações conceituais e esboços recuperados que resgatam a atmosfera histórica e estética dos antigos daguerreótipos imperiais.</p>
-                      </div>
-                    </div>
 
-                    <div className="flex items-start gap-2.5">
-                      <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
-                      <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Leitura Fluida e Confortável</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Interface minimalista e focada em texto, com ferramentas para ajustar o tamanho da tipografia e o contraste para qualquer tela.</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-2.5">
-                      <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
-                      <div>
-                        <h4 className="font-serif font-black text-[#2C2620] text-sm">Estética Literária Clássica</h4>
-                        <p className="text-[11.5px] text-[#6C5B4C] leading-snug">Uma cuidadosa diagramação digital inspirada nos livros antigos de engenharia vitoriana, unindo história e fluidez visual.</p>
-                      </div>
-                    </div>
-                  </div>
 
                   {/* Stats bar */}
                   <div className="grid grid-cols-3 gap-3 border-t border-b border-[#2C2620]/10 py-5 select-none">
