@@ -285,336 +285,664 @@ export default function App() {
               transition={{ duration: 0.2 }}
               className="py-12 md:py-20 px-4 max-w-7xl mx-auto space-y-16"
             >
-              
-              {/* Split layout: Cover Mockup vs. Presentation Metadata */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-                
-                {/* Left Column: Exquisite Deep Black Hardcover Book Mockup */}
-                <div className="lg:col-span-5 flex flex-col items-center justify-center py-6 sm:py-10">
-                  {/* Subtle ambient light floor shadow under the book */}
-                  <div className="relative select-none group">
-                    
-                    {/* ENQUADRADO / STABILIZED CLASSIC BOOK COVER */}
-                    <div 
-                      className="relative w-[250px] min-[360px]:w-[285px] sm:w-[325px] aspect-[1/1.4] transition-all duration-500 ease-out group-hover:scale-[1.03]"
-                      style={{
-                        transformStyle: 'preserve-3d',
-                        transform: 'rotateY(0deg) rotateX(0deg) rotateZ(0deg)',
-                      }}
-                    >
-                      {/* 1. BACK COVER OVERLAY (Slightly larger for thickness) */}
+                        {/* MOBILE/TABLET VIEW (lg:hidden) - STRICTLY UNCHANGED AS REQUESTED */}
+              <div className="block lg:hidden space-y-12">
+                <div className="grid grid-cols-1 gap-12 items-center">
+                  {/* Left Column: Exquisite Deep Black Hardcover Book Mockup */}
+                  <div className="flex flex-col items-center justify-center py-6 sm:py-10">
+                    {/* Subtle ambient light floor shadow under the book */}
+                    <div className="relative select-none group">
+                      
+                      {/* ENQUADRADO / STABILIZED CLASSIC BOOK COVER */}
                       <div 
-                        className="absolute inset-[-1px] bg-gradient-to-r from-[#1c1c1e] to-[#0a0a0a] rounded-r-md border border-stone-900/40 shadow-2xl"
-                        style={{
-                          transform: 'translateZ(-6px)',
-                        }}
-                      />
-
-                      {/* 2. PAGE STACK SIMULATION (Visible tiny edge) */}
-                      <div 
-                        className="absolute top-[3px] bottom-[3px] right-[-4px] w-[6px] bg-[#fbf9f5] border-y border-stone-200 shadow-inner"
-                        style={{
-                          backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 1.5px, #e2dac9 1.5px, #e2dac9 3px)',
-                        }}
-                      />
-
-                      {/* 3. FRONT COVER (Exquisite Deep Black Leather Look) */}
-                      <div 
-                        className="absolute inset-0 bg-gradient-to-br from-[#242426] via-[#121212] to-black rounded-r-lg border border-[#1e1e20] shadow-xl flex flex-col justify-between p-6 overflow-hidden"
-                        style={{
-                          transform: 'translateZ(6px)',
-                          boxShadow: 'inset 0 0 24px rgba(0,0,0,0.6)',
-                        }}
-                      >
-                        {/* Rich Leather pattern watermark overlay */}
-                        <div className="absolute inset-0 bg-radial-to-bl from-transparent to-black/50 mix-blend-overlay opacity-90 pointer-events-none z-0" />
-
-                        {/* Traditional Gold Embossed Double-Line Border framing the cover */}
-                        <div className="absolute inset-2.5 border-2 border-[#ffd700]/35 rounded-md pointer-events-none z-10" />
-                        <div className="absolute inset-3.5 border border-[#ffd700]/20 rounded-sm pointer-events-none z-10" />
-
-                        {/* Gold Filigree corner decorations */}
-                        <div className="absolute top-4 left-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
-                        <div className="absolute top-4 right-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
-                        <div className="absolute bottom-4 left-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
-                        <div className="absolute bottom-4 right-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
-
-                        {/* Spine-join line shadow */}
-                        <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-black/40 z-20 pointer-events-none" />
-
-                        {/* Top Metadata */}
-                        <div className="z-10 text-center space-y-1">
-                          <span className="text-[8px] sm:text-[9.5px] font-mono uppercase tracking-[0.25em] text-[#ffd700]/90 font-black block">
-                            SPR
-                          </span>
-                          <div className="h-[1px] w-8 bg-[#ffd700]/30 mx-auto" />
-                        </div>
-
-                        {/* Main Luxurious Typography Title (Restoring exact original writings) */}
-                        <div className="z-10 text-center space-y-3 px-1 mt-1">
-                          <h1 className="text-xl min-[360px]:text-2xl sm:text-[34px] font-serif font-black tracking-tight leading-none text-white uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                            A Saga da <br/>
-                            <span className="text-[#ffd700] animate-pulse font-extrabold block text-2xl sm:text-[32px] mt-1.5 font-serif">
-                              São Paulo Railway
-                            </span>
-                          </h1>
-                          <div className="h-0.5 sm:h-1 w-10 sm:w-14 bg-[#ffd700]/60 mx-auto rounded-full my-1"></div>
-                          <p className="text-[7.5px] sm:text-[9.5px] font-mono tracking-wide text-stone-300 uppercase max-w-xs mx-auto leading-relaxed font-semibold">
-                            o Império do Café e a Vila de Paranapiacaba
-                          </p>
-                        </div>
-
-                        {/* Exquisite Gilded Image Badge (framed elegantly) */}
-                        <div className="z-10 w-[65%] mx-auto border border-[#ffd700]/30 p-[2px] bg-black rounded-md shadow-lg my-1">
-                          <div className="border border-[#ffd700]/15 rounded-[3px] overflow-hidden bg-black">
-                            <img 
-                              src="/assets/images/spr_logo_1781536980657.jpg" 
-                              alt="Ebook Cover Miniature" 
-                              className="w-full h-full aspect-[4/3] object-cover"
-                              referrerPolicy="no-referrer"
-                            />
-                          </div>
-                        </div>
-
-                        {/* Bottom Author Credentials */}
-                        <div className="z-10 text-center mb-1 select-none">
-                          <span className="font-serif font-semibold text-white block text-[10px] sm:text-[11px] tracking-wide">
-                            Evandro Felix Marcondes
-                          </span>
-                          <span className="text-[7px] font-mono text-stone-400 block uppercase tracking-widest mt-0.5">
-                            SERIE MEMORIA NACIONAL
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* 4. PHYSICAL RED RIBBON SEGMENT */}
-                      <div 
-                        className="absolute bottom-[-18px] left-[52%] w-4 h-12 bg-gradient-to-r from-red-800 to-red-600 shadow-lg origin-top transform rotate-2 rounded-b-sm border-r border-[#691111]/30 z-0 group-hover:rotate-0 transition-transform duration-500"
+                        className="relative w-[250px] min-[360px]:w-[285px] sm:w-[325px] aspect-[1/1.4] transition-all duration-500 ease-out group-hover:scale-[1.03]"
                         style={{
                           transformStyle: 'preserve-3d',
+                          transform: 'rotateY(0deg) rotateX(0deg) rotateZ(0deg)',
                         }}
                       >
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300/60" />
+                        {/* 1. BACK COVER OVERLAY (Slightly larger for thickness) */}
+                        <div 
+                          className="absolute inset-[-1px] bg-gradient-to-r from-[#1c1c1e] to-[#0a0a0a] rounded-r-md border border-stone-900/40 shadow-2xl"
+                          style={{
+                            transform: 'translateZ(-6px)',
+                          }}
+                        />
+
+                        {/* 2. PAGE STACK SIMULATION (Visible tiny edge) */}
+                        <div 
+                          className="absolute top-[3px] bottom-[3px] right-[-4px] w-[6px] bg-[#fbf9f5] border-y border-stone-200 shadow-inner"
+                          style={{
+                            backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 1.5px, #e2dac9 1.5px, #e2dac9 3px)',
+                          }}
+                        />
+
+                        {/* 3. FRONT COVER (Exquisite Deep Black Leather Look) */}
+                        <div 
+                          className="absolute inset-0 bg-gradient-to-br from-[#242426] via-[#121212] to-black rounded-r-lg border border-[#1e1e20] shadow-xl flex flex-col justify-between p-6 overflow-hidden"
+                          style={{
+                            transform: 'translateZ(6px)',
+                            boxShadow: 'inset 0 0 24px rgba(0,0,0,0.6)',
+                          }}
+                        >
+                          {/* Rich Leather pattern watermark overlay */}
+                          <div className="absolute inset-0 bg-radial-to-bl from-transparent to-black/50 mix-blend-overlay opacity-90 pointer-events-none z-0" />
+
+                          {/* Traditional Gold Embossed Double-Line Border framing the cover */}
+                          <div className="absolute inset-2.5 border-2 border-[#ffd700]/35 rounded-md pointer-events-none z-10" />
+                          <div className="absolute inset-3.5 border border-[#ffd700]/20 rounded-sm pointer-events-none z-10" />
+
+                          {/* Gold Filigree corner decorations */}
+                          <div className="absolute top-4 left-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+                          <div className="absolute top-4 right-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+                          <div className="absolute bottom-4 left-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+                          <div className="absolute bottom-4 right-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+
+                          {/* Spine-join line shadow */}
+                          <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-black/40 z-20 pointer-events-none" />
+
+                          {/* Top Metadata */}
+                          <div className="z-10 text-center space-y-1">
+                            <span className="text-[8px] sm:text-[9.5px] font-mono uppercase tracking-[0.25em] text-[#ffd700]/90 font-black block">
+                              SPR
+                            </span>
+                            <div className="h-[1px] w-8 bg-[#ffd700]/30 mx-auto" />
+                          </div>
+
+                          {/* Main Luxurious Typography Title (Restoring exact original writings) */}
+                          <div className="z-10 text-center space-y-3 px-1 mt-1">
+                            <h1 className="text-xl min-[360px]:text-2xl sm:text-[34px] font-serif font-black tracking-tight leading-none text-white uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                              A Saga da <br/>
+                              <span className="text-[#ffd700] animate-pulse font-extrabold block text-2xl sm:text-[32px] mt-1.5 font-serif">
+                                São Paulo Railway
+                              </span>
+                            </h1>
+                            <div className="h-0.5 sm:h-1 w-10 sm:w-14 bg-[#ffd700]/60 mx-auto rounded-full my-1"></div>
+                            <p className="text-[7.5px] sm:text-[9.5px] font-mono tracking-wide text-stone-300 uppercase max-w-xs mx-auto leading-relaxed font-semibold">
+                              o Império do Café e a Vila de Paranapiacaba
+                            </p>
+                          </div>
+
+                          {/* Exquisite Gilded Image Badge (framed elegantly) */}
+                          <div className="z-10 w-[65%] mx-auto border border-[#ffd700]/30 p-[2px] bg-black rounded-md shadow-lg my-1">
+                            <div className="border border-[#ffd700]/15 rounded-[3px] overflow-hidden bg-black">
+                              <img 
+                                src="/assets/images/spr_logo_1781536980657.jpg" 
+                                alt="Ebook Cover Miniature" 
+                                className="w-full h-full aspect-[4/3] object-cover"
+                                referrerPolicy="no-referrer"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Bottom Author Credentials */}
+                          <div className="z-10 text-center mb-1 select-none">
+                            <span className="font-serif font-semibold text-white block text-[10px] sm:text-[11px] tracking-wide">
+                              Evandro Felix Marcondes
+                            </span>
+                            <span className="text-[7px] font-mono text-stone-400 block uppercase tracking-widest mt-0.5">
+                              SERIE MEMORIA NACIONAL
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* 4. PHYSICAL RED RIBBON SEGMENT */}
+                        <div 
+                          className="absolute bottom-[-18px] left-[52%] w-4 h-12 bg-gradient-to-r from-red-800 to-red-600 shadow-lg origin-top transform rotate-2 rounded-b-sm border-r border-[#691111]/30 z-0 group-hover:rotate-0 transition-transform duration-500"
+                          style={{
+                            transformStyle: 'preserve-3d',
+                          }}
+                        >
+                          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300/60" />
+                        </div>
+
                       </div>
 
+                      {/* Book Floor shadow mimicking angle changes strictly with hover */}
+                      <div className="absolute bottom-[-10px] left-[5%] right-[5%] h-4 bg-[#2c2620]/25 rounded-full blur-xl group-hover:bg-[#2c2620]/15 transition-all duration-500 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* Right Column: Presentation details, features, stats and CTA buttons */}
+                  <div className="space-y-6">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-600/10 border border-emerald-600/20 rounded-full text-xs font-mono text-emerald-800 w-fit font-bold uppercase select-none">
+                      <Compass className="h-3.5 w-3.5 text-emerald-700 font-bold animate-pulse" />
+                      E-book Gratuito • Acesso Livre & Completo 
                     </div>
 
-                    {/* Book Floor shadow mimicking angle changes strictly with hover */}
-                    <div className="absolute bottom-[-10px] left-[5%] right-[5%] h-4 bg-[#2c2620]/25 rounded-full blur-xl group-hover:bg-[#2c2620]/15 transition-all duration-500 pointer-events-none" />
+                    {/* HIGHLY VISIBLE & EYE-CATCHING PIX DONATION BOARD CARD */}
+                    <div className="p-6 bg-gradient-to-br from-amber-50 to-[#FCFAF5] border-2 border-[#8A7055]/50 rounded-2xl shadow-sm space-y-5 relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-[#8A7055]/5 rounded-bl-full pointer-events-none" />
+                      
+                      <div className="flex items-start gap-3">
+                        <div className="p-2.5 bg-red-500/10 border border-red-500/20 text-red-600 rounded-xl mt-1 shrink-0 animate-pulse">
+                          <Heart className="h-6 w-6 text-red-600 fill-red-600/30" />
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] uppercase font-mono font-bold text-[#8A7055] tracking-widest">Contribuição Solidária Livre</span>
+                          <h3 className="font-serif font-bold text-lg text-stone-900">Apoie a Pesquisa Histórica</h3>
+                        </div>
+                      </div>
+
+                      {/* EYE-CATCHING HIGHLIGHTED MESSAGE REQUESTED BY USER */}
+                      <div className="p-4 bg-white border border-[#8A7055]/20 rounded-xl text-stone-850 font-serif italic text-sm sm:text-base leading-relaxed text-justify border-l-4 border-l-[#8A7055] shadow-2xs">
+                        "Este e-book foi produzido de forma independente. Se você gostou do conteúdo e deseja apoiar novas pesquisas históricas, considere fazer uma contribuição voluntária."
+                      </div>
+
+                      {/* Donation interactivity simulator */}
+                      <div className="space-y-4 pt-1">
+                        {/* Presets selector */}
+                        <div className="flex flex-col gap-2">
+                          <span className="text-[10px] uppercase font-mono tracking-wider font-extrabold text-stone-500 block">Sugerir Valor de Apoio:</span>
+                          <div className="flex flex-wrap gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('free')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === 'free'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              Valor Livre (no App)
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('10')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === '10'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              R$ 10,00
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('25')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === '25'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              R$ 25,00
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('50')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === '50'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              R$ 50,00
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('custom')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === 'custom'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              Outro Valor...
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Custom input panel if custom is selected */}
+                        {donationOption === 'custom' && (
+                          <div className="flex gap-2 items-center bg-white border border-stone-300 rounded-xl p-2 max-w-xs animate-slide-down">
+                            <span className="font-mono text-stone-400 font-bold text-xs pl-1">R$</span>
+                            <input
+                              type="number"
+                              min="1.00"
+                              step="1.00"
+                              value={customDonationVal}
+                              onChange={(e) => setCustomDonationVal(e.target.value)}
+                              className="bg-transparent border-0 outline-hidden font-mono font-extrabold text-[#8A7055] text-sm w-full"
+                              placeholder="Digite o valor"
+                            />
+                          </div>
+                        )}
+
+                        {/* Dynamic QR code grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center pt-2 border-t border-[#8A7055]/15">
+                          {/* Display QR code image */}
+                          <div className="md:col-span-4 flex justify-center">
+                            <div className="bg-white border border-stone-300 p-2.5 rounded-2xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
+                              <img
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(currentPixCode)}&ecc=M`}
+                                alt="Custom Pix QR Code"
+                                className="w-32 h-32 object-contain"
+                                referrerPolicy="no-referrer"
+                              />
+                              <div className="text-center font-mono text-[9px] font-black text-[#8A7055] tracking-tight mt-1.5">
+                                {donationOption === 'free' ? 'VALOR LIVRE' : `APOIAR COM R$ ${donationOption === 'custom' ? customDonationVal : donationOption}`}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Copy-paste input details & dest */}
+                          <div className="md:col-span-8 flex flex-col gap-2.5">
+                            <div className="space-y-1">
+                              <span className="text-[10px] font-mono tracking-wider text-stone-450 uppercase font-black block">Código Pix Copia e Cola</span>
+                              <div className="bg-white border border-stone-250 p-2 px-3 rounded-xl flex items-center justify-between gap-2.5 shadow-2xs">
+                                <span className="font-mono text-[10px] text-stone-500 overflow-hidden text-ellipsis whitespace-nowrap flex-1 text-left select-all">
+                                  {currentPixCode}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={handleCopyLanderPix}
+                                  className="bg-[#8A7055] hover:bg-[#725C46] text-white font-mono font-bold text-[10px] py-1.5 px-3 rounded-lg uppercase transition-all shrink-0 flex items-center gap-1 cursor-pointer"
+                                >
+                                  {copiedPixResult ? (
+                                    <>
+                                      <Check className="h-3 w-3 text-emerald-300" />
+                                      <span>Copiado!</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Copy className="h-3 w-3" />
+                                      <span>Copiar</span>
+                                    </>
+                                  )}
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="text-[11px] text-stone-600 space-y-1 leading-normal text-left font-sans bg-white/40 p-2.5 rounded-xl border border-stone-200/50">
+                              <div className="flex items-center gap-1.5 font-mono text-[#8A7055] font-extrabold text-[10px]">
+                                <QrCode className="h-3.5 w-3.5" /> DESTINATÁRIO OFICIAL PIX:
+                              </div>
+                              <div>Nome: <b>Evandro Felix Marcondes</b></div>
+                              <div>Banco: <b>99 Pay (Chave Aleatória)</b></div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <h2 className="text-4xl font-serif tracking-tight text-stone-950 font-medium leading-tight">
+                      São Paulo Railway a <span className="text-[#8A7055] font-black italic">primeira ferrovia paulista.</span>
+                    </h2>
+
+                    <div className="text-base text-[#52463A] leading-relaxed text-justify">
+                      <p>
+                        A história da São Paulo Railway está diretamente ligada ao desenvolvimento econômico de São Paulo e à expansão da economy cafeeira no Brasil. Inaugurada em 1867, a ferrovia superou os desafios da Serra do Mar e estabeleceu uma ligação eficiente entre o interior paulista e o Porto de Santos, transformando o transporte e o comércio da época. Ao longo desta obra, o leitor conhecerá os personagens envolvidos na criação da ferrovia, os desafios de engenharia que marcaram sua construção, a formação de Paranapiacaba, a influência britânica na região e os impactos econômicos e sociais gerados pela linha férrea. Mais do que uma história sobre trilhos e locomotivas, este livro apresenta um capítulo importante da modernização do transporte brasileiro e do crescimento de São Paulo, destacando o legado deixado por uma das mais importantes ferrovias da história nacional.
+                      </p>
+                    </div>
+
+                    {/* Stats bar */}
+                    <div className="grid grid-cols-3 gap-3 border-t border-b border-[#2C2620]/10 py-5 select-none">
+                      <div className="text-left">
+                        <span className="font-serif font-black text-2xl text-stone-900">{chapters.length}</span>
+                        <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Capítulos Históricos</p>
+                      </div>
+                      <div className="text-left border-l border-[#2C2620]/10 px-4">
+                        <span className="font-serif font-black text-2xl text-stone-900">{chapters.filter(c => c.image).length}</span>
+                        <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas</p>
+                      </div>
+                      <div className="text-left border-l border-[#2C2620]/10 px-4">
+                        <span className="font-serif font-black text-2xl text-emerald-700">Acesso Grátis</span>
+                        <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Distribuição Aberta</p>
+                      </div>
+                    </div>
+
+                    {/* Immediate Core CTAs */}
+                    <div className="pt-2 flex flex-col sm:flex-row gap-4 w-full">
+                      <button
+                        onClick={() => openApresentacao()}
+                        className="py-4 px-8 bg-[#8A7055] hover:bg-[#725C46] text-white rounded-xl font-serif font-bold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer duration-150"
+                      >
+                        <BookOpen className="h-5 w-5" /> Ler E-Book Agora
+                      </button>
+                      
+                      <button
+                        onClick={() => openFullPDF()}
+                        className="py-4 px-8 border-2 border-[#8A7055] text-[#8A7055] hover:bg-stone-50 rounded-xl font-serif font-bold text-base transition-colors flex items-center justify-center gap-2 cursor-pointer duration-150"
+                      >
+                        <Printer className="h-5 w-5" /> Visualizar & Salvar PDF
+                      </button>
+                    </div>
+
                   </div>
                 </div>
-                               {/* Right Column: Presentation details, features, stats and CTA buttons */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-600/10 border border-emerald-600/20 rounded-full text-xs font-mono text-emerald-800 w-fit font-bold uppercase select-none">
-                    <Compass className="h-3.5 w-3.5 text-emerald-700 font-bold animate-pulse" />
-                    E-book Gratuito • Acesso Livre & Completo 
-                  </div>
+              </div>
 
-                  {/* HIGHLY VISIBLE & EYE-CATCHING PIX DONATION BOARD CARD */}
-                  <div className="p-6 bg-gradient-to-br from-amber-50 to-[#FCFAF5] border-2 border-[#8A7055]/50 rounded-2xl shadow-sm space-y-5 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#8A7055]/5 rounded-bl-full pointer-events-none" />
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="p-2.5 bg-red-500/10 border border-red-500/20 text-red-600 rounded-xl mt-1 shrink-0 animate-pulse">
-                        <Heart className="h-6 w-6 text-red-600 fill-red-600/30" />
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-[10px] uppercase font-mono font-bold text-[#8A7055] tracking-widest">Contribuição Solidária Livre</span>
-                        <h3 className="font-serif font-bold text-lg text-stone-900">Apoie a Pesquisa Histórica</h3>
-                      </div>
-                    </div>
+              {/* DESKTOP/COMPUTER VIEW (hidden lg:block) - ALIGNED EXTREMELY PROFESSIONALLY */}
+              <div className="hidden lg:block space-y-10">
+                {/* Top Row: Side-by-side Book Illustration & Donation Board */}
+                <div className="grid grid-cols-12 gap-10 items-center">
+                  
+                  {/* Left Column: Book cover scaled beautifully to align nicely with the donation box */}
+                  <div className="col-span-5 flex justify-center">
+                    <div className="relative select-none group">
+                      {/* ENQUADRADO / STABILIZED CLASSIC BOOK COVER */}
+                      <div 
+                        className="relative w-[280px] aspect-[1/1.4] transition-all duration-500 ease-out group-hover:scale-[1.03]"
+                        style={{
+                          transformStyle: 'preserve-3d',
+                          transform: 'rotateY(0deg) rotateX(0deg) rotateZ(0deg)',
+                        }}
+                      >
+                        {/* 1. BACK COVER OVERLAY (Slightly larger for thickness) */}
+                        <div 
+                          className="absolute inset-[-1px] bg-gradient-to-r from-[#1c1c1e] to-[#0a0a0a] rounded-r-md border border-stone-900/40 shadow-2xl"
+                          style={{
+                            transform: 'translateZ(-6px)',
+                          }}
+                        />
 
-                    {/* EYE-CATCHING HIGHLIGHTED MESSAGE REQUESTED BY USER */}
-                    <div className="p-4 bg-white border border-[#8A7055]/20 rounded-xl text-stone-850 font-serif italic text-sm sm:text-base leading-relaxed text-justify border-l-4 border-l-[#8A7055] shadow-2xs">
-                      "Este e-book foi produzido de forma independente. Se você gostou do conteúdo e deseja apoiar novas pesquisas históricas, considere fazer uma contribuição voluntária."
-                    </div>
+                        {/* 2. PAGE STACK SIMULATION (Visible tiny edge) */}
+                        <div 
+                          className="absolute top-[3px] bottom-[3px] right-[-4px] w-[6px] bg-[#fbf9f5] border-y border-stone-200 shadow-inner"
+                          style={{
+                            backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 1.5px, #e2dac9 1.5px, #e2dac9 3px)',
+                          }}
+                        />
 
-                    {/* Donation interactivity simulator */}
-                    <div className="space-y-4 pt-1">
-                      {/* Presets selector */}
-                      <div className="flex flex-col gap-2">
-                        <span className="text-[10px] uppercase font-mono tracking-wider font-extrabold text-stone-500 block">Sugerir Valor de Apoio:</span>
-                        <div className="flex flex-wrap gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setDonationOption('free')}
-                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
-                              donationOption === 'free'
-                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
-                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
-                            }`}
-                          >
-                            Valor Livre (no App)
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setDonationOption('10')}
-                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
-                              donationOption === '10'
-                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
-                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
-                            }`}
-                          >
-                            R$ 10,00
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setDonationOption('25')}
-                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
-                              donationOption === '25'
-                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
-                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
-                            }`}
-                          >
-                            R$ 25,00
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setDonationOption('50')}
-                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
-                              donationOption === '50'
-                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
-                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
-                            }`}
-                          >
-                            R$ 50,00
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setDonationOption('custom')}
-                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
-                              donationOption === 'custom'
-                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
-                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
-                            }`}
-                          >
-                            Outro Valor...
-                          </button>
-                        </div>
-                      </div>
+                        {/* 3. FRONT COVER (Exquisite Deep Black Leather Look) */}
+                        <div 
+                          className="absolute inset-0 bg-gradient-to-br from-[#242426] via-[#121212] to-black rounded-r-lg border border-[#1e1e20] shadow-xl flex flex-col justify-between p-6 overflow-hidden"
+                          style={{
+                            transform: 'translateZ(6px)',
+                            boxShadow: 'inset 0 0 24px rgba(0,0,0,0.6)',
+                          }}
+                        >
+                          {/* Rich Leather pattern watermark overlay */}
+                          <div className="absolute inset-0 bg-radial-to-bl from-transparent to-black/50 mix-blend-overlay opacity-90 pointer-events-none z-0" />
 
-                      {/* Custom input panel if custom is selected */}
-                      {donationOption === 'custom' && (
-                        <div className="flex gap-2 items-center bg-white border border-stone-300 rounded-xl p-2 max-w-xs animate-slide-down">
-                          <span className="font-mono text-stone-400 font-bold text-xs pl-1">R$</span>
-                          <input
-                            type="number"
-                            min="1.00"
-                            step="1.00"
-                            value={customDonationVal}
-                            onChange={(e) => setCustomDonationVal(e.target.value)}
-                            className="bg-transparent border-0 outline-hidden font-mono font-extrabold text-[#8A7055] text-sm w-full"
-                            placeholder="Digite o valor"
-                          />
-                        </div>
-                      )}
+                          {/* Traditional Gold Embossed Double-Line Border framing the cover */}
+                          <div className="absolute inset-2.5 border-2 border-[#ffd700]/35 rounded-md pointer-events-none z-10" />
+                          <div className="absolute inset-3.5 border border-[#ffd700]/20 rounded-sm pointer-events-none z-10" />
 
-                      {/* Dynamic QR code grid */}
-                      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center pt-2 border-t border-[#8A7055]/15">
-                        {/* Display QR code image */}
-                        <div className="md:col-span-4 flex justify-center">
-                          <div className="bg-white border border-stone-300 p-2.5 rounded-2xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
-                            <img
-                              src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(currentPixCode)}&ecc=M`}
-                              alt="Custom Pix QR Code"
-                              className="w-32 h-32 object-contain"
-                              referrerPolicy="no-referrer"
-                            />
-                            <div className="text-center font-mono text-[9px] font-black text-[#8A7055] tracking-tight mt-1.5">
-                              {donationOption === 'free' ? 'VALOR LIVRE' : `APOIAR COM R$ ${donationOption === 'custom' ? customDonationVal : donationOption}`}
-                            </div>
+                          {/* Gold Filigree corner decorations */}
+                          <div className="absolute top-4 left-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+                          <div className="absolute top-4 right-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+                          <div className="absolute bottom-4 left-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+                          <div className="absolute bottom-4 right-4 text-[#ffd700]/40 font-serif text-[10px] select-none z-10 font-bold">⚜</div>
+
+                          {/* Spine-join line shadow */}
+                          <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-black/40 z-20 pointer-events-none" />
+
+                          {/* Top Metadata */}
+                          <div className="z-10 text-center space-y-1">
+                            <span className="text-[8px] sm:text-[9.5px] font-mono uppercase tracking-[0.25em] text-[#ffd700]/90 font-black block">
+                              SPR
+                            </span>
+                            <div className="h-[1px] w-8 bg-[#ffd700]/30 mx-auto" />
                           </div>
-                        </div>
 
-                        {/* Copy-paste input details & dest */}
-                        <div className="md:col-span-8 flex flex-col gap-2.5">
-                          <div className="space-y-1">
-                            <span className="text-[10px] font-mono tracking-wider text-stone-450 uppercase font-black block">Código Pix Copia e Cola</span>
-                            <div className="bg-white border border-stone-250 p-2 px-3 rounded-xl flex items-center justify-between gap-2.5 shadow-2xs">
-                              <span className="font-mono text-[10px] text-stone-500 overflow-hidden text-ellipsis whitespace-nowrap flex-1 text-left select-all">
-                                {currentPixCode}
+                          {/* Main Luxurious Typography Title (Restoring exact original writings) */}
+                          <div className="z-10 text-center space-y-3 px-1 mt-1">
+                            <h1 className="text-xl min-[360px]:text-2xl sm:text-[34px] font-serif font-black tracking-tight leading-none text-white uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                              A Saga da <br/>
+                              <span className="text-[#ffd700] animate-pulse font-extrabold block text-2xl sm:text-[32px] mt-1.5 font-serif">
+                                São Paulo Railway
                               </span>
-                              <button
-                                type="button"
-                                onClick={handleCopyLanderPix}
-                                className="bg-[#8A7055] hover:bg-[#725C46] text-white font-mono font-bold text-[10px] py-1.5 px-3 rounded-lg uppercase transition-all shrink-0 flex items-center gap-1 cursor-pointer"
-                              >
-                                {copiedPixResult ? (
-                                  <>
-                                    <Check className="h-3 w-3 text-emerald-300" />
-                                    <span>Copiado!</span>
-                                  </>
-                                ) : (
-                                  <>
-                                    <Copy className="h-3 w-3" />
-                                    <span>Copiar</span>
-                                  </>
-                                )}
-                              </button>
+                            </h1>
+                            <div className="h-0.5 sm:h-1 w-10 sm:w-14 bg-[#ffd700]/60 mx-auto rounded-full my-1"></div>
+                            <p className="text-[7.5px] sm:text-[9.5px] font-mono tracking-wide text-stone-300 uppercase max-w-xs mx-auto leading-relaxed font-semibold">
+                              o Império do Café e a Vila de Paranapiacaba
+                            </p>
+                          </div>
+
+                          {/* Exquisite Gilded Image Badge (framed elegantly) */}
+                          <div className="z-10 w-[65%] mx-auto border border-[#ffd700]/30 p-[2px] bg-black rounded-md shadow-lg my-1">
+                            <div className="border border-[#ffd700]/15 rounded-[3px] overflow-hidden bg-black">
+                              <img 
+                                src="/assets/images/spr_logo_1781536980657.jpg" 
+                                alt="Ebook Cover Miniature" 
+                                className="w-full h-full aspect-[4/3] object-cover"
+                                referrerPolicy="no-referrer"
+                              />
                             </div>
                           </div>
 
-                          <div className="text-[11px] text-stone-600 space-y-1 leading-normal text-left font-sans bg-white/40 p-2.5 rounded-xl border border-stone-200/50">
-                            <div className="flex items-center gap-1.5 font-mono text-[#8A7055] font-extrabold text-[10px]">
-                              <QrCode className="h-3.5 w-3.5" /> DESTINATÁRIO OFICIAL PIX:
-                            </div>
-                            <div>Nome: <b>Evandro Felix Marcondes</b></div>
-                            <div>Banco: <b>99 Pay (Chave Aleatória)</b></div>
+                          {/* Bottom Author Credentials */}
+                          <div className="z-10 text-center mb-1 select-none">
+                            <span className="font-serif font-semibold text-white block text-[10px] sm:text-[11px] tracking-wide">
+                              Evandro Felix Marcondes
+                            </span>
+                            <span className="text-[7px] font-mono text-stone-400 block uppercase tracking-widest mt-0.5">
+                              SERIE MEMORIA NACIONAL
+                            </span>
                           </div>
+                        </div>
+
+                        {/* 4. PHYSICAL RED RIBBON SEGMENT */}
+                        <div 
+                          className="absolute bottom-[-18px] left-[52%] w-4 h-12 bg-gradient-to-r from-red-800 to-red-600 shadow-lg origin-top transform rotate-2 rounded-b-sm border-r border-[#691111]/30 z-0 group-hover:rotate-0 transition-transform duration-500"
+                          style={{
+                            transformStyle: 'preserve-3d',
+                          }}
+                        >
+                          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300/60" />
                         </div>
                       </div>
 
+                      {/* Book Floor shadow */}
+                      <div className="absolute bottom-[-10px] left-[5%] right-[5%] h-4 bg-[#2c2620]/25 rounded-full blur-xl group-hover:bg-[#2c2620]/15 transition-all duration-500 pointer-events-none" />
                     </div>
                   </div>
 
-                  <h2 className="text-4xl sm:text-5xl font-serif tracking-tight text-stone-950 font-medium leading-tight">
-                    São Paulo Railway a <span className="text-[#8A7055] font-black italic">primeira ferrovia paulista.</span>
+                  {/* Right Column: Donation box + Free ebook tag/badge */}
+                  <div className="col-span-7 flex flex-col gap-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-600/10 border border-emerald-600/20 rounded-full text-xs font-mono text-emerald-800 w-fit font-bold uppercase select-none">
+                      <Compass className="h-3.5 w-3.5 text-emerald-700 font-bold animate-pulse" />
+                      E-book Gratuito • Acesso Livre & Completo 
+                    </div>
+
+                    {/* HIGHLY VISIBLE & EYE-CATCHING PIX DONATION BOARD CARD */}
+                    <div className="p-6 bg-gradient-to-br from-amber-50 to-[#FCFAF5] border-2 border-[#8A7055]/50 rounded-2xl shadow-sm space-y-5 relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-[#8A7055]/5 rounded-bl-full pointer-events-none" />
+                      
+                      <div className="flex items-start gap-3">
+                        <div className="p-2.5 bg-red-500/10 border border-red-500/20 text-red-600 rounded-xl mt-1 shrink-0 animate-pulse">
+                          <Heart className="h-6 w-6 text-red-600 fill-red-600/30" />
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] uppercase font-mono font-bold text-[#8A7055] tracking-widest">Contribuição Solidária Livre</span>
+                          <h3 className="font-serif font-bold text-lg text-stone-900">Apoie a Pesquisa Histórica</h3>
+                        </div>
+                      </div>
+
+                      {/* EYE-CATCHING HIGHLIGHTED MESSAGE REQUESTED BY USER */}
+                      <div className="p-4 bg-white border border-[#8A7055]/20 rounded-xl text-stone-850 font-serif italic text-sm sm:text-base leading-relaxed text-justify border-l-4 border-l-[#8A7055] shadow-2xs">
+                        "Este e-book foi produzido de forma independente. Se você gostou do conteúdo e deseja apoiar novas pesquisas históricas, considere fazer uma contribuição voluntária."
+                      </div>
+
+                      {/* Donation interactivity simulator */}
+                      <div className="space-y-4 pt-1">
+                        {/* Presets selector */}
+                        <div className="flex flex-col gap-2">
+                          <span className="text-[10px] uppercase font-mono tracking-wider font-extrabold text-stone-500 block">Sugerir Valor de Apoio:</span>
+                          <div className="flex flex-wrap gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('free')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === 'free'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              Valor Livre (no App)
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('10')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === '10'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              R$ 10,00
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('25')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === '25'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              R$ 25,00
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('50')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === '50'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              R$ 50,00
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDonationOption('custom')}
+                              className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                                donationOption === 'custom'
+                                  ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                              }`}
+                            >
+                              Outro Valor...
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Custom input panel if custom is selected */}
+                        {donationOption === 'custom' && (
+                          <div className="flex gap-2 items-center bg-white border border-stone-300 rounded-xl p-2 max-w-xs animate-slide-down">
+                            <span className="font-mono text-stone-400 font-bold text-xs pl-1">R$</span>
+                            <input
+                              type="number"
+                              min="1.00"
+                              step="1.00"
+                              value={customDonationVal}
+                              onChange={(e) => setCustomDonationVal(e.target.value)}
+                              className="bg-transparent border-0 outline-hidden font-mono font-extrabold text-[#8A7055] text-sm w-full"
+                              placeholder="Digite o valor"
+                            />
+                          </div>
+                        )}
+
+                        {/* Dynamic QR code grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center pt-2 border-t border-[#8A7055]/15">
+                          {/* Display QR code image */}
+                          <div className="md:col-span-4 flex justify-center">
+                            <div className="bg-white border border-stone-300 p-2.5 rounded-2xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
+                              <img
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(currentPixCode)}&ecc=M`}
+                                alt="Custom Pix QR Code"
+                                className="w-32 h-32 object-contain"
+                                referrerPolicy="no-referrer"
+                              />
+                              <div className="text-center font-mono text-[9px] font-black text-[#8A7055] tracking-tight mt-1.5">
+                                {donationOption === 'free' ? 'VALOR LIVRE' : `APOIAR COM R$ ${donationOption === 'custom' ? customDonationVal : donationOption}`}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Copy-paste input details & dest */}
+                          <div className="md:col-span-8 flex flex-col gap-2.5">
+                            <div className="space-y-1">
+                              <span className="text-[10px] font-mono tracking-wider text-stone-450 uppercase font-black block">Código Pix Copia e Cola</span>
+                              <div className="bg-white border border-stone-250 p-2 px-3 rounded-xl flex items-center justify-between gap-2.5 shadow-2xs">
+                                <span className="font-mono text-[10px] text-stone-500 overflow-hidden text-ellipsis whitespace-nowrap flex-1 text-left select-all">
+                                  {currentPixCode}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={handleCopyLanderPix}
+                                  className="bg-[#8A7055] hover:bg-[#725C46] text-white font-mono font-bold text-[10px] py-1.5 px-3 rounded-lg uppercase transition-all shrink-0 flex items-center gap-1 cursor-pointer"
+                                >
+                                  {copiedPixResult ? (
+                                    <>
+                                      <Check className="h-3 w-3 text-emerald-300" />
+                                      <span>Copiado!</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Copy className="h-3 w-3" />
+                                      <span>Copiar</span>
+                                    </>
+                                  )}
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="text-[11px] text-stone-600 space-y-1 leading-normal text-left font-sans bg-white/40 p-2.5 rounded-xl border border-stone-200/50">
+                              <div className="flex items-center gap-1.5 font-mono text-[#8A7055] font-extrabold text-[10px]">
+                                <QrCode className="h-3.5 w-3.5" /> DESTINATÁRIO OFICIAL PIX:
+                              </div>
+                              <div>Nome: <b>Evandro Felix Marcondes</b></div>
+                              <div>Banco: <b>99 Pay (Chave Aleatória)</b></div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Segment: Title, Description and Stats aligning cleanly */}
+                <div className="border border-stone-200/50 bg-[#FCFAF5]/50 rounded-3xl p-8 sm:p-10 space-y-6 shadow-2xs">
+                  <h2 className="text-4xl text-stone-950 font-serif font-black tracking-tight leading-tight uppercase">
+                    São Paulo Railway a <span className="text-[#8A7055] font-black italic lowercase">primeira ferrovia paulista.</span>
                   </h2>
 
-                  <div className="text-base sm:text-[16px] text-[#52463A] leading-relaxed text-left">
+                  <div className="text-base text-[#52463A] leading-relaxed text-justify font-serif">
                     <p>
                       A história da São Paulo Railway está diretamente ligada ao desenvolvimento econômico de São Paulo e à expansão da economia cafeeira no Brasil. Inaugurada em 1867, a ferrovia superou os desafios da Serra do Mar e estabeleceu uma ligação eficiente entre o interior paulista e o Porto de Santos, transformando o transporte e o comércio da época. Ao longo desta obra, o leitor conhecerá os personagens envolvidos na criação da ferrovia, os desafios de engenharia que marcaram sua construção, a formação de Paranapiacaba, a influência britânica na região e os impactos econômicos e sociais gerados pela linha férrea. Mais do que uma história sobre trilhos e locomotivas, este livro apresenta um capítulo importante da modernização do transporte brasileiro e do crescimento de São Paulo, destacando o legado deixado por uma das mais importantes ferrovias da história nacional.
                     </p>
                   </div>
 
-
-
                   {/* Stats bar */}
-                  <div className="grid grid-cols-3 gap-3 border-t border-b border-[#2C2620]/10 py-5 select-none">
-                    <div className="text-center sm:text-left">
+                  <div className="grid grid-cols-3 gap-3 border-t border-[#2C2620]/10 pt-6 select-none">
+                    <div className="text-left">
                       <span className="font-serif font-black text-2xl text-stone-900">{chapters.length}</span>
                       <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Capítulos Históricos</p>
                     </div>
-                    <div className="text-center sm:text-left border-l border-[#2C2620]/10 px-4">
+                    <div className="text-left border-l border-[#2C2620]/10 px-6">
                       <span className="font-serif font-black text-2xl text-stone-900">{chapters.filter(c => c.image).length}</span>
                       <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas</p>
                     </div>
-                    <div className="text-center sm:text-left border-l border-[#2C2620]/10 px-4">
-                      <span className="font-serif font-black text-2xl text-emerald-700">Acesso Grátis</span>
+                    <div className="text-left border-l border-[#2C2620]/10 px-6">
+                      <span className="font-serif font-black text-2xl text-emerald-700 font-bold">Acesso Grátis</span>
                       <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Distribuição Aberta</p>
                     </div>
                   </div>
 
-                  {/* Immediate Core CTAs */}
-                  <div className="pt-2 flex flex-col sm:flex-row gap-4 w-full">
+                  {/* Immediate Action Buttons */}
+                  <div className="pt-4 flex flex-col sm:flex-row gap-4 w-full">
                     <button
                       onClick={() => openApresentacao()}
-                      className="py-4 px-8 bg-[#8A7055] hover:bg-[#725C46] text-white rounded-xl font-serif font-bold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer duration-150"
+                      className="py-4 px-10 bg-[#8A7055] hover:bg-[#725C46] text-white rounded-xl font-serif font-bold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer duration-150"
                     >
                       <BookOpen className="h-5 w-5" /> Ler E-Book Agora
                     </button>
                     
                     <button
                       onClick={() => openFullPDF()}
-                      className="py-4 px-8 border-2 border-[#8A7055] text-[#8A7055] hover:bg-stone-50 rounded-xl font-serif font-bold text-base transition-colors flex items-center justify-center gap-2 cursor-pointer duration-150"
+                      className="py-4 px-10 border-2 border-[#8A7055] text-[#8A7055] hover:bg-stone-50 rounded-xl font-serif font-bold text-base transition-colors flex items-center justify-center gap-2 cursor-pointer duration-150"
                     >
                       <Printer className="h-5 w-5" /> Visualizar & Salvar PDF
                     </button>
                   </div>
-
                 </div>
               </div>
-
               {/* TABLE OF CONTENTS SECTION */}
               <section className="bg-white/40 border border-[#2C2620]/10 rounded-3xl p-6 sm:p-10 space-y-8">
                 <div className="text-center space-y-1">
