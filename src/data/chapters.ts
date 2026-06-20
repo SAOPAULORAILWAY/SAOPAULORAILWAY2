@@ -7,7 +7,7 @@ export const chapters: Chapter[] = [
     title: 'A ferrovia que venceu a Serra do Mar.',
     subtitle: 'Como a São Paulo Railway superou a Serra do Mar para integrar o interior paulista ao Porto de Santos.',
     image: '/assets/images/serra_mar_challenge_spr_1781707082900.jpg',
-    imageCaption: 'Ilustração artística de época recriando a ousada engenharia na Serra do Mar: uma locomotiva a vapor com as marcas da SPR vencendo os aclives íngremes sob a densa névoa da floresta tropical.',
+    imageCaption: 'Ilustração de época recriando a ousada engenharia na Serra do Mar: uma locomotiva a vapor com as marcas da SPR vencendo os aclives íngremes sob a densa névoa da floresta tropical.',
     readingTime: 6,
     content: [
       'Durante o Império de Dom Pedro II, o transporte de mercadorias entre o interior paulista e o litoral era lento e caro. O café, principal produto da economia brasileira no século XIX, seguiu em tropas de mulas por caminhos íngremes e sinuosos da Serra do Mar. Em períodos de chuva, as trilhas tornavam-se ainda mais difíceis de percorrer, provocando atrasos e elevando os custos do transporte.',
@@ -45,7 +45,7 @@ export const chapters: Chapter[] = [
     title: 'Engenharia e trabalho na serra.',
     subtitle: 'O sistema que venceu a serra e os desafios da construção.',
     image: '/assets/images/funicular_engineering_spr_v2_1781707063737.jpg',
-    imageCaption: 'Ilustração artística de época mostrando operários e engenheiros enfrentando a lama, relva e chuvas na Serra do Mar para instalar os grandiosos planos inclinados do Sistema Funicular, com a marca oficial da SPR estampada.',
+    imageCaption: 'Ilustração de época mostrando operários e engenheiros enfrentando a lama, relva e chuvas na Serra do Mar para instalar os grandiosos planos inclinados do Sistema Funicular, com a marca oficial da SPR estampada.',
     readingTime: 9,
     content: [
       'As obras da São Paulo Railway avançaram de forma decisiva a partir de 1860. Sob a coordenação dos engenheiros responsáveis pelo projeto, centenas de trabalhadores passaram a atuar em diferentes frentes de trabalho ao longo da Serra do Mar, onde seriam implantados os planos inclinados que permitiriam a ligação ferroviária entre o litoral e o planalto paulista.',
@@ -64,7 +64,7 @@ export const chapters: Chapter[] = [
     title: 'Uma Vila Inglesa na Serra do Mar.',
     subtitle: 'A vida em Paranapiacaba e a chegada do futebol ao Brasil.',
     image: '/assets/images/paranapiacaba_clock_spr_1781707467393.jpg',
-    imageCaption: 'Ilustração artística de época recriando a mítica neblina cobrindo a arquitetura vitoriana da estação ferroviária e o icônico relógio em Paranapiacaba.',
+    imageCaption: 'Ilustração de época recriando a mítica neblina cobrindo a arquitetura vitoriana da estação ferroviária e o icônico relógio em Paranapiacaba.',
     readingTime: 6,
     content: [
       'No alto da Serra do Mar, em uma região frequentemente coberta pela neblina, a Estação Alto da Serra deu origem ao povoado que mais tarde ficaria conhecido como Paranapiacaba. O local desempenhava uma função estratégica na operação da São Paulo Railway, pois era ali que ocorria a transição entre o sistema funicular da Serra do Mar e o trecho percorrido por locomotivas convencionais no planalto paulista.',
@@ -82,7 +82,7 @@ export const chapters: Chapter[] = [
     title: 'A transformação de São Paulo.',
     subtitle: 'Como os lucros do café remodelaram o cenário urbano paulistano.',
     image: '/assets/images/estacao_da_luz_spr_1781708439536.jpg',
-    imageCaption: 'Ilustração artística de época recriando a monumental Estação da Luz com sua icônica torre do relógio vitoriana e locomotivas a vapor ostentando a marca SPR.',
+    imageCaption: 'Ilustração de época recriando a monumental Estação da Luz com sua icônica torre do relógio vitoriana e locomotivas a vapor ostentando a marca SPR.',
     readingTime: 8,
     content: [
       'Os resultados obtidos pela São Paulo Railway foram expressivos desde as primeiras décadas de operação. Como principal ligação entre as regiões produtoras de café do interior paulista e o Porto de Santos, a ferrovia desempenhou papel fundamental no escoamento da produção e contribuiu para importantes transformações econômicas em São Paulo.',
@@ -101,7 +101,7 @@ export const chapters: Chapter[] = [
     title: 'A ligação com o mercado mundial.',
     subtitle: 'O desenvolvimento do Porto de Santos e o comércio internacional.',
     image: '/assets/images/porto_de_santos_spr_vintage_1781709193710.jpg',
-    imageCaption: 'Ilustração artística de época recriando a dinâmica do Porto de Santos no final do século XIX, com navios mercantes e trens da SPR operando em plena sintonia.',
+    imageCaption: 'Ilustração de época recriando a dinâmica do Porto de Santos no final do século XIX, com navios mercantes e trens da SPR operando em plena sintonia.',
     readingTime: 6,
     content: [
       'Se o interior paulista produzia café em grande escala, o Porto de Santos era responsável por encaminhar essa produção aos mercados internacionais. Antes da construção da ferrovia, o transporte entre o planalto e o litoral era realizado principalmente por tropas de mulas que percorriam caminhos estreitos e sujeitos às condições climáticas da Serra do Mar. As viagens eram demoradas e frequentemente dificultadas pelas chuvas e pelas condições precárias das estradas.',

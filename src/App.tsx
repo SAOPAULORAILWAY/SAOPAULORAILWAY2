@@ -584,7 +584,7 @@ export default function App() {
                         <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Capítulos Históricos</p>
                       </div>
                       <div className="text-left border-l border-[#2C2620]/10 px-4">
-                        <span className="font-serif font-black text-2xl text-stone-900">{chapters.filter(c => c.image).length}</span>
+                        <span className="font-serif font-black text-2xl text-stone-900">7</span>
                         <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas</p>
                       </div>
                       <div className="text-left border-l border-[#2C2620]/10 px-4">
@@ -916,7 +916,7 @@ export default function App() {
                       <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Capítulos Históricos</p>
                     </div>
                     <div className="text-left border-l border-[#2C2620]/10 px-6">
-                      <span className="font-serif font-black text-2xl text-stone-900">{chapters.filter(c => c.image).length}</span>
+                      <span className="font-serif font-black text-2xl text-stone-900">7</span>
                       <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas</p>
                     </div>
                     <div className="text-left border-l border-[#2C2620]/10 px-6">
