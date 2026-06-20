@@ -20,7 +20,8 @@ import {
   Sliders,
   Award,
   Lock,
-  LogOut
+  LogOut,
+  Heart
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -339,41 +340,15 @@ export default function EbookReader({
             <span className="hidden sm:inline">{isPrintMode ? 'Sair da Visualização PDF' : 'Visualizar em PDF'}</span>
           </button>
 
-          {/* Botão de Deslogar Licença/Dispositivo */}
-          {isUnlocked && onLock && (
-            <div className="relative">
-              {!confirmLogout ? (
-                <button
-                  onClick={() => setConfirmLogout(true)}
-                  className="py-1.5 sm:py-2 px-3 rounded-lg text-xs font-mono font-extrabold bg-[#C2593F] hover:bg-[#A8452E] text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-sm border border-[#A8452E]/30"
-                  title="Deslogar e Liberar Vaga"
-                >
-                  <LogOut className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Deslogar do Livro</span>
-                </button>
-              ) : (
-                <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-300 p-1 rounded-lg shadow-md animate-in fade-in zoom-in-95 duration-155 z-50">
-                  <span className="text-[10px] font-mono font-extrabold text-amber-900 px-1">Liberar vaga?</span>
-                  <button
-                    onClick={async () => {
-                      await onLock();
-                      onBackToCover();
-                      setConfirmLogout(false);
-                    }}
-                    className="py-1 px-2 rounded bg-[#C2593F] hover:bg-[#A8452E] text-white text-[10px] font-mono font-black cursor-pointer shadow-xs transition-colors"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    onClick={() => setConfirmLogout(false)}
-                    className="py-1 px-2 rounded bg-stone-200 hover:bg-stone-300 text-stone-700 text-[10px] font-mono font-bold cursor-pointer transition-colors"
-                  >
-                    Não
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+          {/* Botão de Contribuição / Apoiar Projeto */}
+          <button
+            onClick={() => setReaderPaywallOpen(true)}
+            className="py-1.5 sm:py-2 px-3 rounded-lg text-xs font-mono font-extrabold bg-[#8A7055] hover:bg-[#725C46] text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-sm border border-[#725C46]/20"
+            title="Apoiar este E-book com uma contribuição voluntária"
+          >
+            <Heart className="h-3.5 w-3.5 text-red-500 fill-red-500 animate-pulse" />
+            <span className="hidden sm:inline">Apoiar Projeto</span>
+          </button>
 
           {/* Preferences controls */}
           <button
@@ -1177,11 +1152,11 @@ export default function EbookReader({
                   </article>
                 ) : isPrintMode ? (
                   /* RENDER HIGH-FIDELITY LUXURIOUS PDF COMPILATION STAGE */
-                  <div className="space-y-8 w-full">
+                  <div className="space-y-8 w-full overflow-x-auto pb-6">
                     
                     {printScope === 'full' ? (
                       /* ====== MAXIMUM FIDELITY COMPILED EXPANSIVE EBOOK PDF TEMPLATE ====== */
-                      <div className="print-container bg-white text-stone-900 border border-stone-300 rounded-2xl shadow-xl overflow-hidden p-6 sm:p-14 space-y-16 max-w-3xl mx-auto font-serif print:border-0 print:shadow-none print:p-0 print:space-y-0 selection:bg-stone-200">
+                      <div className="print-container select-text space-y-6 w-fit mx-auto font-serif print:border-0 print:shadow-none print:p-0 print:space-y-0 selection:bg-stone-200">
                         {/* COVER SHEET (PAGE 1) */}
                         <div className="pdf-fixed-page min-h-[85vh] flex flex-col justify-between p-8 sm:p-12 border-8 border-double border-[#ffd700]/30 relative bg-gradient-to-br from-[#242426] via-[#121212] to-black text-white select-none overflow-hidden" style={{ pageBreakAfter: 'always', breakAfter: 'page' }}>
                           {/* Rich Leather pattern watermark overlay */}
@@ -1430,8 +1405,8 @@ export default function EbookReader({
                              <div className="space-y-2 text-center select-none">
                                <span className="text-[10px] font-mono tracking-widest uppercase text-[#8A7055] font-extrabold block">Rigor editorial.</span>
                                <h2 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase text-stone-950">FONTES CONSULTADAS</h2>
+                               <div className="h-[1px] w-20 bg-[#8A7055]/50 mx-auto my-3 rounded-full print:hidden"></div>
                              </div>
-                             <div className="h-[1px] w-20 bg-[#8A7055]/50 mx-auto my-3 rounded-full print:hidden"></div>
 
                              <div className="space-y-5 text-[12px] text-stone-850">
                                <p className="text-stone-600 text-[12px] sm:text-[13px] leading-relaxed italic text-justify">

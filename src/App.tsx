@@ -20,7 +20,12 @@ import {
   BookOpenText,
   Anchor,
   Globe2,
-  Lock
+  Lock,
+  Heart,
+  Copy,
+  Coins,
+  QrCode,
+  Check
 } from 'lucide-react';
 import EbookReader from './components/EbookReader';
 import { chapters } from './data/chapters';
@@ -36,14 +41,78 @@ export default function App() {
   const [targetShowReferences, setTargetShowReferences] = useState<boolean>(false);
   const [targetShowAboutAuthor, setTargetShowAboutAuthor] = useState<boolean>(false);
   const [targetShowApresentacao, setTargetShowApresentacao] = useState<boolean>(true);
-  const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
-    return localStorage.getItem('spr_ebook_unlocked') === 'true';
-  });
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(true);
   const [paywallOpen, setPaywallOpen] = useState(false);
+  
+  // States for donation and PIX interactivity
+  const [donationOption, setDonationOption] = useState<'free' | '10' | '25' | '50' | 'custom'>('free');
+  const [customDonationVal, setCustomDonationVal] = useState<string>('30');
+  const [copiedPixResult, setCopiedPixResult] = useState(false);
 
   React.useEffect(() => {
     seedDefaultCodes();
+    // Keep it unlocked in localStorage too for backwards compatibility
+    localStorage.setItem('spr_ebook_unlocked', 'true');
   }, []);
+
+  const buildPixCode = (valOption: string, customVal: string) => {
+    const key = "7b1858fd-ccb3-4904-b3e9-570df6b63136"; // Chave Aleatória (99 Pay)
+    const name = "Evandro Felix Marcondes";
+    const city = "Sao Paulo";
+    
+    // Choose active value
+    let rawAmount = "";
+    if (valOption === '10') rawAmount = "10.00";
+    else if (valOption === '25') rawAmount = "25.00";
+    else if (valOption === '50') rawAmount = "50.00";
+    else if (valOption === 'custom') {
+      const parsed = parseFloat(customVal);
+      if (!isNaN(parsed) && parsed > 0) {
+        rawAmount = parsed.toFixed(2);
+      }
+    }
+    
+    const keyClean = key.trim();
+    const gui = "br.gov.bcb.pix";
+    
+    const sub26_00 = "0014" + gui;
+    const sub26_01 = "01" + keyClean.length.toString().padStart(2, '0') + keyClean;
+    const sub26 = sub26_00 + sub26_01;
+    const f26 = "26" + sub26.length.toString().padStart(2, '0') + sub26;
+    
+    let base = "000201" + 
+               "010212" + 
+               f26 +
+               "52040000" + 
+               "5303986";
+               
+    if (rawAmount) {
+      base += "54" + rawAmount.length.toString().padStart(2, '0') + rawAmount;
+    }
+    
+    base += "5802BR" + 
+            "59" + name.length.toString().padStart(2, '0') + name.toUpperCase() +
+            "60" + city.length.toString().padStart(2, '0') + city.toUpperCase() +
+            "62130509" + "SPRDOACAO" + 
+            "6304";
+                 
+    let crc = 0xFFFF;
+    for (let i = 0; i < base.length; i++) {
+      let x = ((crc >> 8) ^ base.charCodeAt(i)) & 0xFF;
+      x ^= x >> 4;
+      crc = ((crc << 8) ^ (x << 12) ^ (x << 5) ^ x) & 0xFFFF;
+    }
+    const crcHex = crc.toString(16).toUpperCase().padStart(4, '0');
+    return base + crcHex;
+  };
+
+  const currentPixCode = buildPixCode(donationOption, customDonationVal);
+
+  const handleCopyLanderPix = () => {
+    navigator.clipboard.writeText(currentPixCode);
+    setCopiedPixResult(true);
+    setTimeout(() => setCopiedPixResult(false), 2500);
+  };
 
   const unlockEbook = () => {
     setIsUnlocked(true);
@@ -334,27 +403,172 @@ export default function App() {
                     <div className="absolute bottom-[-10px] left-[5%] right-[5%] h-4 bg-[#2c2620]/25 rounded-full blur-xl group-hover:bg-[#2c2620]/15 transition-all duration-500 pointer-events-none" />
                   </div>
                 </div>
-
-                {/* Right Column: Presentation details, features, stats and CTA buttons */}
+                               {/* Right Column: Presentation details, features, stats and CTA buttons */}
                 <div className="lg:col-span-7 space-y-6">
-                  {isUnlocked ? (
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-600/10 border border-emerald-600/20 rounded-full text-xs font-mono text-emerald-800 w-fit font-bold uppercase select-none">
-                      <Compass className="h-3.5 w-3.5 text-emerald-700 font-bold animate-pulse" />
-                      E-book Desbloqueado • Acesso Liberado
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-600/10 border border-emerald-600/20 rounded-full text-xs font-mono text-emerald-800 w-fit font-bold uppercase select-none">
+                    <Compass className="h-3.5 w-3.5 text-emerald-700 font-bold animate-pulse" />
+                    E-book Gratuito • Acesso Livre & Completo 
+                  </div>
+
+                  {/* HIGHLY VISIBLE & EYE-CATCHING PIX DONATION BOARD CARD */}
+                  <div className="p-6 bg-gradient-to-br from-amber-50 to-[#FCFAF5] border-2 border-[#8A7055]/50 rounded-2xl shadow-sm space-y-5 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#8A7055]/5 rounded-bl-full pointer-events-none" />
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="p-2.5 bg-red-500/10 border border-red-500/20 text-red-600 rounded-xl mt-1 shrink-0 animate-pulse">
+                        <Heart className="h-6 w-6 text-red-600 fill-red-600/30" />
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[10px] uppercase font-mono font-bold text-[#8A7055] tracking-widest">Contribuição Solidária Livre</span>
+                        <h3 className="font-serif font-bold text-lg text-stone-900">Apoie a Pesquisa Histórica</h3>
+                      </div>
                     </div>
-                  ) : (
-                    <button
-                      onClick={() => setPaywallOpen(true)}
-                      className="inline-flex items-center gap-2 px-3 py-1 bg-amber-600/10 border border-amber-600/20 hover:bg-amber-600/20 hover:border-amber-600/30 rounded-full text-xs font-mono text-amber-950 w-fit font-bold uppercase transition-all select-none cursor-pointer"
-                    >
-                      <span>🔒 Versão Comercial (</span>
-                      <span className="text-red-700 font-black animate-pulse">R$ 29,99</span>
-                      <span> • Obter Chave)</span>
-                    </button>
-                  )}
+
+                    {/* EYE-CATCHING HIGHLIGHTED MESSAGE REQUESTED BY USER */}
+                    <div className="p-4 bg-white border border-[#8A7055]/20 rounded-xl text-stone-850 font-serif italic text-sm sm:text-base leading-relaxed text-justify border-l-4 border-l-[#8A7055] shadow-2xs">
+                      "Este e-book foi produzido de forma independente. Se você gostou do conteúdo e deseja apoiar novas pesquisas históricas, considere fazer uma contribuição voluntária."
+                    </div>
+
+                    {/* Donation interactivity simulator */}
+                    <div className="space-y-4 pt-1">
+                      {/* Presets selector */}
+                      <div className="flex flex-col gap-2">
+                        <span className="text-[10px] uppercase font-mono tracking-wider font-extrabold text-stone-500 block">Sugerir Valor de Apoio:</span>
+                        <div className="flex flex-wrap gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setDonationOption('free')}
+                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                              donationOption === 'free'
+                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                            }`}
+                          >
+                            Valor Livre (no App)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setDonationOption('10')}
+                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                              donationOption === '10'
+                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                            }`}
+                          >
+                            R$ 10,00
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setDonationOption('25')}
+                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                              donationOption === '25'
+                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                            }`}
+                          >
+                            R$ 25,00
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setDonationOption('50')}
+                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                              donationOption === '50'
+                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                            }`}
+                          >
+                            R$ 50,00
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setDonationOption('custom')}
+                            className={`py-1.5 px-3 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer border ${
+                              donationOption === 'custom'
+                                ? 'bg-[#8A7055] border-[#8A7055] text-white shadow-xs'
+                                : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                            }`}
+                          >
+                            Outro Valor...
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Custom input panel if custom is selected */}
+                      {donationOption === 'custom' && (
+                        <div className="flex gap-2 items-center bg-white border border-stone-300 rounded-xl p-2 max-w-xs animate-slide-down">
+                          <span className="font-mono text-stone-400 font-bold text-xs pl-1">R$</span>
+                          <input
+                            type="number"
+                            min="1.00"
+                            step="1.00"
+                            value={customDonationVal}
+                            onChange={(e) => setCustomDonationVal(e.target.value)}
+                            className="bg-transparent border-0 outline-hidden font-mono font-extrabold text-[#8A7055] text-sm w-full"
+                            placeholder="Digite o valor"
+                          />
+                        </div>
+                      )}
+
+                      {/* Dynamic QR code grid */}
+                      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center pt-2 border-t border-[#8A7055]/15">
+                        {/* Display QR code image */}
+                        <div className="md:col-span-4 flex justify-center">
+                          <div className="bg-white border border-stone-300 p-2.5 rounded-2xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
+                            <img
+                              src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(currentPixCode)}&ecc=M`}
+                              alt="Custom Pix QR Code"
+                              className="w-32 h-32 object-contain"
+                              referrerPolicy="no-referrer"
+                            />
+                            <div className="text-center font-mono text-[9px] font-black text-[#8A7055] tracking-tight mt-1.5">
+                              {donationOption === 'free' ? 'VALOR LIVRE' : `APOIAR COM R$ ${donationOption === 'custom' ? customDonationVal : donationOption}`}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Copy-paste input details & dest */}
+                        <div className="md:col-span-8 flex flex-col gap-2.5">
+                          <div className="space-y-1">
+                            <span className="text-[10px] font-mono tracking-wider text-stone-450 uppercase font-black block">Código Pix Copia e Cola</span>
+                            <div className="bg-white border border-stone-250 p-2 px-3 rounded-xl flex items-center justify-between gap-2.5 shadow-2xs">
+                              <span className="font-mono text-[10px] text-stone-500 overflow-hidden text-ellipsis whitespace-nowrap flex-1 text-left select-all">
+                                {currentPixCode}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={handleCopyLanderPix}
+                                className="bg-[#8A7055] hover:bg-[#725C46] text-white font-mono font-bold text-[10px] py-1.5 px-3 rounded-lg uppercase transition-all shrink-0 flex items-center gap-1 cursor-pointer"
+                              >
+                                {copiedPixResult ? (
+                                  <>
+                                    <Check className="h-3 w-3 text-emerald-300" />
+                                    <span>Copiado!</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy className="h-3 w-3" />
+                                    <span>Copiar</span>
+                                  </>
+                                )}
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="text-[11px] text-stone-600 space-y-1 leading-normal text-left font-sans bg-white/40 p-2.5 rounded-xl border border-stone-200/50">
+                            <div className="flex items-center gap-1.5 font-mono text-[#8A7055] font-extrabold text-[10px]">
+                              <QrCode className="h-3.5 w-3.5" /> DESTINATÁRIO OFICIAL PIX:
+                            </div>
+                            <div>Nome: <b>Evandro Felix Marcondes</b></div>
+                            <div>Banco: <b>99 Pay (Chave Aleatória)</b></div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
 
                   <h2 className="text-4xl sm:text-5xl font-serif tracking-tight text-stone-950 font-medium leading-tight">
-                    São Paulo Railway a <span className="text-red-700 font-black animate-pulse">primeira ferrovia paulista.</span>
+                    São Paulo Railway a <span className="text-[#8A7055] font-black italic">primeira ferrovia paulista.</span>
                   </h2>
 
                   <div className="text-base sm:text-[16px] text-[#52463A] leading-relaxed text-left">
@@ -364,7 +578,7 @@ export default function App() {
                   </div>
 
                   {/* Curated features grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 py-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 py-2">
                     <div className="flex items-start gap-2.5">
                       <CheckCircle2 className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
@@ -406,32 +620,32 @@ export default function App() {
                     </div>
                     <div className="text-center sm:text-left border-l border-[#2C2620]/10 px-4">
                       <span className="font-serif font-black text-2xl text-stone-900">{chapters.filter(c => c.image).length}</span>
-                      <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas Exclusivas</p>
+                      <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Imagens Ilustrativas</p>
                     </div>
                     <div className="text-center sm:text-left border-l border-[#2C2620]/10 px-4">
-                      <span className="font-serif font-black text-2xl text-red-700 animate-pulse">R$ 29,99</span>
-                      <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Preço Único</p>
+                      <span className="font-serif font-black text-2xl text-emerald-700">Acesso Grátis</span>
+                      <p className="text-[10px] font-mono text-stone-800 font-bold uppercase tracking-widest mt-1">Distribuição Aberta</p>
                     </div>
                   </div>
 
                   {/* Immediate Core CTAs */}
-                  <div className="pt-4 flex flex-col sm:flex-row gap-4 w-full">
+                  <div className="pt-2 flex flex-col sm:flex-row gap-4 w-full">
                     <button
                       onClick={() => openApresentacao()}
                       className="py-4 px-8 bg-[#8A7055] hover:bg-[#725C46] text-white rounded-xl font-serif font-bold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer duration-150"
                     >
-                      <BookOpen className="h-5 w-5" /> Iniciar Leitura Digital
+                      <BookOpen className="h-5 w-5" /> Ler E-Book Agora
                     </button>
                     
                     <button
                       onClick={() => openFullPDF()}
                       className="py-4 px-8 border-2 border-[#8A7055] text-[#8A7055] hover:bg-stone-50 rounded-xl font-serif font-bold text-base transition-colors flex items-center justify-center gap-2 cursor-pointer duration-150"
                     >
-                      <BookOpen className="h-5 w-5" /> Visualizar em PDF
+                      <Printer className="h-5 w-5" /> Visualizar & Salvar PDF
                     </button>
                   </div>
-                </div>
 
+                </div>
               </div>
 
               {/* TABLE OF CONTENTS SECTION */}

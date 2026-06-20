@@ -8,6 +8,64 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
+/* Screen-mode styling for the high-fidelity PDF pages to match exact A4 paper dimensions and ratio (794px x 1123px) */
+.print-container .pdf-fixed-page,
+.print-container.pdf-fixed-page {
+  width: 794px !important;
+  height: 1123px !important;
+  min-height: 1123px !important;
+  max-height: 1123px !important;
+  box-sizing: border-box !important;
+  padding: 56px 64px !important; /* Perfect luxury editorial margin for book pages */
+  margin: 0 auto 36px auto !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  background-color: #FCFAF7 !important;
+  color: #1c1917 !important;
+  border: 1px solid #e7dfd5 !important;
+  border-radius: 4px !important;
+}
+
+.print-container .pdf-flow-page,
+.print-container.pdf-flow-page {
+  width: 794px !important;
+  min-height: 1123px !important;
+  box-sizing: border-box !important;
+  padding: 56px 64px !important; /* Perfect luxury editorial margin for book pages */
+  margin: 0 auto 36px auto !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  background-color: #FCFAF7 !important;
+  color: #1c1917 !important;
+  border: 1px solid #e7dfd5 !important;
+  border-radius: 4px !important;
+}
+
+/* Ensure consistent text typography and spacing across screens so pages never overflow */
+.print-container .pdf-fixed-page p,
+.print-container .pdf-flow-page p {
+  font-size: 13.5px !important;
+  line-height: 1.62 !important;
+  margin-bottom: 12px !important;
+}
+
+/* Handle the dark leather cover sheet aesthetics on-screen */
+.print-container .pdf-fixed-page.bg-gradient-to-br,
+.print-container.pdf-fixed-page.bg-gradient-to-br {
+  background: linear-gradient(135deg, #1e1e20 0%, #0d0d0e 50%, #000000 100%) !important;
+  color: #ffffff !important;
+  border: 8px double rgba(255, 215, 0, 0.3) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35) !important;
+}
+
 /* Print/Export PDF refinement styling sheets */
 @media print {
   /* Remove default browser headers and footers (link, date, time) */
