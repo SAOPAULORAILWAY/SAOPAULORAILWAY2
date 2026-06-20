@@ -420,7 +420,7 @@ export default function App() {
                         </div>
                         <div className="space-y-1">
                           <span className="text-[10px] uppercase font-mono font-bold text-[#8A7055] tracking-widest">Contribuição Solidária Livre</span>
-                          <h3 className="font-serif font-bold text-lg text-stone-900">Apoie a Pesquisa Histórica</h3>
+                          <h3 className="font-serif font-bold text-lg text-stone-900">Faça sua doação.</h3>
                         </div>
                       </div>
 
@@ -567,8 +567,8 @@ export default function App() {
                       </div>
                     </div>
 
-                    <h2 className="text-4xl font-serif tracking-tight text-stone-950 font-medium leading-tight">
-                      São Paulo Railway a <span className="text-[#8A7055] font-black italic">primeira ferrovia paulista.</span>
+                    <h2 className="text-4xl font-serif tracking-tight text-stone-950 font-black leading-tight uppercase">
+                      SÃO PAULO RAILWAY A <span className="text-red-600 animate-pulse font-black">PRIMEIRA FERROVIA PAULISTA.</span>
                     </h2>
 
                     <div className="text-base text-[#52463A] leading-relaxed text-justify">
@@ -748,7 +748,7 @@ export default function App() {
                         </div>
                         <div className="space-y-1">
                           <span className="text-[10px] uppercase font-mono font-bold text-[#8A7055] tracking-widest">Contribuição Solidária Livre</span>
-                          <h3 className="font-serif font-bold text-lg text-stone-900">Apoie a Pesquisa Histórica</h3>
+                          <h3 className="font-serif font-bold text-lg text-stone-900">Faça sua doação.</h3>
                         </div>
                       </div>
 
@@ -900,7 +900,7 @@ export default function App() {
                 {/* Bottom Segment: Title, Description and Stats aligning cleanly */}
                 <div className="border border-stone-200/50 bg-[#FCFAF5]/50 rounded-3xl p-8 sm:p-10 space-y-6 shadow-2xs">
                   <h2 className="text-4xl text-stone-950 font-serif font-black tracking-tight leading-tight uppercase">
-                    São Paulo Railway a <span className="text-[#8A7055] font-black italic lowercase">primeira ferrovia paulista.</span>
+                    SÃO PAULO RAILWAY A <span className="text-red-600 animate-pulse font-black">PRIMEIRA FERROVIA PAULISTA.</span>
                   </h2>
 
                   <div className="text-base text-[#52463A] leading-relaxed text-justify font-serif">
